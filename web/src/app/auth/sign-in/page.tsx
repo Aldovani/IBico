@@ -1,57 +1,96 @@
-import Link from "next/link";
+// "use client";
+// import Link from "next/link";
+// import { useSignIn } from "./useSignIn";
+// import { Input } from "@/components/Input";
+// import { FiEyeOff, FiEye } from "react-icons/fi";
+// import { Button } from "@/components/Button";
 
-export default function SignIn() {
-  return (
-    <div className="flex flex-col max-w-lg  pb-10 w-full max-md:m-auto max-sm:px-6">
-      <header className="mt-8">
-        <h2 className="text-slate-900 text-3xl font-semibold">
-          Bem vindo ao IBico
-        </h2>
-        <p className="text-slate-400  mt-2">
-          Yorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc
-          vulputate libero et velit interdum, ac aliquet{" "}
-        </p>
-      </header>
+// export default function SignIn() {
+//   const {
+//     handleSubmit,
+//     register,
+//     errors,
+//     handleTogglePassword,
+//     isShowPassword,
+//   } = useSignIn();
 
-      <form className="flex flex-col mt-8">
-        <label htmlFor="cpfPhone" className="flex flex-col">
-          <span className="text-slate-800">CPF/Telefone</span>
-          <input
-            type="text"
-            id="cpfPhone"
-            className="bg-slate-100 mt-2 border-slate-200  text-slate-400 border-2 pl-4 rounded-lg py-4"
-            placeholder="Digite seu CPF ou Telefone"
-          />
-        </label>
-        <label htmlFor="password" className="flex flex-col mt-4">
-          <span className="text-slate-800">Senha</span>
-          <input
-            type="text"
-            id="password"
-            className="bg-slate-100 mt-2  text-slate-400  border-slate-200 border-2 pl-4 rounded-lg py-4"
-            placeholder="••••••••••••••••"
-          />
-        </label>
-        <span className="text-slate-400 mt-2">
-          Esqueceu a senha?{" "}
-          <Link
-            href="/auth/reset-password"
-            className="text-blue-700 font-semibold"
-          >
-            Redefinir
-          </Link>
-        </span>
-        <button className="mt-5 bg-blue-700 text-slate-50 w-full py-3 font-bold text-lg rounded-lg duration-150 ease-out  hover:bg-blue-600">
-          Entrar
-        </button>
+//   return (
+//     <div className="flex flex-col max-w-lg  pb-10 w-full max-md:m-auto max-sm:px-6">
+//       <header className="mt-8">
+//         <h2 className="text-slate-900 text-3xl font-lato font-semibold">
+//           Bem vindo ao IBico
+//         </h2>
+//         <p className="text-slate-400  mt-2 font-poppins">
+//           Yorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc
+//           vulputate libero et velit interdum, ac aliquet{" "}
+//         </p>
+//       </header>
 
-        <span className="text-slate-400 mt-2">
-          Não possui uma conta?{" "}
-          <Link href="/auth/register" className="text-blue-700 font-semibold">
-            Registra-se
-          </Link>
-        </span>
-      </form>
-    </div>
-  );
-}
+//       <form className="flex flex-col mt-8" onSubmit={handleSubmit(() => {})}>
+//         <Input.Label error={!!errors.CPF} id="cpf" name="CPF">
+//           <Input.Field
+//             error={!!errors.CPF}
+//             id="cpf"
+//             placeholder="Digite seu CPF"
+//             autoComplete="cc-number"
+//             inputMode="numeric"
+//             type="text"
+//             maxLength={11}
+//             {...register("CPF")}
+//           />
+//           {errors.CPF?.message && (
+//             <Input.MessageError message={errors.CPF.message} />
+//           )}
+//         </Input.Label>
+
+//         <Input.Label
+//           error={!!errors.password}
+//           id="password"
+//           className="mt-2"
+//           name="Senha"
+//         >
+//           <Input.Wrapper>
+//             <Input.Field
+//               error={!!errors.password}
+//               id="password"
+//               type={isShowPassword ? "text" : "password"}
+//               {...register("password")}
+//               placeholder="••••••••••••••••"
+//             />
+//             <Input.Icon
+//               action={handleTogglePassword}
+//               icon={
+//                 !isShowPassword ? (
+//                   <FiEye size="24" color="#94A3B8" />
+//                 ) : (
+//                   <FiEyeOff size="24" color="#94A3B8" />
+//                 )
+//               }
+//             />
+//           </Input.Wrapper>
+//           {errors.password?.message && (
+//             <Input.MessageError message={errors.password.message} />
+//           )}
+//         </Input.Label>
+
+//         <span className="text-slate-400 mt-2 font-poppins">
+//           Esqueceu a senha?{" "}
+//           <Link
+//             href="/auth/reset-password"
+//             className="text-blue-700 font-semibold"
+//           >
+//             Redefinir
+//           </Link>
+//         </span>
+
+//         <Button className="mt-5">Entrar</Button>
+//         <span className="text-slate-400 mt-2 font-poppins">
+//           Não possui uma conta?{" "}
+//           <Link href="/auth/register" className="text-blue-700 font-semibold">
+//             Registra-se
+//           </Link>
+//         </span>
+//       </form>
+//     </div>
+//   );
+// }
