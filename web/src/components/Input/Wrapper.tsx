@@ -1,8 +1,8 @@
-import { ReactNode } from "react";
+import { ReactNode } from 'react'
 
 type WrapperProps = {
-  children: ReactNode;
-};
+  children: ReactNode
+}
 export function Wrapper({ children }: WrapperProps) {
-  return <div className="relative w-full">{children}</div>;
+  return <div className="relative w-full flex items-center">{children}</div>
 }

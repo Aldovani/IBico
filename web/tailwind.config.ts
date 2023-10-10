@@ -13,10 +13,21 @@ const config: Config = {
       backgroundImage: {
         "auth-image": "url('/img/auth-image.jpg')"
       },
+      gridTemplateColumns: {
+        'opportunity-details': '864px 304px'
+      },
+      minWidth: {
+        "80": "320px",
+      },
+      maxWidth: {
+        '304': '304px',
+        '100': '100px'
+      },
       fontFamily: {
         lato: ['var(--font-lato)', ...fontFamily.sans],
         poppins: ['var(--font-poppins)', ...fontFamily.sans]
-      }
+      },
+
     },
   },
   plugins: [],

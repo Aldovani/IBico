@@ -1,13 +1,37 @@
-import { ReactNode } from "react";
+import { VariantProps, tv } from 'tailwind-variants'
+import { ReactNode } from 'react'
+
+const iconStyles = tv({
+  base: 'absolute top-1/2 -translate-y-1/2',
+  variants: {
+    positions: {
+      right: ' right-4',
+      left: 'left-4',
+    },
+  },
+})
 
 type IconProps = {
-  icon: ReactNode;
-  action: () => void;
-};
-export function Icon({ icon, action }: IconProps) {
+  icon: ReactNode
+  onClick?: () => void
+} & VariantProps<typeof iconStyles>
+
+export function Icon({ icon, positions = 'right', onClick }: IconProps) {
+  if (!onClick) {
+    return (
+      <div className={iconStyles({ positions })} onClick={onClick}>
+        {icon}
+      </div>
+    )
+  }
+
   return (
-    <button type="button" className="absolute right-3 top-1/2 -translate-y-1/4" onClick={action}>
+    <button
+      type="button"
+      className={iconStyles({ positions })}
+      onClick={onClick}
+    >
       {icon}
     </button>
-  );
+  )
 }

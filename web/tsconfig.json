@@ -33,6 +33,6 @@
     ".next/types/**/*.ts",
     "jest.config.js",
     "types.d.ts"
-  ],
+, "api/server.js"  ],
   "exclude": ["node_modules"]
 }
