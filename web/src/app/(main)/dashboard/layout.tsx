@@ -9,7 +9,7 @@ export default function ConfigLayout({ children }: ConfigLayoutProps) {
   return (
     <>
       <NavigationDashboard />
-      {children}
+      <div className="max-sm:pt-14">{children}</div>
     </>
   )
 }

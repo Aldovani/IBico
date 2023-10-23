@@ -25,20 +25,24 @@ export function useRegister() {
 
   const registerSchema = z
     .object({
-      cpf: z.string().max(14).min(14),
-      name: z.string().min(12),
+      cpf: z.string().max(14).min(14, 'Deve conter no mínimo 14 números'),
+      name: z.string().min(8, 'Deve conter no mínimo 8 caracteres'),
       cellphone: z
         .string()
         .max(15)
-        .min(14)
-        .refine((data) => isValidCellphone(data)),
+        .min(14, 'Deve conter no mínimo 14 caracteres')
+        .refine(
+          (data) => isValidCellphone(data),
+          'Número de telefone invalido',
+        ),
       password: z
         .string()
-        .min(8)
+        .min(8, 'Deve conter no minion 8 caracteres')
         .regex(
-          /^(?=.*? [A - Z])(?=.*? [a - z])(?=.*? [0 - 9])(?=.*? [# ? !@$ %^&* -]).{ 8, }$/,
+          /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?.&])[A-Za-z\d@$!%*?.&]{8,}$/,
+          'Senha deve conter letra maiúscula e minuscula , numero e um carácter especial ',
         ),
-      confirmPassword: z.string().min(8),
+      confirmPassword: z.string().min(8, 'Deve conter no minion 8 caracteres'),
     })
     .superRefine((val, ctx) => {
       if (!isValidCPF(val.cpf)) {
@@ -47,7 +51,7 @@ export function useRegister() {
 
       if (val.password !== val.confirmPassword) {
         ctx.addIssue({
-          message: 'CPF invalido',
+          message: 'Senhas diferentes',
           code: 'custom',
           path: ['confirmPassword'],
         })
@@ -64,6 +68,7 @@ export function useRegister() {
   } = useForm<signInSchema>({
     resolver: zodResolver(registerSchema),
     mode: 'onSubmit',
+    reValidateMode: 'onChange',
   })
 
   async function handleRegister({
@@ -93,28 +98,26 @@ export function useRegister() {
     },
   })
 
-  function handleTogglePassword() {
+  function handleToggleIconPassword() {
     setIsShowPassword((prev) => !prev)
   }
-  function handleToggleConfirmPassword() {
+  function handleToggleIconConfirmPassword() {
     setIsShowConfirmPassword((prev) => !prev)
   }
 
   function handleChangeCPF(value: string) {
-    setValue('cpf', maskCPF(value), {
-      shouldValidate: true,
-    })
+    setValue('cpf', maskCPF(value))
   }
   function handleChangeCellphone(value: string) {
-    setValue('cellphone', maskCellphone(value), { shouldValidate: true })
+    setValue('cellphone', maskCellphone(value))
   }
 
   return {
     register,
     handleSubmit,
     errors,
-    handleTogglePassword,
-    handleToggleConfirmPassword,
+    handleToggleIconPassword,
+    handleToggleIconConfirmPassword,
     isShowConfirmPassword,
     isShowPassword,
     handleRegister: mutate,

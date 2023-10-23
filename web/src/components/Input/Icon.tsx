@@ -1,5 +1,6 @@
 import { VariantProps, tv } from 'tailwind-variants'
 import { ReactNode } from 'react'
+import { FiEye, FiEyeOff } from 'react-icons/fi'
 
 const iconStyles = tv({
   base: 'absolute top-1/2 -translate-y-1/2',
@@ -12,16 +13,25 @@ const iconStyles = tv({
 })
 
 type IconProps = {
-  icon: ReactNode
+  icon?: ReactNode
+  isPassword?: boolean
+  error?: boolean
+
   onClick?: () => void
 } & VariantProps<typeof iconStyles>
 
-export function Icon({ icon, positions = 'right', onClick }: IconProps) {
+export function Icon({
+  icon,
+  positions = 'right',
+  onClick,
+  error,
+  isPassword = undefined,
+}: IconProps) {
   if (!onClick) {
     return (
-      <div className={iconStyles({ positions })} onClick={onClick}>
+      <span className={iconStyles({ positions })} onClick={onClick}>
         {icon}
-      </div>
+      </span>
     )
   }
 
@@ -32,6 +42,11 @@ export function Icon({ icon, positions = 'right', onClick }: IconProps) {
       onClick={onClick}
     >
       {icon}
+
+      {isPassword && <FiEye size="24" color={error ? '#94a3b8' : '#E11D48'} />}
+      {!isPassword && (
+        <FiEyeOff size="24" color={error ? '#94a3b8' : '#E11D48'} />
+      )}
     </button>
   )
 }

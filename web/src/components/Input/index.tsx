@@ -4,6 +4,7 @@ import { Label } from './Label'
 import { MessageError } from './MessageError'
 import { Wrapper } from './Wrapper'
 import { Pin } from './Pin'
+import { TextArea } from './TextArea'
 
 export const Input = {
   Field,
@@ -12,4 +13,5 @@ export const Input = {
   Wrapper,
   MessageError,
   Pin,
+  TextArea,
 }

@@ -6,7 +6,7 @@ export function NavigationDashboard() {
   const { handleMouseLeave, handleMouseEntre, hoverLink, router, LINKS } =
     useNavigationDashboard()
   return (
-    <nav className="border-b border-slate-200 ">
+    <nav className="border-b border-slate-200 max-sm:hidden ">
       <ul
         onMouseLeave={handleMouseLeave}
         className="flex gap-4 relative max-w-screen-xl mx-auto pt-28 px-6 pb-6"
@@ -23,7 +23,12 @@ export function NavigationDashboard() {
           <li key={title}>
             <ActiveLink
               href={href}
-              onMouseEnter={handleMouseEntre}
+              onMouseEnter={({ currentTarget: { offsetLeft, clientWidth } }) =>
+                handleMouseEntre({
+                  left: offsetLeft,
+                  width: clientWidth,
+                })
+              }
               isActive={router === pathName}
             >
               {title}

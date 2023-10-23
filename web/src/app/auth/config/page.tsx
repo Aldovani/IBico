@@ -1,12 +1,17 @@
 'use client'
 
 import Link from 'next/link'
-import { Input } from '@components/Input'
+
 import { Button } from '@/components/Button'
 
+import { useConfig } from './useConfig'
+import { Skills } from '@/components/Skills'
+
 export default function Register() {
+  const { skills, handleAddSkill, handleSubmit, removeSkill } = useConfig()
+
   return (
-    <div className="flex flex-col pb-10 max-w-lg w-full max-md:m-auto max-sm:px-6">
+    <div className=" pb-10 max-w-lg w-full max-md:m-auto max-sm:px-6">
       <header className="mt-8">
         <h2 className="font-lato text-slate-900 text-3xl font-semibold">
           Configuração da sua conta
@@ -16,18 +21,17 @@ export default function Register() {
           contratar seus serviços
         </p>
       </header>
-      <form className="flex flex-col mt-8">
-        <Input.Label id="skills" name="Competências">
-          <Input.Field
-            id="skills"
-            placeholder="Digite sua competência"
-          ></Input.Field>
-        </Input.Label>
+      <form className="flex flex-col mt-8" onSubmit={(e) => handleSubmit(e)}>
+        <Skills
+          onAddSkill={handleAddSkill}
+          onRemoveSkill={removeSkill}
+          skills={skills}
+        />
 
         <div className="flex items-center justify-between ">
           <Link
-            href="/vagas"
-            className="font-poppins font-semibold text-slate-400 mt-4"
+            href="/opportunities"
+            className="font-poppins font-semibold text-slate-500 mt-4"
           >
             pular
           </Link>

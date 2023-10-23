@@ -1,7 +1,11 @@
+'use client'
 import { Button } from '@/components/Button'
-import { Input } from '@/components/Input'
+import { Skills as SkillComponent } from '@components/Skills'
+import { useSkills } from './useSkills'
 
 export default function Skills() {
+  const { handleAddSkill, handleSubmit, removeSkill, skills } = useSkills()
+
   return (
     <main className="w-full">
       <section className="flex items-center justify-between border-b-2 border-slate-200 pb-6">
@@ -12,11 +16,6 @@ export default function Skills() {
           <p className="font-poppins text-slate-400 text-sm">
             Jorem ipsum dolor sit amet, consectetur adipiscing elit.
           </p>
-        </div>
-
-        <div className="flex max-w-304 gap-4 w-full">
-          <Button variants="secondary">Cancelar</Button>
-          <Button>Salvar</Button>
         </div>
       </section>
 
@@ -31,12 +30,22 @@ export default function Skills() {
           </p>
         </div>
 
-        <form className="grid grid-cols-2 gap-4 mt-6 items-center">
-          <Input.Label id="skills" name="Competência">
-            <Input.Field />
-          </Input.Label>
+        <form
+          className=" gap-4 mt-6 items-center max-w-sm"
+          onSubmit={handleSubmit}
+        >
+          <SkillComponent
+            skills={skills}
+            onAddSkill={handleAddSkill}
+            onRemoveSkill={removeSkill}
+          />
+
+          <div className="flex max-w-304 mt-6 gap-4 w-full">
+            <Button variants="secondary">Cancelar</Button>
+            <Button>Salvar</Button>
+          </div>
         </form>
       </section>
-    </main> 
+    </main>
   )
 }

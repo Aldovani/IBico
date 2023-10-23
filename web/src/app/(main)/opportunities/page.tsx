@@ -1,6 +1,5 @@
 import { Button } from '@/components/Button'
 import { Input } from '@/components/Input'
-import { Header } from '@components/Header'
 import Link from 'next/link'
 
 import {
@@ -15,8 +14,7 @@ import {
 
 export default function Opportunities() {
   return (
-     <div className=" max-w-screen-xl mx-auto pt-28 px-6 pb-16">
-      
+    <div className=" max-w-screen-xl mx-auto pt-28 px-6 pb-16">
       <section className="max-w-lg ">
         <h1 className="font-lato font-bold text-4xl text-blue-700 ">
           Encontre uma oportunidade em poucos minutos{' '}

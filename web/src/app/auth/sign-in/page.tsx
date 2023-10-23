@@ -2,7 +2,6 @@
 import Link from 'next/link'
 import { useSignIn } from './useSignIn'
 import { Input } from '@/components/Input'
-import { FiEyeOff, FiEye } from 'react-icons/fi'
 import { Button } from '@/components/Button'
 import { useAuth } from '@/hooks/useAuth'
 
@@ -19,14 +18,14 @@ export default function SignIn() {
   const { handleSignIn, isLoading } = useAuth()
 
   return (
-    <div className="flex flex-col max-w-lg  pb-10 w-full max-md:m-auto max-sm:px-6">
+    <div className=" max-w-lg  pb-10 w-full max-md:m-auto max-sm:px-6">
       <header className="mt-8">
         <h2 className="text-slate-900 text-3xl font-lato font-semibold">
-          Bem vindo ao IBico
+          Bem vindo ao iBico
         </h2>
         <p className="text-slate-400  mt-2 font-poppins">
-          Yorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc
-          vulputate libero et velit interdum, ac aliquet{' '}
+          Por favor, faça o login para acessar sua conta e encontrar
+          oportunidades temporárias.
         </p>
       </header>
 
@@ -40,7 +39,7 @@ export default function SignIn() {
           <Input.Field
             error={!!errors.cpf}
             id="cpf"
-            placeholder="Digite seu CPF"
+            placeholder="000.000.000-00"
             autoComplete="cc-number"
             inputMode="numeric"
             type="text"
@@ -51,9 +50,7 @@ export default function SignIn() {
               },
             })}
           />
-          {errors.cpf?.message && (
-            <Input.MessageError message={errors.cpf.message} />
-          )}
+          <Input.MessageError message={errors.cpf?.message} />
         </Input.Label>
 
         <Input.Label
@@ -72,18 +69,11 @@ export default function SignIn() {
             />
             <Input.Icon
               onClick={handleTogglePassword}
-              icon={
-                !isShowPassword ? (
-                  <FiEye size="24" color="#94A3B8" />
-                ) : (
-                  <FiEyeOff size="24" color="#94A3B8" />
-                )
-              }
+              isPassword={isShowPassword}
+              error={!errors.password}
             />
           </Input.Wrapper>
-          {errors.password?.message && (
-            <Input.MessageError message={errors.password.message} />
-          )}
+          <Input.MessageError message={errors.password?.message} />
         </Input.Label>
 
         <span className="text-slate-400 mt-2 font-poppins">

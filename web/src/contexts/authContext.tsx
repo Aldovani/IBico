@@ -64,7 +64,6 @@ export function AuthContextProvider({ children }: authContextProviderProps) {
           router.push(pathTo)
         },
         onError: (error) => {
-          alert('error')
           console.log(error)
         },
       },

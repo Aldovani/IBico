@@ -13,7 +13,7 @@ export default function AuthLayout({ children }: AuthLayoutProps) {
           href="/"
           className="font-bold font-poppins text-slate-50 text-4xl"
         >
-          IBico
+          iBico
         </Link>
       </div>
 

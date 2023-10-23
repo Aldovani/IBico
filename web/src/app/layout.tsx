@@ -2,6 +2,8 @@ import './globals.css'
 import type { Metadata } from 'next'
 import { Lato, Poppins } from 'next/font/google'
 import { AppProviders } from '@/contexts'
+import { ToastContainer } from '@/components/Toast'
+import { ReviewModal } from '@/components/ReviewModal'
 
 const poppins = Poppins({
   variable: '--font-poppins',
@@ -16,7 +18,7 @@ const lato = Lato({
 })
 
 export const metadata: Metadata = {
-  title: 'IBico',
+  title: 'iBico',
   description: '',
 }
 
@@ -30,6 +32,9 @@ export default function RootLayout({
       <html lang="pt-br">
         <body className={`${poppins.variable} ${lato.variable}`}>
           {children}
+          <div id="container-modal"></div>
+          <ToastContainer />
+          <ReviewModal />
         </body>
       </html>
     </AppProviders>

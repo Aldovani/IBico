@@ -1,9 +1,22 @@
+'use client'
+
 import { Button } from '@/components/Button'
 import { Input } from '@/components/Input'
+import { useChangePassword } from '@/hooks/useChangePassword'
 
 export default function ChangePassword() {
+  const {
+    handleToggleConfirmPassword,
+    handleTogglePassword,
+    isShowConfirmPassword,
+    isShowPassword,
+    errors,
+    handleSubmit,
+    register,
+  } = useChangePassword()
+
   return (
-    <div className="flex flex-col max-w-lg  pb-10 w-full max-md:m-auto max-sm:px-6">
+    <div className="max-w-lg  pb-10 w-full max-md:m-auto max-sm:px-6">
       <header className="mt-8">
         <h2 className="text-slate-900 text-3xl font-lato font-semibold">
           Redefina sua senha
@@ -14,12 +27,54 @@ export default function ChangePassword() {
         </p>
       </header>
 
-      <form className="flex flex-col mt-8">
-        <Input.Label id="password" name="Nova senha">
-          <Input.Field />
+      <form
+        className="flex flex-col mt-8"
+        onSubmit={handleSubmit((e) => {
+          console.log(e)
+        })}
+      >
+        <Input.Label id="password" name="Nova senha" error={!!errors.password}>
+          <Input.Wrapper>
+            <Input.Field
+              error={!!errors.password}
+              placeholder="••••••••••••••••"
+              {...register('password')}
+              type={isShowPassword ? 'text' : 'password'}
+              id="password"
+              minLength={8}
+            />
+
+            <Input.Icon
+              onClick={handleTogglePassword}
+              isPassword={isShowPassword}
+              error={!errors.password}
+            />
+          </Input.Wrapper>
+          <Input.MessageError message={errors.password?.message} />
         </Input.Label>
-        <Input.Label id="confirmPassword" name="Confirmar senha">
-          <Input.Field />
+
+        <Input.Label
+          id="confirmPassword"
+          className="mt-5"
+          name="Confirmar senha"
+          error={!!errors.confirmPassword}
+        >
+          <Input.Wrapper>
+            <Input.Field
+              id="confirmPassword"
+              {...register('confirmPassword')}
+              type={isShowConfirmPassword ? 'text' : 'password'}
+              placeholder="••••••••••••••••"
+              minLength={8}
+              error={!!errors.confirmPassword}
+            />
+            <Input.Icon
+              onClick={handleToggleConfirmPassword}
+              isPassword={isShowConfirmPassword}
+              error={!errors.confirmPassword}
+            />
+          </Input.Wrapper>
+          <Input.MessageError message={errors.confirmPassword?.message} />
         </Input.Label>
         <Button className="mt-5">validar número</Button>
       </form>

@@ -10,9 +10,9 @@ export function useValidateCellphone() {
   const cellphoneSchema = z.object({
     cellphone: z
       .string()
-      .min(14)
+      .min(14, 'Deve conter no mínimo 14 números')
       .max(15)
-      .refine((data) => isValidCellphone(data)),
+      .refine((data) => isValidCellphone(data), 'Número informado invalido'),
   })
 
   type validateCellphoneSchema = z.infer<typeof cellphoneSchema>
@@ -46,7 +46,7 @@ export function useValidateCellphone() {
   })
 
   function handleChangeCellphone(value: string) {
-    setValue('cellphone', maskCellphone(value), { shouldValidate: true })
+    setValue('cellphone', maskCellphone(value))
   }
   return {
     handleChangeCellphone,

@@ -6,7 +6,7 @@ import { useVerifyCode } from './useVerifyCode'
 export default function EntrePin() {
   const { handleChange, handleKey, pinsInputs, pinsLength } = useVerifyCode()
   return (
-    <div className="flex flex-col max-w-lg  pb-10 w-full max-md:m-auto max-sm:px-6">
+    <div className=" max-w-lg  pb-10 w-full max-md:m-auto max-sm:px-6">
       <header className="mt-8">
         <h2 className="text-slate-900 text-3xl font-lato font-semibold">
           Validar código

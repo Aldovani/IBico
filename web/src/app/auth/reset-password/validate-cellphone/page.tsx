@@ -15,7 +15,7 @@ export default function ValidateCellphone() {
   } = useValidateCellphone()
 
   return (
-    <div className="flex flex-col max-w-lg  pb-10 w-full max-md:m-auto max-sm:px-6">
+    <div className="max-w-lg  pb-10 w-full max-md:m-auto max-sm:px-6">
       <header className="mt-8">
         <h2 className="text-slate-900 text-3xl font-lato font-semibold">
           Validar telefone
@@ -51,6 +51,9 @@ export default function ValidateCellphone() {
             autoComplete="cc-number"
             error={!!errors.cellphone?.message}
           />
+          {errors.cellphone?.message && (
+            <Input.MessageError message={errors.cellphone.message} />
+          )}
         </Input.Label>
         <Button className="mt-5" loading={isLoading}>
           validar número

@@ -4,15 +4,14 @@ import Link from 'next/link'
 import { Input } from '@components/Input'
 import { useRegister } from './useRegister'
 import { Button } from '@/components/Button'
-import { FiEye, FiEyeOff } from 'react-icons/fi'
 
 export default function Register() {
   const {
     errors,
     register,
     handleSubmit,
-    handleToggleConfirmPassword,
-    handleTogglePassword,
+    handleToggleIconConfirmPassword,
+    handleToggleIconPassword,
     isShowConfirmPassword,
     isShowPassword,
     handleRegister,
@@ -22,10 +21,10 @@ export default function Register() {
   } = useRegister()
 
   return (
-    <div className="flex flex-col pb-10 max-w-lg w-full max-md:m-auto max-sm:px-6">
+    <div className="pb-10 max-w-lg w-full max-md:m-auto max-sm:px-6">
       <header className="mt-8">
         <h2 className="font-lato text-slate-900 text-3xl font-semibold">
-          Cadastra-se no IBico
+          Cadastra-se no iBico
         </h2>
         <p className="font-poppins text-slate-400  mt-2">
           Insira seu nome completo, CPF, telefone, senha e confirmar senha para
@@ -36,7 +35,6 @@ export default function Register() {
         className="flex flex-col mt-8"
         onSubmit={handleSubmit(
           ({ cellphone, confirmPassword, cpf, name, password }) => {
-            console.log(cellphone)
             handleRegister({ cellphone, confirmPassword, cpf, name, password })
           },
         )}
@@ -50,14 +48,12 @@ export default function Register() {
                 handleChangeCPF(value.target.value)
               },
             })}
-            placeholder="Digite seu CPF"
+            placeholder="000.000.000-00"
             maxLength={14}
             inputMode="numeric"
             autoComplete="cc-number"
           />
-          {errors.cpf?.message && (
-            <Input.MessageError message={errors.cpf.message} />
-          )}
+          <Input.MessageError message={errors.cpf?.message} />
         </Input.Label>
 
         <Input.Label
@@ -72,9 +68,7 @@ export default function Register() {
             {...register('name')}
             placeholder="Digite seu nome completo"
           />
-          {errors.name?.message && (
-            <Input.MessageError message={errors.name.message} />
-          )}
+          <Input.MessageError message={errors.name?.message} />
         </Input.Label>
 
         <Input.Label
@@ -94,10 +88,10 @@ export default function Register() {
             placeholder="Digite seu numero de telefone"
             inputMode="tel"
             autoComplete="cc-number"
+            minLength={14}
+            maxLength={15}
           />
-          {errors.cellphone?.message && (
-            <Input.MessageError message={errors.cellphone.message} />
-          )}
+          <Input.MessageError message={errors.cellphone?.message} />
         </Input.Label>
 
         <Input.Label
@@ -116,16 +110,12 @@ export default function Register() {
               type={!isShowPassword ? 'password' : 'text'}
             />
             <Input.Icon
-              onClick={handleTogglePassword}
-              icon={
-                !isShowPassword ? (
-                  <FiEye size="24" color="#94A3B8" />
-                ) : (
-                  <FiEyeOff size="24" color="#94A3B8" />
-                )
-              }
+              onClick={handleToggleIconPassword}
+              isPassword={isShowPassword}
+              error={!errors.password}
             />
           </Input.Wrapper>
+          <Input.MessageError message={errors.password?.message} />
         </Input.Label>
 
         <Input.Label
@@ -144,20 +134,12 @@ export default function Register() {
               className="pr-16"
             />
             <Input.Icon
-              onClick={handleToggleConfirmPassword}
-              icon={
-                !isShowConfirmPassword ? (
-                  <FiEye size="24" color="#94A3B8" />
-                ) : (
-                  <FiEyeOff size="24" color="#94A3B8" />
-                )
-              }
+              onClick={handleToggleIconConfirmPassword}
+              isPassword={isShowConfirmPassword}
+              error={!errors.confirmPassword}
             />
           </Input.Wrapper>
-
-          {errors.confirmPassword?.message && (
-            <Input.MessageError message={errors.confirmPassword.message} />
-          )}
+          <Input.MessageError message={errors.confirmPassword?.message} />
         </Input.Label>
 
         <Button className="mt-5" type="submit" loading={isLoading}>

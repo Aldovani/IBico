@@ -32,9 +32,7 @@ export function useSignIn() {
   })
 
   function handleChangeCPF(value: string) {
-    setValue('cpf', maskCPF(value), {
-      shouldValidate: true,
-    })
+    setValue('cpf', maskCPF(value))
   }
   function handleTogglePassword() {
     setIsShowPassword((current) => !current)

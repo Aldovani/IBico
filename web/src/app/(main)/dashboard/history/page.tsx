@@ -52,8 +52,170 @@ export default function History() {
           </div>
         </div>
       </section>
-      <div className="">
-        <h1 className="text-6xl">Aqui vem a tabela , vai tomar no cu </h1>
+      <div className="mt-8  border  px-6 border-slate-200 rounded-lg rounded-b-none ">
+        <table className="w-full border-separate">
+          <thead>
+            <tr>
+              <th className="text-start font-poppins font-medium text-slate-500 py-4  ">
+                Tipo
+              </th>
+              <th className="text-start font-poppins font-medium text-slate-500 py-4 ">
+                Nome da oportunidade
+              </th>
+              <th className="text-start font-poppins font-medium text-slate-500 py-4 ">
+                Valor
+              </th>
+              <th className="text-start font-poppins font-medium text-slate-500 py-4 ">
+                Status
+              </th>
+              <th className="text-start font-poppins font-medium text-slate-500 py-4 ">
+                Avaliação
+              </th>
+              <th className="text-start font-poppins font-medium text-slate-500 py-4 ">
+                Data
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td className="text-start py-2">
+                <span className="text-slate-700 flex items-center justify-center w-12 h-12 bg-slate-100 rounded-full">
+                  <FiBriefcase size="24" />
+                </span>
+              </td>
+              <td className="text-start py-2 font-poppins font-medium ">
+                Faxineira
+              </td>
+              <td className="text-start py-2  font-poppins text-slate-500">
+                R$ 2000.00
+              </td>
+              <td className="text-start py-2 font-poppins text-yellow-500 ">
+                pendente
+              </td>
+              <td className="text-start py-2 font-poppins text-slate-500">
+                indefinido
+              </td>
+              <td className="text-start py-2 font-poppins text-slate-500">
+                20/09/2023
+              </td>
+            </tr>
+            <tr>
+              <td className="text-start py-2">
+                <span className="text-slate-700 flex items-center justify-center w-12 h-12 bg-slate-100 rounded-full">
+                  <FiBriefcase size="24" />
+                </span>
+              </td>
+              <td className="text-start py-2 font-poppins font-medium ">
+                Faxineira
+              </td>
+              <td className="text-start py-2  font-poppins text-slate-500">
+                R$ 2000.00
+              </td>
+              <td className="text-start py-2 font-poppins text-yellow-500 ">
+                pendente
+              </td>
+              <td className="text-start py-2 font-poppins text-slate-500">
+                indefinido
+              </td>
+              <td className="text-start py-2 font-poppins text-slate-500">
+                20/09/2023
+              </td>
+            </tr>
+
+            <tr>
+              <td className="text-start py-2">
+                <span className="text-slate-700 flex items-center justify-center w-12 h-12 bg-slate-100 rounded-full">
+                  <FiBriefcase size="24" />
+                </span>
+              </td>
+              <td className="text-start py-2 font-poppins font-medium ">
+                Faxineira
+              </td>
+              <td className="text-start py-2  font-poppins text-slate-500">
+                R$ 2000.00
+              </td>
+              <td className="text-start py-2 font-poppins text-yellow-500 ">
+                pendente
+              </td>
+              <td className="text-start py-2 font-poppins text-slate-500">
+                indefinido
+              </td>
+              <td className="text-start py-2 font-poppins text-slate-500">
+                20/09/2023
+              </td>
+            </tr>
+
+            <tr>
+              <td className="text-start py-2">
+                <span className="text-slate-700 flex items-center justify-center w-12 h-12 bg-slate-100 rounded-full">
+                  <FiBriefcase size="24" />
+                </span>
+              </td>
+              <td className="text-start py-2 font-poppins font-medium ">
+                Faxineira
+              </td>
+              <td className="text-start py-2  font-poppins text-slate-500">
+                R$ 2000.00
+              </td>
+              <td className="text-start py-2 font-poppins text-yellow-500 ">
+                pendente
+              </td>
+              <td className="text-start py-2 font-poppins text-slate-500">
+                indefinido
+              </td>
+              <td className="text-start py-2 font-poppins text-slate-500">
+                20/09/2023
+              </td>
+            </tr>
+
+            <tr>
+              <td className="text-start py-2">
+                <span className="text-slate-700 flex items-center justify-center w-12 h-12 bg-slate-100 rounded-full">
+                  <FiBriefcase size="24" />
+                </span>
+              </td>
+              <td className="text-start py-2 font-poppins font-medium ">
+                Faxineira
+              </td>
+              <td className="text-start py-2  font-poppins text-slate-500">
+                R$ 2000.00
+              </td>
+              <td className="text-start py-2 font-poppins text-yellow-500 ">
+                pendente
+              </td>
+              <td className="text-start py-2 font-poppins text-slate-500">
+                indefinido
+              </td>
+              <td className="text-start py-2 font-poppins text-slate-500">
+                20/09/2023
+              </td>
+            </tr>
+
+            <tr>
+              <td className="text-start py-2">
+                <span className="text-slate-700 flex items-center justify-center w-12 h-12 bg-slate-100 rounded-full">
+                  <FiBriefcase size="24" />
+                </span>
+              </td>
+              <td className="text-start py-2 font-poppins font-medium ">
+                Faxineira
+              </td>
+              <td className="text-start py-2  font-poppins text-slate-500">
+                R$ 2000.00
+              </td>
+              <td className="text-start py-2 font-poppins text-yellow-500 ">
+                pendente
+              </td>
+              <td className="text-start py-2 font-poppins text-slate-500">
+                indefinido
+              </td>
+              <td className="text-start py-2 font-poppins text-slate-500">
+                20/09/2023
+              </td>
+            </tr>
+          </tbody>
+          <tfoot></tfoot>
+        </table>
       </div>
     </main>
   )

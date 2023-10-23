@@ -1,4 +1,10 @@
+'use client'
 import { Button } from '@/components/Button'
+import { Copy } from '@/components/Copy'
+import { Modal } from '@/components/Modal'
+import { ShareList } from '@/components/ShareList'
+import { useModal } from '@/hooks/useModal'
+
 import Link from 'next/link'
 import {
   FiArrowLeft,
@@ -8,9 +14,26 @@ import {
   FiSlash,
   FiCalendar,
   FiMapPin,
+  FiCheck,
 } from 'react-icons/fi'
 
 export default function OpportunityDetails() {
+  const {
+    isOpen,
+    handleCloseModal,
+    handleOpenModal,
+    isLeave,
+    handleAnimationEndClose,
+  } = useModal()
+
+  const {
+    isOpen: isOpenConfirmOpportunity,
+    handleCloseModal: handleCloseModalConfirmOpportunity,
+    handleOpenModal: handleOpenModalConfirmOpportunity,
+    isLeave: isLeaveConfirmOpportunity,
+    handleAnimationEndClose: handleAnimationEndCloseConfirmOpportunity,
+  } = useModal()
+
   return (
     <div className=" max-w-screen-xl mx-auto pt-28 px-6 pb-24 grid grid-cols-opportunity-details items-start justify-between max-lg:grid-cols-1">
       <div>
@@ -26,7 +49,10 @@ export default function OpportunityDetails() {
               postado 4 de setembro de 2023
             </span>
             <div className="flex items-center gap-6 mt-4">
-              <span className="flex items-center text-blue-700 gap-2">
+              <span
+                className="flex items-center text-blue-700 gap-2"
+                onClick={handleOpenModal}
+              >
                 compartilhar
                 <FiShare2 />
               </span>
@@ -38,7 +64,12 @@ export default function OpportunityDetails() {
           </div>
 
           <div className="w-48 max-sm:fixed max-sm:bottom-0 max-sm:left-0 max-sm:bg-slate-50  max-sm:w-full max-sm:px-6 max-sm:py-4 max-sm:border-t-2 border-slate-200 max-sm:shadow-2xl max-sm:shadow-slate-400">
-            <Button className="flex-grow-1">Candidata-se</Button>
+            <Button
+              onClick={handleOpenModalConfirmOpportunity}
+              className="flex-grow-1"
+            >
+              Candidata-se
+            </Button>
           </div>
         </section>
 
@@ -142,7 +173,6 @@ export default function OpportunityDetails() {
           </p>
         </section>
       </div>
-
       <section className="max-w-xs max-lg:max-w-none  w-full max-md:mt-6">
         <h2 className="text-slate-700 text-2xl font-lato font-medium ">
           Vagas semelhantes
@@ -306,6 +336,68 @@ export default function OpportunityDetails() {
           </article>
         </div>
       </section>
+
+      <Modal.Overlay isOpen={isOpen} onClose={handleCloseModal}>
+        <Modal.Container
+          isLeave={isLeave}
+          isOpen={isOpen}
+          onAnimationEnd={handleAnimationEndClose}
+        >
+          <Modal.Header onClose={handleCloseModal}>
+            <div className="flex items-center gap-1">
+              <div className="p-1 bg-blue-100 rounded-lg text-blue-700">
+                <FiShare2 size={18} />
+              </div>
+              <h3 className="font-lato text-lg font-semibold">Compartilhar</h3>
+            </div>
+          </Modal.Header>
+
+          <Modal.Body>
+            <p className="font-poppins text-slate-400 text-sm font-normal mb-4">
+              compartilhe essa oportunidades com amigos e familiares que
+              precisam de uma renda extra
+            </p>
+            <Copy text="htpps://ibico.com/opportunities/54565411sdadasdasdasdaskdajskldjasdkjal" />
+            <ShareList url="sdasdn" />
+          </Modal.Body>
+        </Modal.Container>
+      </Modal.Overlay>
+
+      <Modal.Overlay
+        isOpen={isOpenConfirmOpportunity}
+        onClose={handleCloseModalConfirmOpportunity}
+      >
+        <Modal.Container
+          isLeave={isLeaveConfirmOpportunity}
+          isOpen={isOpenConfirmOpportunity}
+          onAnimationEnd={handleAnimationEndCloseConfirmOpportunity}
+        >
+          <Modal.Header onClose={handleCloseModalConfirmOpportunity}>
+            <div className="flex items-center gap-1">
+              <div className="p-1 bg-blue-100 rounded-lg text-blue-700">
+                <FiCheck size={18} />
+              </div>
+              <h3 className="font-lato text-lg font-semibold">
+                Confirmar candidatura
+              </h3>
+            </div>
+          </Modal.Header>
+
+          <Modal.Body>
+            <p className="font-poppins text-slate-400 text-sm font-normal mb-4">
+              Tem certeza de que deseja confirmar sua candidatura para esta
+              oportunidade?
+            </p>
+          </Modal.Body>
+
+          <Modal.Footer>
+            <Modal.Action onClick={handleCloseModalConfirmOpportunity}>
+              Cancelar
+            </Modal.Action>
+            <Modal.Action actions="success">Confirmar</Modal.Action>
+          </Modal.Footer>
+        </Modal.Container>
+      </Modal.Overlay>
     </div>
   )
 }

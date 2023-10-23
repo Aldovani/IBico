@@ -15,7 +15,7 @@ export function NavigationAside({ links }: NavigationAsideProps) {
   const pathName = usePathname()
   return (
     <nav className="h-auto">
-      <ul className="h-fit sticky top-1/4 flex flex-col gap-4">
+      <ul className="h-fit sticky top-1/4 flex flex-col gap-4 justify-between max-sm:flex-row w-full">
         {links?.map(({ href, text }) => (
           <li key={text}>
             <LinkItem isActive={pathName === href} href={href}>

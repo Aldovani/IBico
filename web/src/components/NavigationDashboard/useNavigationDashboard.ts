@@ -1,39 +1,37 @@
 import { usePathname } from 'next/navigation'
 import { useEffect, useState } from 'react'
 
-type Link = {
-  width: number; left: number
+type LinkPositionProps = {
+  width: number
+  left: number
 }
 
-
+const LINKS = [
+  {
+    href: '/dashboard/user',
+    title: 'Configurações',
+    pathName: 'user',
+  },
+  {
+    href: '/dashboard/history',
+    title: 'Histórico',
+    pathName: 'history',
+  },
+  {
+    href: '/dashboard/opportunities',
+    title: 'Oportunidades',
+    pathName: 'opportunities',
+  },
+  {
+    href: '/dashboard/notifications',
+    title: 'Notificações',
+    pathName: 'notifications',
+  },
+]
 
 export function useNavigationDashboard() {
   const router = usePathname().split('/')[2]
 
-  const LINKS = [
-    {
-      href: '/dashboard/user',
-      title: 'Configurações',
-      pathName: 'user'
-    },
-    {
-      href: '/dashboard/history',
-      title: 'Histórico',
-      pathName: 'history'
-
-    },
-    {
-      href: '/dashboard/opportunities',
-      title: 'Oportunidades',
-      pathName: 'opportunities'
-
-    },
-    {
-      href: '/dashboard/notifications',
-      title: 'Notificações',
-      pathName: 'notifications'
-    },
-  ]
   const [currentLink, setCurrentLink] = useState<{
     width: number
     left: number
@@ -56,24 +54,26 @@ export function useNavigationDashboard() {
     })
   }, [router])
 
-  const [hoverLink, setHouverLink] = useState<Link>({
+  const [hoverLink, setHouverLink] = useState<LinkPositionProps>({
     left: 0,
     width: 0,
   })
 
-  function handleMouseEntre(e: any) {
-    const { clientWidth, offsetLeft } = e.target
-
-    setHouverLink({ width: clientWidth, left: offsetLeft })
+  function handleMouseEntre({ left, width }: LinkPositionProps) {
+    setHouverLink({
+      width,
+      left,
+    })
   }
   function handleMouseLeave() {
     setHouverLink({ width: currentLink.width, left: currentLink.left })
   }
 
   return {
-    handleMouseEntre, handleMouseLeave,
+    handleMouseEntre,
+    handleMouseLeave,
     hoverLink,
     router,
-    LINKS
+    LINKS,
   }
 }
