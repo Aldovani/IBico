@@ -5,6 +5,10 @@ import {
   FiClock,
   FiCompass,
   FiCheck,
+  FiFacebook,
+  FiTwitter,
+  FiLinkedin,
+  FiInstagram,
 } from 'react-icons/fi'
 
 export default function Home() {
@@ -109,40 +113,40 @@ export default function Home() {
               + Objetivo
             </h3>
             <p className="text-slate-400 text-sm ">
-              Vorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc
-              vulputate libero et velit interdum, ac aliquet odio mattis.
+              Encontre empregos que atendam aos seus objetivos de carreira e
+              estilo de vida.
             </p>
           </div>
           <div className="px-4 py-6 max-w-304 border border-slate-200 rounded-lg">
             <FiCompass size={32} className="text-blue-700" />
             <h3 className="font-poppins text-slate-900 font-semibold text-xl mt-5 mb-3">
-              + Objetivo
+              + Velocidade
             </h3>
             <p className="text-slate-400 text-sm ">
-              Vorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc
-              vulputate libero et velit interdum, ac aliquet odio mattis.
+              Inicie sua próxima oportunidade de trabalho em tempo recorde,
+              graças à nossa busca eficiente.
             </p>
           </div>
 
           <div className="px-4 py-6 max-w-304 border border-slate-200 rounded-lg">
             <FiSearch size={32} className="text-blue-700" />
             <h3 className="font-poppins text-slate-900 font-semibold text-xl mt-5 mb-3">
-              + Objetivo
+              + Procura
             </h3>
             <p className="text-slate-400 text-sm ">
-              Vorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc
-              vulputate libero et velit interdum, ac aliquet odio mattis.
+              Simplificamos a busca de empregos temporários, permitindo que você
+              encontre oportunidades sob medida.
             </p>
           </div>
 
           <div className="px-4 py-6 max-w-304 border border-slate-200 rounded-lg">
             <FiClock size={32} className="text-blue-700" />
             <h3 className="font-poppins text-slate-900 font-semibold text-xl mt-5 mb-3">
-              + Objetivo
+              + Tempo
             </h3>
             <p className="text-slate-400 text-sm ">
-              Vorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc
-              vulputate libero et velit interdum, ac aliquet odio mattis.
+              Economize tempo e aproveite a flexibilidade para trabalhar quando
+              e onde você desejar.
             </p>
           </div>
         </div>
@@ -216,7 +220,7 @@ export default function Home() {
               <div className="px-4 bg-slate-50 py-6 max-w-304 border border-slate-200 rounded-lg">
                 <span className="text-2xl font-poppins text-slate-400">01</span>
                 <h3 className="font-poppins text-slate-900 font-semibold text-xl mt-2 mb-3">
-                  + Objetivo
+                  Cria uma conta
                 </h3>
                 <p className="text-slate-400 text-sm ">
                   Vorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc
@@ -227,7 +231,7 @@ export default function Home() {
               <div className="px-4 bg-slate-50 py-6 max-w-304 border border-slate-200 rounded-lg">
                 <span className="text-2xl font-poppins text-slate-400">02</span>
                 <h3 className="font-poppins text-slate-900 font-semibold text-xl mt-2 mb-3">
-                  + Objetivo
+                  Entrar na conta
                 </h3>
                 <p className="text-slate-400 text-sm ">
                   Vorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc
@@ -238,7 +242,7 @@ export default function Home() {
               <div className="px-4 bg-slate-50 py-6 max-w-304 border border-slate-200 rounded-lg">
                 <span className="text-2xl font-poppins text-slate-400">03</span>
                 <h3 className="font-poppins text-slate-900 font-semibold text-xl mt-2 mb-3">
-                  + Objetivo
+                  Publicar oportunidade
                 </h3>
                 <p className="text-slate-400 text-sm ">
                   Vorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc
@@ -277,6 +281,98 @@ export default function Home() {
           vulputate libero et velit interdum, ac aliquet odio mattis.
         </p>
       </section>
+
+      <footer className="max-w-screen-xl m-auto py-20 ">
+        <div className=" flex justify-between items-center border-b border-slate-200 pb-6">
+          <span className="text-3xl font-lato font-extrabold text-blue-700">
+            iBico
+          </span>
+
+          <nav>
+            <ul className="flex gap-8">
+              <li>
+                <Link
+                  className="text-slate-400 font-poppins transcition hover:text-blue-700"
+                  href="/"
+                >
+                  Inicio
+                </Link>
+              </li>
+              <li>
+                <Link
+                  className="text-slate-400 font-poppins transcition hover:text-blue-700"
+                  href="/opportunities"
+                >
+                  Oportunidades
+                </Link>
+              </li>
+              <li>
+                <Link
+                  className="text-slate-400 font-poppins transcition hover:text-blue-700"
+                  href="#about"
+                >
+                  sobre
+                </Link>
+              </li>
+              <li>
+                <Link
+                  className="text-slate-400 font-poppins transcition hover:text-blue-700"
+                  href="#app"
+                >
+                  App
+                </Link>
+              </li>
+            </ul>
+          </nav>
+
+          <nav>
+            <ul className="flex gap-4">
+              <li>
+                <Link
+                  href=""
+                  className="p-2 border border-l-slate-200 block rounded-lg text-slate-400 hover:text-blue-700 transition-colors"
+                >
+                  <FiFacebook size={20} />
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href=""
+                  className="p-2 border border-l-slate-200 block rounded-lg text-slate-400 hover:text-blue-700 transition-colors"
+                >
+                  <FiTwitter size={20} />
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href=""
+                  className="p-2 border border-l-slate-200 block rounded-lg text-slate-400 hover:text-blue-700 transition-colors"
+                >
+                  <FiLinkedin size={20} />
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href=""
+                  className="p-2 border border-l-slate-200 block rounded-lg text-slate-400 hover:text-blue-700 transition-colors"
+                >
+                  <FiInstagram size={20} />
+                </Link>
+              </li>
+            </ul>
+          </nav>
+        </div>
+        <div className="flex justify-between items-center pt-6">
+          <p className="text-slate-400 font-poppins ">
+            &copy; 2023 iBico. Todos os direitos reservados.
+          </p>
+
+          <div className="text-slate-400 font-poppins flex gap-4">
+            <span>Politica de privacidade</span>
+            <span>Termo e condições</span>
+          </div>
+        </div>
+      </footer>
     </>
   )
 }
