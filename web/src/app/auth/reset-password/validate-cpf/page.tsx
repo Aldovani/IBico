@@ -2,23 +2,17 @@
 import { Button } from '@/components/Button'
 import { Input } from '@/components/Input'
 import Link from 'next/link'
-import { useValidateCellphone } from './useValidateCellphone'
+import { useValidateCPF } from './useValidateCPF'
 
-export default function ValidateCellphone() {
-  const {
-    errors,
-    handleChangeCellphone,
-    handleSubmit,
-    isLoading,
-    mutate,
-    register,
-  } = useValidateCellphone()
+export default function ValidateCPF() {
+  const { errors, handleSubmit, isLoading, mutate, register, handleChangeCPF } =
+    useValidateCPF()
 
   return (
     <div className="max-w-lg  pb-10 w-full max-md:m-auto max-sm:px-6">
       <header className="mt-8">
         <h2 className="text-slate-900 text-3xl font-lato font-semibold">
-          Validar telefone
+          Validar CPF
         </h2>
         <p className="text-slate-400  mt-2 font-poppins">
           Yorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc
@@ -28,32 +22,23 @@ export default function ValidateCellphone() {
 
       <form
         className="flex flex-col mt-8"
-        onSubmit={handleSubmit(({ cellphone }) => {
-          mutate(cellphone)
-        })}
+        onSubmit={() => handleSubmit(({ cpf }) => mutate(cpf))}
       >
-        <Input.Label
-          id="cellphone"
-          name="Telefone"
-          error={!!errors.cellphone?.message}
-        >
+        <Input.Label id="cpf" name="CPF" error={!!errors.cpf?.message}>
           <Input.Field
-            {...register('cellphone', {
+            error={!!errors.cpf?.message}
+            id="cpf"
+            {...register('cpf', {
               onChange: (value) => {
-                handleChangeCellphone(value.target.value)
+                handleChangeCPF(value.target.value)
               },
             })}
-            id="cellphone"
-            placeholder="(99) 99999-9999"
-            maxLength={15}
-            minLength={14}
-            inputMode="tel"
+            placeholder="000.000.000-00"
+            maxLength={14}
+            inputMode="numeric"
             autoComplete="cc-number"
-            error={!!errors.cellphone?.message}
           />
-          {errors.cellphone?.message && (
-            <Input.MessageError message={errors.cellphone.message} />
-          )}
+          <Input.MessageError message={errors.cpf?.message} />
         </Input.Label>
         <Button className="mt-5" loading={isLoading}>
           validar número

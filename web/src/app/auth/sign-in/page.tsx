@@ -3,7 +3,6 @@ import Link from 'next/link'
 import { useSignIn } from './useSignIn'
 import { Input } from '@/components/Input'
 import { Button } from '@/components/Button'
-import { useAuth } from '@/hooks/useAuth'
 
 export default function SignIn() {
   const {
@@ -13,9 +12,9 @@ export default function SignIn() {
     handleTogglePassword,
     isShowPassword,
     handleChangeCPF,
+    handleSignIn,
+    isLoading,
   } = useSignIn()
-
-  const { handleSignIn, isLoading } = useAuth()
 
   return (
     <div className=" max-w-lg  pb-10 w-full max-md:m-auto max-sm:px-6">
@@ -30,7 +29,7 @@ export default function SignIn() {
       </header>
 
       <form
-        className="flex flex-col mt-8"
+        className="flex flex-col mt-8 "
         onSubmit={handleSubmit(({ cpf, password }) =>
           handleSignIn({ cpf, password }),
         )}

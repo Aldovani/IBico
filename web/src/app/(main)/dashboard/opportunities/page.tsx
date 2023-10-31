@@ -39,8 +39,6 @@ export default function Opportunities() {
       </section>
 
       <div className="mt-6">
-        <h5>Em aberto</h5>
-
         <ul className="[&>*:not(:first-child)]:mt-3">
           <li className="flex border-2 justify-between items-center border-slate-200 rounded-lg p-3">
             <div className="flex items-center gap-3">
@@ -82,8 +80,6 @@ export default function Opportunities() {
           </li>
         </ul>
       </div>
-
-      <h5>Em aberto</h5>
 
       <Modal.Overlay isOpen={isOpen} onClose={handleCloseModal}>
         <Modal.Container

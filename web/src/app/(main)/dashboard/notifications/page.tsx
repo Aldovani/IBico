@@ -1,4 +1,5 @@
 import { NavigationAside } from '@/components/NavigationAside'
+import { FiBriefcase } from 'react-icons/fi'
 
 const links = [
   { href: '/dashboard/notifications', text: 'Todas' },
@@ -25,7 +26,22 @@ export default function Notification() {
           </div>
         </section>
 
-        <div className="mt-6"></div>
+        <ul className="mt-6">
+          <li className=" flex items-center gap-3 mt-2 border  border-slate-200 px-2 py-4 rounded-lg">
+            <div className="p-2 rounded-full bg-slate-200 text-slate-500 w-10 h-10">
+              <FiBriefcase size={24} />
+            </div>
+            <div className="flex flex-col">
+              <strong className="text-sm text-slate-500">
+                Uma nova oportunidade baseada nas suas competências foi
+                publicado na plataforma
+              </strong>
+              <span className="text-xs text-slate-400  font-poppins">
+                há 10 minutos atrás
+              </span>
+            </div>
+          </li>
+        </ul>
       </div>
     </div>
   )

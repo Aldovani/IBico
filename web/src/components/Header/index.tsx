@@ -2,7 +2,7 @@ import Link from 'next/link'
 import { SearchInput } from './components/SearchInput'
 import { UserMenu } from './components/UserMenu'
 import { Notifications } from './components/Notification'
-import { FiPlus } from 'react-icons/fi'
+import { FiPlus, FiBriefcase } from 'react-icons/fi'
 
 export function Header() {
   return (
@@ -20,10 +20,11 @@ export function Header() {
         <div className="flex items-center gap-4">
           <Link
             href="/dashboard/opportunities/create"
-            className=" border block border-slate-200 rounded-lg p-2"
+            className=" border border-slate-200 rounded-lg p-2 flex item items-center gap-1  transition-colors hover:text-blue-700  "
             title="Publique sua oportunidade"
           >
-            <FiPlus size={18} />
+            <FiBriefcase size={20} />
+            {/* Criar oportunidade */}
           </Link>
 
           <Notifications />

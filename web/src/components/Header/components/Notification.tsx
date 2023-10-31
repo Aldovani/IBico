@@ -6,9 +6,10 @@ export function Notifications() {
     <div className="relative group ">
       <Link
         href="/dashboard/notifications"
-        className=" border block border-slate-200 rounded-lg p-2"
+        title="notificações"
+        className=" border block border-slate-200 rounded-lg p-2 hover:text-blue-700"
       >
-        <FiBell size={18} />
+        <FiBell size={20} />
       </Link>
 
       <div className="pt-4 absolute translate-y-2 right-0 opacity-0 transition-all pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto group-hover:translate-y-0 ">

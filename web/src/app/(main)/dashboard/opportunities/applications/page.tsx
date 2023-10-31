@@ -91,7 +91,7 @@ export default function Applications() {
             </p>
 
             <p className="mt-2 text-slate-700 font-poppins text-sm">
-              <strong> nome oportunidade:</strong> Faxineira
+              <strong>titulo oportunidade:</strong> Faxineira
               <br />
               <strong> valor:</strong> R$155.00
             </p>

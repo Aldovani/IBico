@@ -3,7 +3,7 @@
 import { env } from 'process'
 
 export function useLocalStorage() {
-  const LocalStorageKey = env.LOCAL_STORAGE_KEY
+  const LocalStorageKey = 'ibico:dev' || env.NEXT_PUBLIC_LOCAL_STORAGE_KEY
 
   function save(key: string, value: string) {
     localStorage.setItem(`${LocalStorageKey}:${key}`, value)

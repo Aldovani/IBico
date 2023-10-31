@@ -1,6 +1,7 @@
 import { useLocalStorage } from '@/hooks/useLocalStorage'
 import { api } from '@/services/api'
 import { useMutation } from '@tanstack/react-query'
+import { AxiosError } from 'axios'
 import { useRouter } from 'next/navigation'
 import { ReactNode, createContext, useState } from 'react'
 
@@ -11,6 +12,10 @@ type authContextProviderProps = {
 type RequestSignInProps = {
   cpf: string
   password: string
+}
+
+type RequestSignInResponse = {
+  access_token: string
 }
 
 type User = {
@@ -25,6 +30,7 @@ type authContext = {
   isLoading: boolean
   user: User | null
   isAuthenticated: boolean
+  errors: AxiosError | undefined
 }
 
 export const AuthContext = createContext({} as authContext)
@@ -33,18 +39,26 @@ export function AuthContextProvider({ children }: authContextProviderProps) {
   const [user, setUser] = useState<User | null>(null)
   const { save, remove } = useLocalStorage()
   const router = useRouter()
+  const [errors, setError] = useState<AxiosError | undefined>(undefined)
 
   const isAuthenticated = !!user
 
   async function handleRequest({ cpf, password }: RequestSignInProps) {
-    const { data } = await api.post('/sign-in', { cpf, password })
+    const signPayload = `${cpf.replace(/\D/g, '')}:${password}`
+    const signEncoded = btoa(signPayload)
 
+    const { data } = await api.post('/oauth/token', null, {
+      headers: {
+        Authorization: `Basic ${signEncoded}`,
+      },
+    })
+    console.log(data)
     return data
   }
 
   const { mutate, isLoading } = useMutation<
-    User,
-    unknown,
+    RequestSignInResponse,
+    AxiosError,
     { cpf: string; password: string },
     unknown
   >({
@@ -53,18 +67,18 @@ export function AuthContextProvider({ children }: authContextProviderProps) {
 
   function handleSignIn(
     { cpf, password }: RequestSignInProps,
-    pathTo = '/vagas',
+    pathTo = '/opportunities',
   ) {
     mutate(
       { cpf, password },
       {
-        onSuccess: (data) => {
-          setUser(data)
-          save('token', data.token)
+        onSuccess: ({ access_token: accessToken }) => {
+          save('token', accessToken)
           router.push(pathTo)
         },
         onError: (error) => {
-          console.log(error)
+          console.log({ error })
+          setError(error)
         },
       },
     )
@@ -72,7 +86,7 @@ export function AuthContextProvider({ children }: authContextProviderProps) {
 
   function handleSignOut() {
     remove('token')
-    router.push('/auth/sign-in')
+    router.push('/')
   }
 
   return (
@@ -83,6 +97,7 @@ export function AuthContextProvider({ children }: authContextProviderProps) {
         isAuthenticated,
         user,
         handleSignOut,
+        errors,
       }}
     >
       {children}

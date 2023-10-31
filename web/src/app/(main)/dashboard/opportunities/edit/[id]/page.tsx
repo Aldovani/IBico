@@ -16,7 +16,7 @@ export default function EditOpportunity() {
       </Link>
 
       <h1 className="text-2xl text-slate-900 font-lato font-bold mb-2">
-        Publique sua oportunidade
+        Edite sua oportunidade
       </h1>
       <p className="max-w-448 font-poppins text-slate-400 ">
         Forem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate

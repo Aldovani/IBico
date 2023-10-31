@@ -13,6 +13,10 @@ const config: Config = {
     extend: {
       backgroundImage: {
         'auth-image': "url('/img/auth-image.jpg')",
+        'people-01': "url('/img/people-01.png')",
+        'people-02': "url('/img/people-02.png')",
+        'people-03': "url('/img/people-03.png')",
+        hero: 'linear-gradient(0deg, rgba(15, 23, 42, 0.25) 0%, rgba(15, 23, 42, 0.25) 100%), url("/img/bg-hero.png") ',
       },
       gridTemplateColumns: {
         'opportunity-details': '864px 304px',
@@ -25,9 +29,7 @@ const config: Config = {
         '100': '100px',
         '448': '448px',
       },
-      height: {
-        hero: 'calc(100svh - 80px)',
-      },
+      height: {},
       fontFamily: {
         lato: ['var(--font-lato)', ...fontFamily.sans],
         poppins: ['var(--font-poppins)', ...fontFamily.sans],

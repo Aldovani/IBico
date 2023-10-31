@@ -9,13 +9,20 @@ import { useMutation } from '@tanstack/react-query'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
+import { AxiosResponse } from 'axios'
 
 type RegisterProps = {
   name: string
   cpf: string
   cellphone: string
   password: string
-  confirmPassword: string
+  username: string
+}
+
+type UserCreated = {
+  name: string
+  username: string
+  imgURL: string
 }
 
 export function useRegister() {
@@ -35,6 +42,7 @@ export function useRegister() {
           (data) => isValidCellphone(data),
           'Número de telefone invalido',
         ),
+      username: z.string().min(4, 'Deve conter no mínimo 4 caracteres'),
       password: z
         .string()
         .min(8, 'Deve conter no minion 8 caracteres')
@@ -58,14 +66,14 @@ export function useRegister() {
       }
     })
 
-  type signInSchema = z.infer<typeof registerSchema>
+  type registerSchema = z.infer<typeof registerSchema>
 
   const {
     register,
     handleSubmit,
     formState: { errors },
     setValue,
-  } = useForm<signInSchema>({
+  } = useForm<registerSchema>({
     resolver: zodResolver(registerSchema),
     mode: 'onSubmit',
     reValidateMode: 'onChange',
@@ -73,24 +81,34 @@ export function useRegister() {
 
   async function handleRegister({
     cellphone,
-    confirmPassword,
     cpf,
     name,
     password,
+    username,
   }: RegisterProps) {
-    const { data } = await api.post('/register', {
-      cellphone,
-      confirmPassword,
-      cpf,
+    const userPayload = {
+      telephone: cellphone.replace(/\D/g, ''),
+      cpf: cpf.replace(/\D/g, ''),
       name,
-      password,
-    })
+      username,
+      imgURL: '',
+      passwd: password,
+      skills: [],
+    }
+    console.log({ userPayload })
+
+    const { data } = await api.post<unknown, AxiosResponse<UserCreated>>(
+      '/users',
+      userPayload,
+    )
+
     return data
   }
 
   const { mutate, isLoading } = useMutation({
     mutationFn: handleRegister,
-    onSuccess: (_, { cpf, password }) => {
+    onSuccess: (data, { cpf, password }) => {
+      console.log({ data })
       handleSignIn({ cpf, password }, '/auth/config')
     },
     onError: (error) => {

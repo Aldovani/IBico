@@ -34,8 +34,8 @@ export default function Register() {
       <form
         className="flex flex-col mt-8"
         onSubmit={handleSubmit(
-          ({ cellphone, confirmPassword, cpf, name, password }) => {
-            handleRegister({ cellphone, confirmPassword, cpf, name, password })
+          async ({ cellphone, cpf, name, password, username }) => {
+            handleRegister({ cellphone, cpf, name, password, username })
           },
         )}
       >
@@ -69,6 +69,21 @@ export default function Register() {
             placeholder="Digite seu nome completo"
           />
           <Input.MessageError message={errors.name?.message} />
+        </Input.Label>
+
+        <Input.Label
+          id="username"
+          className="mt-4"
+          name="Nome de usuário"
+          error={!!errors.username?.message}
+        >
+          <Input.Field
+            error={!!errors.username?.message}
+            id="username"
+            {...register('username')}
+            placeholder="Digite seu nome de usuário"
+          />
+          <Input.MessageError message={errors.username?.message} />
         </Input.Label>
 
         <Input.Label

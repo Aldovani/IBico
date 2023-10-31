@@ -2,11 +2,14 @@ import { z } from 'zod'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { isValidCPF } from '@/utils/isvalidCPF'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { maskCPF } from '@/utils/maskCPF'
+import { useAuth } from '@/hooks/useAuth'
+import { HTTPS_CODES } from '@/constants/http-codes'
 
 export function useSignIn() {
   const [isShowPassword, setIsShowPassword] = useState(false)
+  const { handleSignIn, isLoading, errors: errorsSignIn } = useAuth()
 
   const signInSchema = z
     .object({
@@ -25,11 +28,22 @@ export function useSignIn() {
     register,
     handleSubmit,
     setValue,
+    setError,
     formState: { errors },
   } = useForm<signInSchema>({
     resolver: zodResolver(signInSchema),
     mode: 'onSubmit',
   })
+
+  useEffect(() => {
+    if (errorsSignIn?.response?.status === HTTPS_CODES.UNAUTHORIZED) {
+      setError('cpf', { message: 'CPF ou senha incorreto', type: 'value' })
+      setError('password', {
+        message: 'CPF ou senha incorreto',
+        type: 'value',
+      })
+    }
+  }, [errorsSignIn, setError])
 
   function handleChangeCPF(value: string) {
     setValue('cpf', maskCPF(value))
@@ -45,5 +59,7 @@ export function useSignIn() {
     handleTogglePassword,
     isShowPassword,
     handleChangeCPF,
+    isLoading,
+    handleSignIn,
   }
 }
