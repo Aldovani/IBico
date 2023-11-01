@@ -1,5 +1,7 @@
+import { HTTPS_CODES } from '@/constants/http-codes'
 import { useLocalStorage } from '@/hooks/useLocalStorage'
 import { api } from '@/services/api'
+import { toast } from '@/utils/toast'
 import { useMutation } from '@tanstack/react-query'
 import { AxiosError } from 'axios'
 import { useRouter } from 'next/navigation'
@@ -77,7 +79,11 @@ export function AuthContextProvider({ children }: authContextProviderProps) {
           router.push(pathTo)
         },
         onError: (error) => {
-          console.log({ error })
+          if(error.response?.status=== HTTPS_CODES.INTERNAL_SERVER_ERROR){
+            toast({text:"",title:"Erro no servidor",type:"ERROR"})
+            return
+          }
+          
           setError(error)
         },
       },

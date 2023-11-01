@@ -99,7 +99,7 @@ export default function Home() {
       <section className="bg-slate-100 py-20">
         <div className="max-w-screen-xl m-auto flex items-center justify-between">
           <div>
-            <h4 className="text-8xl font-lato font-bold text-slate-900">
+            <h4 className="text-8xl font-lato font-extrabold text-slate-900">
               5.000<span className="text-blue-700">+</span>
             </h4>
             <p className="text-slate-500 max-w-304">
@@ -108,7 +108,7 @@ export default function Home() {
           </div>
 
           <div>
-            <h4 className="text-8xl font-lato font-bold text-slate-900">
+            <h4 className="text-8xl font-lato font-extrabold text-slate-900">
               10k<span className="text-blue-700">+</span>
             </h4>
             <p className="text-slate-500 max-w-304">
@@ -117,7 +117,7 @@ export default function Home() {
           </div>
 
           <div>
-            <h4 className="text-8xl font-lato font-bold text-slate-900">
+            <h4 className="text-8xl font-lato font-extrabold text-slate-900">
               50<span className="text-blue-700">%</span>
             </h4>
             <p className="text-slate-500 max-w-304">

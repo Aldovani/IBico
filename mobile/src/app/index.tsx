@@ -10,7 +10,8 @@ export default function App() {
   useEffect(() => {
     getStorage();
   }, []);
-  // — — — — — — — — — — ACTIONS — — — — — — — — — — //
+
+  
   const getStorage = async () => {
     const onboarded = await AsyncStorage.getItem("ONBOARDED");
     setOnboarded(!!JSON.parse(onboarded || ""));
