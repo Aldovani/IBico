@@ -3,17 +3,17 @@ import { useState } from 'react'
 export function useDrawer() {
   const [isOpen, setIsOpen] = useState(false)
 
-  function onClose() {
+  function handleClose() {
     setIsOpen(false)
   }
 
-  function onOpen() {
+  function handleOpen() {
     setIsOpen(true)
   }
 
   return {
     isOpen,
-    onOpen,
-    onClose,
+    handleClose,
+    handleOpen,
   }
 }

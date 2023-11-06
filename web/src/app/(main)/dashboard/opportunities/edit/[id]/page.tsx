@@ -1,11 +1,20 @@
-'use client'
 import { Button } from '@/components/Button'
 import { Input } from '@/components/Input'
 import { Skills } from '@/components/Skills'
 import Link from 'next/link'
 import { FiArrowLeft } from 'react-icons/fi'
+import { headers } from 'next/headers'
+import { serverApi } from '@/services/api'
 
-export default function EditOpportunity() {
+export default async function EditOpportunity() {
+  const url = headers().get('x-url')
+  const { pathname } = new URL(url || '')
+  const id = pathname.split('/')[pathname.split('/').length - 1]
+
+  const { data } = await serverApi.get(`/oportunities/${id}`)
+
+  console.log({ data })
+
   return (
     <div className="w-full">
       <Link
@@ -59,7 +68,7 @@ export default function EditOpportunity() {
         </Input.Label>
 
         <div>
-          <Skills
+          {/* <Skills
             onAddSkill={() => {
               console.log('')
             }}
@@ -67,7 +76,7 @@ export default function EditOpportunity() {
               console.log('')
             }}
             skills={[]}
-          />
+          /> */}
         </div>
 
         <Button>Criar oportunidade</Button>

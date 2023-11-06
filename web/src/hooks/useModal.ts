@@ -5,6 +5,10 @@ export function useModal() {
   const [isLeave, setIisLeave] = useState(false)
 
   function handleAnimationEndClose(e: AnimationEvent<HTMLDivElement>) {
+    console.log('====================')
+    console.log({ isOpen, isLeave })
+    console.log('====================')
+
     if (e.animationName === 'fadeOut') {
       setIisLeave(false)
       setIsOpen(false)

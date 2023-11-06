@@ -1,3 +1,4 @@
+'use client'
 import { useModal } from '@/hooks/useModal'
 import { AnimationEvent, ReactNode, createContext, useContext } from 'react'
 

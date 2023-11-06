@@ -2,7 +2,7 @@
 
 import { Button } from '@/components/Button'
 import { Input } from '@/components/Input'
-import { useChangePassword } from '@/hooks/useChangePassword'
+import { useResetPassword } from './useChangePassword'
 
 export default function ChangePassword() {
   const {
@@ -13,7 +13,9 @@ export default function ChangePassword() {
     errors,
     handleSubmit,
     register,
-  } = useChangePassword()
+    isLoading,
+    mutate,
+  } = useResetPassword()
 
   return (
     <div className="max-w-lg  pb-10 w-full max-md:m-auto max-sm:px-6">
@@ -29,8 +31,8 @@ export default function ChangePassword() {
 
       <form
         className="flex flex-col mt-8"
-        onSubmit={handleSubmit((e) => {
-          console.log(e)
+        onSubmit={handleSubmit(({ password }) => {
+          mutate(password)
         })}
       >
         <Input.Label id="password" name="Nova senha" error={!!errors.password}>
@@ -76,7 +78,9 @@ export default function ChangePassword() {
           </Input.Wrapper>
           <Input.MessageError message={errors.confirmPassword?.message} />
         </Input.Label>
-        <Button className="mt-5">validar número</Button>
+        <Button className="mt-5" loading={isLoading}>
+          Alterar senha
+        </Button>
       </form>
     </div>
   )

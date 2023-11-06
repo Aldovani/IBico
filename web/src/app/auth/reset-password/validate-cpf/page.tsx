@@ -22,7 +22,7 @@ export default function ValidateCPF() {
 
       <form
         className="flex flex-col mt-8"
-        onSubmit={() => handleSubmit(({ cpf }) => mutate(cpf))}
+        onSubmit={handleSubmit(({ cpf }) => mutate(cpf))}
       >
         <Input.Label id="cpf" name="CPF" error={!!errors.cpf?.message}>
           <Input.Field
@@ -40,8 +40,8 @@ export default function ValidateCPF() {
           />
           <Input.MessageError message={errors.cpf?.message} />
         </Input.Label>
-        <Button className="mt-5" loading={isLoading}>
-          validar número
+        <Button className="mt-5" type="submit" loading={isLoading}>
+          validar CPF
         </Button>
         <span className="font-poppins text-slate-400 mt-4">
           Possui uma conta?

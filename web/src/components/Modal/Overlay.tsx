@@ -11,7 +11,10 @@ type ContainerProps = {
 }
 
 export function Overlay({ children, isOpen = false, onClose }: ContainerProps) {
-  const { handleClickCloseModal } = useOverlay({ handleClose: onClose, isOpen })
+  const { handleClickCloseModal } = useOverlay({
+    handleClose: onClose,
+    isOpen,
+  })
 
   return (
     <ReactPortal containerId="container-modal">

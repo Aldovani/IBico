@@ -4,7 +4,8 @@ import { Skills as SkillComponent } from '@components/Skills'
 import { useSkills } from './useSkills'
 
 export default function Skills() {
-  const { handleAddSkill, handleSubmit, removeSkill, skills } = useSkills()
+  const { handleAddSkill, handleSubmit, removeSkill, skills, isLoading } =
+    useSkills()
 
   return (
     <main className="w-full">
@@ -42,7 +43,7 @@ export default function Skills() {
 
           <div className="flex max-w-304 mt-6 gap-4 w-full">
             <Button variants="secondary">Cancelar</Button>
-            <Button>Salvar</Button>
+            <Button loading={isLoading}>Salvar</Button>
           </div>
         </form>
       </section>

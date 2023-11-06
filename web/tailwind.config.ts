@@ -13,6 +13,7 @@ const config: Config = {
     extend: {
       backgroundImage: {
         'auth-image': "url('/img/auth-image.jpg')",
+        app: "url('/img/bg-app.png')",
         'people-01': "url('/img/people-01.png')",
         'people-02': "url('/img/people-02.png')",
         'people-03': "url('/img/people-03.png')",
@@ -69,7 +70,7 @@ const config: Config = {
         },
       },
       animation: {
-        'fade-in': 'fadeIn .3s cubic-bezier(0.65,0.05,0.36,1) forwards',
+        'fade-in': 'fadeIn .3s cubic-bezier(0.65,0.05,0.36,1)  forwards',
         'fade-out': 'fadeOut .3s cubic-bezier(0.65,0.05,0.36,1) forwards',
         'from-right': 'fromRight .3s ease forwards',
         'leave-right': 'leaveRight .3s ease forwards',

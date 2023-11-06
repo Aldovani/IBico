@@ -1,11 +1,93 @@
-import { KeyboardEvent, useRef } from 'react'
+import { api } from '@/services/api'
+import { toast } from '@/utils/toast'
+import { useMutation } from '@tanstack/react-query'
+import { useRouter, useSearchParams } from 'next/navigation'
+import { FormEvent, KeyboardEvent, useEffect, useRef, useState } from 'react'
 import { z } from 'zod'
 
 type inputsRefs = HTMLInputElement | null
 
+type ResetPasswordInfo = {
+  requestId: string
+  userCpf: string
+}
+type RequestVerifyCodePayload = {
+  requestId: string
+  userCpf: string
+  code: string
+}
+
 export function useVerifyCode() {
   const pinsInputs = useRef<inputsRefs[]>([])
   const pinsLength = new Array(6).fill(0)
+  const [resetPasswordInfo, setResetPasswordInfo] = useState<
+    ResetPasswordInfo | undefined
+  >(undefined)
+
+  const [code, setCode] = useState(new Map())
+  const queyParams = useSearchParams()
+  const router = useRouter()
+
+  useEffect(() => {
+    if (!queyParams.get('data')) return
+
+    const data = JSON.parse(atob(queyParams.get('data') || '{}'))
+    if (data?.requestId) {
+      setResetPasswordInfo(data)
+    }
+  }, [queyParams])
+
+  const { mutate } = useMutation({
+    mutationFn: handleRequestVerifyCode,
+    onSuccess: (data) => {
+      const dataToVerifyCode = {
+        accessToken: data.accessToken,
+      }
+
+      const dataToBase64 = btoa(JSON.stringify(dataToVerifyCode))
+      router.push(`/auth/reset-password/change-password?data=${dataToBase64}`)
+    },
+    onError: (error) => {
+      console.log(error)
+    },
+  })
+
+  function handleSubmit(e: FormEvent) {
+    e.preventDefault()
+
+    if (!resetPasswordInfo?.requestId && !resetPasswordInfo?.userCpf) {
+      toast({ text: '', title: '', type: 'ERROR' })
+      return
+    }
+
+    if (code.size <= 5) {
+      toast({ text: '', title: '', type: 'ERROR' })
+
+      return
+    }
+    let finalCode = ''
+    code.forEach((item) => (finalCode += `${item}`))
+
+    mutate({
+      requestId: resetPasswordInfo.requestId,
+      userCpf: resetPasswordInfo.userCpf,
+      code: finalCode,
+    })
+  }
+  // NTc2NDY5
+  async function handleRequestVerifyCode({
+    code,
+    requestId,
+    userCpf,
+  }: RequestVerifyCodePayload) {
+    const { data } = await api.post('/password/validateCode', {
+      code,
+      requestId,
+      userCpf,
+    })
+
+    return data
+  }
 
   function handleKey(event: KeyboardEvent<HTMLInputElement>, index: number) {
     if (!pinsInputs) return
@@ -37,8 +119,14 @@ export function useVerifyCode() {
 
     if (!valideCode.success) {
       pinElement.value = ''
+      setCode((prev) => {
+        prev.delete(index)
+        return prev
+      })
+
       return
     }
+    setCode((prev) => prev.set(index, Number(pinElement.value)))
 
     pinsInputs.current[index + 1]?.focus()
   }
@@ -47,5 +135,7 @@ export function useVerifyCode() {
     handleKey,
     pinsInputs,
     pinsLength,
+    resetPasswordInfo,
+    handleSubmit,
   }
 }

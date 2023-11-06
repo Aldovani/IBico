@@ -1,4 +1,3 @@
-import { FiChevronLeft, FiChevronRight } from 'react-icons/fi'
 import { OpportunityItem } from '../Item'
 
 type Opportunity = {

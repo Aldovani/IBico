@@ -3,11 +3,11 @@ import { ComponentProps, ReactNode } from 'react'
 import { Spinner } from '../Spinner'
 
 const button = tv({
-  base: 'font-poppins whitespace-nowrap flex  items-center rounded-lg  justify-center w-full  py-2 px-6 font-medium  duration-150 ease-out ',
+  base: 'font-poppins font-medium whitespace-nowrap flex  items-center rounded-lg  justify-center w-full  py-2 px-6   duration-150 ease-out ',
   variants: {
     variants: {
       primary:
-        'text-lg  hover:bg-blue-600  bg-blue-700 text-slate-50 disable:border-2 disable:bg-blue-800  disable:hover:bg-blue-800',
+        'text-lg  hover:bg-blue-600  bg-blue-700 text-slate-50 disable:border-2 disable:bg-blue-800 disable:cursor-not-allowed  disable:hover:bg-blue-800',
       secondary:
         'border-2 border-slate-300 bg-transparent text-slate-500 hover:bg-slate-200',
     },

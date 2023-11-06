@@ -65,6 +65,7 @@ export default function SignIn() {
               type={isShowPassword ? 'text' : 'password'}
               {...register('password')}
               placeholder="••••••••••••••••"
+              autoComplete="current-password"
             />
             <Input.Icon
               onClick={handleTogglePassword}
@@ -78,7 +79,7 @@ export default function SignIn() {
         <span className="text-slate-400 mt-2 font-poppins">
           Esqueceu a senha?{' '}
           <Link
-            href="/auth/reset-password/validate-cellphone"
+            href="/auth/reset-password/validate-cpf"
             className="text-blue-700 font-semibold"
           >
             Redefinir

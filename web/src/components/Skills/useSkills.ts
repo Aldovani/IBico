@@ -37,6 +37,8 @@ export function useSkills({ handleAddSkill, skills }: UseSkillsProps) {
 
   function handleKeyDown(e: KeyboardEvent<HTMLInputElement>) {
     if (e.key === 'Enter') {
+      e.preventDefault()
+
       const currentValue = getValues('skills')
       if (currentValue && currentValue.length >= 3) {
         handleAddSkill({ name: currentValue, id: Math.random() })

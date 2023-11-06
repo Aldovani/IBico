@@ -20,7 +20,9 @@
     "axios": "^1.5.1",
     "eslint": "^8.50.0",
     "eslint-config-next": "13.5.2",
+    "js-cookie": "^3.0.5",
     "next": "13.5.2",
+    "next-client-cookies": "^1.0.6",
     "postcss": "8.4.30",
     "react": "18.2.0",
     "react-dom": "18.2.0",
@@ -41,6 +43,7 @@
     "@storybook/react": "7.4.5",
     "@testing-library/jest-dom": "^6.1.3",
     "@testing-library/react": "^14.0.0",
+    "@types/js-cookie": "^3.0.5",
     "@types/node": "20.6.5",
     "@types/react": "18.2.22  ",
     "@types/react-dom": "18.2.7",
@@ -55,4 +58,4 @@
     "typescript": "5.2.2",
     "vitest": "^0.34.5"
   }
-} 
+}

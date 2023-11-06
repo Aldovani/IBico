@@ -5,8 +5,15 @@ import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 import { isValidCPF } from '@/utils/isvalidCPF'
 import { maskCPF } from '@/utils/maskCPF'
+import { useRouter } from 'next/navigation'
+import { toast } from '@/utils/toast'
+
+type verifyCodeResponse = {
+  requestId: string
+}
 
 export function useValidateCPF() {
+  const router = useRouter()
   const CPFSchema = z
     .object({
       cpf: z.string().max(14).min(14, 'Deve conter no mínimo 14 números'),
@@ -30,17 +37,35 @@ export function useValidateCPF() {
   })
 
   async function handleRegister(cpf: string) {
-    const { data } = await api.get(`/password/generateCode/${cpf}`)
+    const { data } = await api.get(
+      `/password/generateCode/${cpf.replace(/\D/g, '')}`,
+    )
     return data
   }
 
   const { mutate, isLoading } = useMutation({
     mutationFn: handleRegister,
-    onSuccess: () => {
-      console.log()
+    onSuccess: (data: verifyCodeResponse, cpf) => {
+      toast({
+        text: 'SMS envida com sucesso para o numero cadastrado em nossa base de dados',
+        title: 'Sucesso',
+        type: 'SUCCESS',
+      })
+
+      const dataToVerifyCode = {
+        requestId: data.requestId,
+        userCpf: cpf,
+      }
+
+      const dataToBase64 = btoa(JSON.stringify(dataToVerifyCode))
+      router.push(`/auth/reset-password/verify-code?data=${dataToBase64}`)
     },
-    onError: (error) => {
-      console.log(error)
+    onError: () => {
+      toast({
+        text: 'Usuário não encontrado em nossa base de dados',
+        title: 'Usuário não encontrado',
+        type: 'ERROR',
+      })
     },
   })
 

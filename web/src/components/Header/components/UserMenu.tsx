@@ -1,5 +1,6 @@
 'use client'
 
+import { useAuth } from '@/hooks/useAuth'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useEffect, useRef, useState } from 'react'
@@ -14,6 +15,7 @@ import {
 } from 'react-icons/fi'
 
 export function UserMenu() {
+  const { handleSignOut } = useAuth()
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const menuRef = useRef<HTMLUListElement>(null)
 
@@ -101,7 +103,10 @@ export function UserMenu() {
         </li>
 
         <li>
-          <button className="font-poppins w-full flex items-center gap-2 rounded-lg font-medium px-4 py-1 text-slate-500 transition-colors   hover:bg-slate-100 hover:text-blue-700">
+          <button
+            onClick={handleSignOut}
+            className="font-poppins w-full flex items-center gap-2 rounded-lg font-medium px-4 py-1 text-slate-500 transition-colors   hover:bg-slate-100 hover:text-blue-700"
+          >
             <FiLogOut size={16} />
             Sair
           </button>

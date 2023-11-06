@@ -1,14 +1,19 @@
+'use client'
+
 import { HTTPS_CODES } from '@/constants/http-codes'
 import { useLocalStorage } from '@/hooks/useLocalStorage'
-import { api } from '@/services/api'
+import { User } from '@/services/api/repositories/user'
 import { toast } from '@/utils/toast'
 import { useMutation } from '@tanstack/react-query'
 import { AxiosError } from 'axios'
 import { useRouter } from 'next/navigation'
 import { ReactNode, createContext, useState } from 'react'
+import { useCookies } from 'next-client-cookies'
+import { clientApi } from '@/services/api'
 
 type authContextProviderProps = {
   children: ReactNode
+  user: User | null
 }
 
 type RequestSignInProps = {
@@ -19,11 +24,20 @@ type RequestSignInProps = {
 type RequestSignInResponse = {
   access_token: string
 }
-
-type User = {
+type skill = {
   name: string
-  avatar: string
-  token: string
+  id: number
+}
+
+export type User = {
+  name: string
+  active: true
+  cpf: string
+  dateOfCreation: string
+  imgURL: string
+  skills: skill[]
+  telephone: string
+  username: string
 }
 
 type authContext = {
@@ -37,24 +51,28 @@ type authContext = {
 
 export const AuthContext = createContext({} as authContext)
 
-export function AuthContextProvider({ children }: authContextProviderProps) {
-  const [user, setUser] = useState<User | null>(null)
+export function AuthContextProvider({
+  children,
+  user: userProp,
+}: authContextProviderProps) {
+  const [user, setUser] = useState<User | null>(userProp)
+  const [errors, setError] = useState<AxiosError | undefined>(undefined)
   const { save, remove } = useLocalStorage()
   const router = useRouter()
-  const [errors, setError] = useState<AxiosError | undefined>(undefined)
+  const cookies = useCookies()
 
   const isAuthenticated = !!user
 
   async function handleRequest({ cpf, password }: RequestSignInProps) {
     const signPayload = `${cpf.replace(/\D/g, '')}:${password}`
+
     const signEncoded = btoa(signPayload)
 
-    const { data } = await api.post('/oauth/token', null, {
+    const { data } = await clientApi.post('/oauth/token', null, {
       headers: {
         Authorization: `Basic ${signEncoded}`,
       },
     })
-    console.log(data)
     return data
   }
 
@@ -74,16 +92,21 @@ export function AuthContextProvider({ children }: authContextProviderProps) {
     mutate(
       { cpf, password },
       {
-        onSuccess: ({ access_token: accessToken }) => {
+        onSuccess: async ({ access_token: accessToken }) => {
           save('token', accessToken)
+          cookies.set('token', accessToken)
+
+          const data = await User.getUser()
+
+          setUser(data.items[0])
           router.push(pathTo)
         },
         onError: (error) => {
-          if(error.response?.status=== HTTPS_CODES.INTERNAL_SERVER_ERROR){
-            toast({text:"",title:"Erro no servidor",type:"ERROR"})
+          if (error.response?.status === HTTPS_CODES.INTERNAL_SERVER_ERROR) {
+            toast({ text: '', title: 'Erro no servidor', type: 'ERROR' })
             return
           }
-          
+
           setError(error)
         },
       },
@@ -92,6 +115,9 @@ export function AuthContextProvider({ children }: authContextProviderProps) {
 
   function handleSignOut() {
     remove('token')
+    setUser(null)
+    cookies.set('token', '')
+
     router.push('/')
   }
 

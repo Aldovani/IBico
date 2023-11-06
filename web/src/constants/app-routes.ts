@@ -1,13 +1,16 @@
 export const APP_ROUTES = {
   private: {
     config: {
-      name: 'user/config',
+      name: 'dashboard/user/config',
     },
     perfil: {
-      name: 'user/profile',
+      name: 'dashboard/user/profile',
     },
     password: {
-      name: 'user/password',
+      name: 'dashboard/user/password',
+    },
+    configAccount: {
+      name: '/auth/config',
     },
   },
 
@@ -15,5 +18,8 @@ export const APP_ROUTES = {
     landingPage: '/',
     signIn: '/auth/sign-in',
     register: '/auth/register',
+    'reset-password-verify-cpf': '/auth/reset-password/verify-cpf',
+    'reset-password-verify-code': '/auth/reset-password/verify-code',
+    'reset-password-change-password': '/auth/reset-password/change-password',
   },
 }

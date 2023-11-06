@@ -1,8 +1,12 @@
 'use client'
+
 import { Button } from '@/components/Button'
 import { Input } from '@/components/Input'
 import Image from 'next/image'
 import { useUserConfig } from './useUserConfig'
+import { Modal } from '@/components/Modal'
+
+import { FiXCircle } from 'react-icons/fi'
 
 export default function UserConfig() {
   const {
@@ -11,7 +15,17 @@ export default function UserConfig() {
     register,
     handleChangeCPF,
     handleChangeCellphone,
+    isLoading,
+    mutate,
+    handleDisableAccount,
+    isLeave,
+    isOpen,
+    handleAnimationEndClose,
+    handleCloseModal,
+    handleOpenModal,
+    isLoadingUserDisable,
   } = useUserConfig()
+
   return (
     <main className="w-full">
       <section className=" left-0 flex items-center justify-between border-b-2 border-slate-200 pb-6">
@@ -70,12 +84,19 @@ export default function UserConfig() {
 
         <form
           className="grid grid-cols-2 gap-4 mt-6 items-center max-md:grid-cols-1"
-          onSubmit={handleSubmit(() => {
-            console.log('auiii')
+          onSubmit={handleSubmit(({ cellphone, cpf, name, username }) => {
+            mutate({
+              telephone: cellphone,
+              cpf,
+              name,
+              username,
+              passwd: 'Dodo1234.',
+            })
           })}
         >
           <Input.Label id="name" name="Nome" error={!!errors.name}>
             <Input.Field
+              id="name"
               {...register('name')}
               error={!!errors.name}
               defaultValue="Aldovani Henrique da costa"
@@ -84,6 +105,7 @@ export default function UserConfig() {
           </Input.Label>
           <Input.Label id="cpf" error={!!errors.cpf} name="CPF">
             <Input.Field
+              id="cpf"
               error={!!errors.cpf}
               {...register('cpf', {
                 onChange(value) {
@@ -97,11 +119,25 @@ export default function UserConfig() {
           </Input.Label>
 
           <Input.Label
+            id="username"
+            error={!!errors.username}
+            name="Node de usuário"
+          >
+            <Input.Field
+              id="username"
+              error={!!errors.username}
+              {...register('username')}
+            />
+            <Input.MessageError message={errors.username?.message} />
+          </Input.Label>
+
+          <Input.Label
             id="cellphone"
             error={!!errors.cellphone}
             name="Telefone"
           >
             <Input.Field
+              id="cellphone"
               error={!!errors.cellphone}
               {...register('cellphone', {
                 onChange: (value) => {
@@ -119,7 +155,9 @@ export default function UserConfig() {
 
           <div className="flex col-start-1 col-end-2  max-w-304 gap-4 w-full">
             <Button variants="secondary">Cancelar</Button>
-            <Button type="submit">Salvar</Button>
+            <Button loading={isLoading} disabled={isLoading} type="submit">
+              Salvar
+            </Button>
           </div>
         </form>
       </section>
@@ -135,12 +173,55 @@ export default function UserConfig() {
         </div>
 
         <div className=" flex items-center max-w-304 gap-6 mt-6">
-          <Button variants="secondary">Desativar</Button>
-          <Button variants="secondary" action="dangerous">
-            Deletar
+          <Button
+            onClick={handleOpenModal}
+            variants="secondary"
+            action="dangerous"
+          >
+            Desativar
           </Button>
         </div>
       </section>
+
+      <Modal.Overlay isOpen={isOpen} onClose={handleCloseModal}>
+        <Modal.Container
+          onAnimationEnd={handleAnimationEndClose}
+          isLeave={isLeave}
+          isOpen={isOpen}
+        >
+          <Modal.Header onClose={handleCloseModal}>
+            <div className="flex items-center gap-1">
+              <div className="p-1 bg-red-100 rounded-lg text-red-700">
+                <FiXCircle size={18} />
+              </div>
+              <h3 className="font-lato text-lg font-semibold">
+                Desativar conta
+              </h3>
+            </div>
+          </Modal.Header>
+
+          <Modal.Body>
+            <p>
+              voce tem certeza que voce deseja desativar sua conta, voce não
+              poderar se candidatar em nenhuma oportunidade em nossa plataforma
+              alem de não aparecer na busca dos outros usuários
+            </p>
+          </Modal.Body>
+          <Modal.Footer>
+            <Modal.Action onClick={handleCloseModal}>Cancelar</Modal.Action>
+            <Modal.Action onClick={() => console.log('aquii')}>
+              Console
+            </Modal.Action>
+            <Modal.Action
+              isLoading={isLoadingUserDisable}
+              onClick={() => console.log('aquii')}
+              actions="dangerous"
+            >
+              Desativar
+            </Modal.Action>
+          </Modal.Footer>
+        </Modal.Container>
+      </Modal.Overlay>
     </main>
   )
 }

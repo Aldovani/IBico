@@ -1,9 +1,14 @@
 import './globals.css'
-import type { Metadata } from 'next'
 import { Lato, Poppins } from 'next/font/google'
 import { AppProviders } from '@/contexts'
 import { ToastContainer } from '@/components/Toast'
 import { ReviewModal } from '@/components/ReviewModal'
+import { cookies, headers } from 'next/headers'
+import { Page } from '@/components/Page'
+import { Metadata } from 'next'
+import { redirect } from 'next/navigation'
+import { serverApi } from '@/services/api'
+import { checkIsPublicRoute } from '@/utils/checkIsPublicRoute'
 
 const poppins = Poppins({
   variable: '--font-poppins',
@@ -22,21 +27,45 @@ export const metadata: Metadata = {
   description: '',
 }
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
+  const cookiesAll = cookies().getAll()
+  const user = await fetchUser()
+
+  // const headersList = headers()
+  // const url = headersList.get('x-url') || '/'
+  // const { pathname } = new URL(url)
+  // const isPublicPage = checkIsPublicRoute(pathname)
+
+  // if (!!user && !isPublicPage) {
+  //   redirect('/auth/sign-in')
+  // }
+
+  // if (user && isPublicPage) {
+  //   redirect('/opportunities')
+  // }
+
   return (
-    <AppProviders>
-      <html lang="pt-br">
+    <html lang="pt-br">
+      <AppProviders cookies={cookiesAll} user={user}>
         <body className={`${poppins.variable} ${lato.variable}`}>
-          {children}
-          <div id="container-modal"></div>
+          <Page>{children}</Page>
           <ToastContainer />
-          <ReviewModal />
+          {/* <ReviewModal /> */}
         </body>
-      </html>
-    </AppProviders>
+      </AppProviders>
+    </html>
   )
+}
+async function fetchUser() {
+  try {
+    const { data } = await serverApi.get('/users')
+    console.log({ dados: data })
+    return data.items[0]
+  } catch (err) {
+    return null
+  }
 }

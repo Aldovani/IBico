@@ -1,5 +1,4 @@
 import { useAuth } from '@/hooks/useAuth'
-import { api } from '@/services/api'
 import { isValidCPF } from '@/utils/isvalidCPF'
 import { maskCPF } from '@/utils/maskCPF'
 import { maskCellphone } from '@/utils/maskCellphone'
@@ -9,21 +8,10 @@ import { useMutation } from '@tanstack/react-query'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
-import { AxiosResponse } from 'axios'
-
-type RegisterProps = {
-  name: string
-  cpf: string
-  cellphone: string
-  password: string
-  username: string
-}
-
-type UserCreated = {
-  name: string
-  username: string
-  imgURL: string
-}
+import { AxiosError } from 'axios'
+import { HTTPS_CODES } from '@/constants/http-codes'
+import { toast } from '@/utils/toast'
+import { User } from '@/services/api/user'
 
 export function useRegister() {
   const [isShowPassword, setIsShowPassword] = useState(false)
@@ -79,40 +67,19 @@ export function useRegister() {
     reValidateMode: 'onChange',
   })
 
-  async function handleRegister({
-    cellphone,
-    cpf,
-    name,
-    password,
-    username,
-  }: RegisterProps) {
-    const userPayload = {
-      telephone: cellphone.replace(/\D/g, ''),
-      cpf: cpf.replace(/\D/g, ''),
-      name,
-      username,
-      imgURL: '',
-      passwd: password,
-      skills: [],
-    }
-    console.log({ userPayload })
-
-    const { data } = await api.post<unknown, AxiosResponse<UserCreated>>(
-      '/users',
-      userPayload,
-    )
-
-    return data
-  }
-
   const { mutate, isLoading } = useMutation({
-    mutationFn: handleRegister,
-    onSuccess: (data, { cpf, password }) => {
-      console.log({ data })
+    mutationFn: User.createUser,
+    onSuccess: (_, { cpf, password }) => {
       handleSignIn({ cpf, password }, '/auth/config')
     },
-    onError: (error) => {
-      console.log(error)
+    onError: (error: AxiosError) => {
+      if (error.response?.status === HTTPS_CODES.INTERNAL_SERVER_ERROR) {
+        toast({
+          text: 'Aconteceu um erro em nossos servidores, tente novamente mais tarde',
+          title: 'Erro no servidor',
+          type: 'ERROR',
+        })
+      }
     },
   })
 

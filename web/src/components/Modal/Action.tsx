@@ -1,12 +1,13 @@
 import { ReactNode, ComponentProps } from 'react'
 import { tv, VariantProps } from 'tailwind-variants'
+import { Spinner } from '../Spinner'
 
 const action = tv({
   base: 'text-slate-500 font-poppins transition-all font-medium py-2 px-4  border border-slate-200 rounded-lg hover:bg-slate-200',
   variants: {
     actions: {
       dangerous:
-        'text-red-700  border-red-500 hover:bg-red-500 hover:text-slate-50  ',
+        'data-[loading="true"]:bg-red-500  text-red-700  border-red-500 hover:bg-red-500 hover:text-slate-50 ',
       success: 'text-blue-700 hover:bg-blue-700 hover:text-slate-50',
     },
   },
@@ -14,6 +15,7 @@ const action = tv({
 
 type ActionProps = {
   children: ReactNode
+  isLoading?: boolean
 } & VariantProps<typeof action> &
   ComponentProps<'button'>
 
@@ -22,10 +24,16 @@ export function Action({
   onClick: handleClick,
   className,
   actions,
+  isLoading = false,
 }: ActionProps) {
   return (
-    <button onClick={handleClick} className={action({ actions, className })}>
-      {children}
+    <button
+      data-loading={isLoading}
+      onClick={handleClick}
+      className={action({ actions, className })}
+    >
+      {isLoading && <Spinner />}
+      {!isLoading && children}
     </button>
   )
 }

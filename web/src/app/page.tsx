@@ -131,7 +131,7 @@ export default function Home() {
         <span className="font-poppins font-bold text-sm text-slate-400">
           vantagens
         </span>
-        <h2 className="font-lato font-extrabold text-blue-900  mt-3 text-4xl max-w-lg ">
+        <h2 className="font-lato font-extrabold text-blue-900  mt-3 text-[2.5rem] max-w-xl ">
           Confira algumas da vantagens da nossa plataforma{' '}
         </h2>
         <p className="max-w-md font-poppins text-slate-400 mt-4">
@@ -192,7 +192,7 @@ export default function Home() {
               facilidade & agilidade
             </span>
             <div className="flex justify-between items-center">
-              <h2 className="font-lato font-extrabold text-blue-900  text-4xl max-w-lg ">
+              <h2 className="font-lato font-extrabold text-blue-900  text-[2.5rem] max-w-xl ">
                 Veja como é simples e fácil cadastrar uma oportunidade na
                 plataforma
               </h2>
@@ -203,7 +203,7 @@ export default function Home() {
             </div>
           </header>
 
-          <main className="flex  justify-between gap-8 mt-10">
+          <div className="flex  justify-between gap-8 mt-10">
             <div className=" flex-1 rounded-lg ">
               <video src="/video/steap-1.webm" muted autoPlay loop></video>
             </div>
@@ -246,7 +246,7 @@ export default function Home() {
                 </ul>
               </main>
             </div>
-          </main>
+          </div>
 
           <footer>
             <div className="flex gap-6 mt-12">
@@ -304,7 +304,7 @@ export default function Home() {
             <span className="font-poppins font-bold text-sm text-slate-400">
               pra quem é
             </span>
-            <h2 className="font-lato font-extrabold text-blue-900  mt-3 text-4xl max-w-304 ">
+            <h2 className="font-lato font-extrabold text-blue-900  mt-3 text-[2.5rem] max-w-sm ">
               Por que decidimos criar o iBico ?
             </h2>
             <div className="max-w-[520px]">
@@ -339,7 +339,26 @@ export default function Home() {
         </div>
       </section>
 
-      <footer className="max-w-screen-xl m-auto py-20 ">
+      <section id="app" className="bg-app bg-no-repeat h-[580px]  ">
+        <div className="max-w-7xl  mx-auto h-full flex flex-col  justify-center ">
+          <span className="font-poppins font-bold text-sm text-slate-50">
+            baixe nosso app
+          </span>
+          <h2 className="font-lato font-extrabold text-slate-50  text-[2.5rem] max-w-sm ">
+            Por que decidimos criar o iBico ?
+          </h2>
+          <p className="max-w-md font-poppins text-slate-200 mt-4">
+            Vorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc
+            vulputate libero et velit interdum, ac aliquet odio mattis.
+          </p>
+
+          <div>
+            <div></div>
+          </div>
+        </div>
+      </section>
+
+      <footer className="max-w-screen-xl m-auto  py-20 ">
         <div className=" flex justify-between items-center border-b border-slate-200 pb-6">
           <span className="text-3xl font-lato font-extrabold text-blue-700">
             iBico
