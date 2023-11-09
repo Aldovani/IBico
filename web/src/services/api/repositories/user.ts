@@ -29,10 +29,17 @@ type User = {
   skills: Skill[]
   active: boolean
 }
-type UpdateUserDTO = Partial<User>
+type UpdateUserDTO = {
+  payload: Partial<User>
+  currentData: Omit<User, 'passwd'>
+}
+
+type UserRequestDTO = {
+  name?: string
+}
 
 export function UserRequest(httpProvider: AxiosInstance) {
-  async function getUser(name?: string) {
+  async function getUser({ name }: UserRequestDTO) {
     const { data } = await httpProvider.get(`/users${name ? `${name}` : ''}`)
     return data
   }
@@ -62,41 +69,27 @@ export function UserRequest(httpProvider: AxiosInstance) {
     return data
   }
 
-  async function updateUser({
-    cpf,
-    imgURL,
-    name,
-    passwd,
-    skills,
-    telephone,
-    username,
-    active,
-  }: UpdateUserDTO) {
-    const { data: response } = await httpProvider.get(`/users`)
-
-    const user = response.items[0]
+  async function updateUser({ currentData, payload }: UpdateUserDTO) {
     const userPayload = {
-      cpf: cpf?.replace(/\D/g, '') || user.cpf,
-      telephone: telephone?.replace(/\D/g, '') || user.telephone,
-      imgURL: imgURL || user.imgURL,
-      name: name || user.name,
-      passwd,
-      skills: skills || user.skills,
-      username: username || user.username,
-      active: active || user?.active,
+      ...currentData,
+      ...payload,
+      cpf: payload.cpf ? payload.cpf.replace(/\D/g, '') : currentData.cpf,
+      telephone: payload.telephone
+        ? payload.telephone.replace(/\D/g, '')
+        : currentData.telephone,
     }
 
     const { data } = await httpProvider.put('/users', userPayload)
     return data
   }
 
-  async function deleteUser() {
+  async function disableUser() {
     const { data } = await httpProvider.delete('/users')
     return data
   }
 
   return {
-    deleteUser,
+    disableUser,
     createUser,
     updateUser,
     getUser,

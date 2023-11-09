@@ -1,4 +1,4 @@
-import { api } from '@/services/api'
+import { clientApi } from '@/services/api/providers/clientSide'
 import { toast } from '@/utils/toast'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useMutation } from '@tanstack/react-query'
@@ -77,7 +77,7 @@ export function useResetPassword() {
   })
 
   async function handleRequestChangePassword(password: string) {
-    const { data } = await api.post('/password/resetPassword', {
+    const { data } = await clientApi.post('/password/resetPassword', {
       accessToken: resetPasswordInfo?.accessToken,
       newPassword: password,
     })

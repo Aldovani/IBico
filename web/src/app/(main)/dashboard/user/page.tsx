@@ -7,6 +7,7 @@ import { useUserConfig } from './useUserConfig'
 import { Modal } from '@/components/Modal'
 
 import { FiXCircle } from 'react-icons/fi'
+import { User } from '@/contexts/authContext'
 
 export default function UserConfig() {
   const {
@@ -21,9 +22,11 @@ export default function UserConfig() {
     isLeave,
     isOpen,
     handleAnimationEndClose,
-    handleCloseModal,
-    handleOpenModal,
+    handleClose,
+    handleOpen,
     isLoadingUserDisable,
+    user,
+    isMounted,
   } = useUserConfig()
 
   return (
@@ -86,11 +89,13 @@ export default function UserConfig() {
           className="grid grid-cols-2 gap-4 mt-6 items-center max-md:grid-cols-1"
           onSubmit={handleSubmit(({ cellphone, cpf, name, username }) => {
             mutate({
-              telephone: cellphone,
-              cpf,
-              name,
-              username,
-              passwd: 'Dodo1234.',
+              currentData: user as User,
+              payload: {
+                telephone: cellphone,
+                cpf,
+                name,
+                username,
+              },
             })
           })}
         >
@@ -174,22 +179,23 @@ export default function UserConfig() {
 
         <div className=" flex items-center max-w-304 gap-6 mt-6">
           <Button
-            onClick={handleOpenModal}
+            onClick={handleOpen}
             variants="secondary"
-            action="dangerous"
+            action={user?.active ? 'dangerous' : undefined}
           >
-            Desativar
+            {user?.active ? 'Desativar' : 'Ativar'}
           </Button>
         </div>
       </section>
 
-      <Modal.Overlay isOpen={isOpen} onClose={handleCloseModal}>
+      <Modal.Overlay isOpen={isOpen} onClose={handleClose}>
         <Modal.Container
           onAnimationEnd={handleAnimationEndClose}
           isLeave={isLeave}
+          isMounted={isMounted}
           isOpen={isOpen}
         >
-          <Modal.Header onClose={handleCloseModal}>
+          <Modal.Header onClose={handleClose}>
             <div className="flex items-center gap-1">
               <div className="p-1 bg-red-100 rounded-lg text-red-700">
                 <FiXCircle size={18} />
@@ -208,13 +214,11 @@ export default function UserConfig() {
             </p>
           </Modal.Body>
           <Modal.Footer>
-            <Modal.Action onClick={handleCloseModal}>Cancelar</Modal.Action>
-            <Modal.Action onClick={() => console.log('aquii')}>
-              Console
-            </Modal.Action>
+            <Modal.Action onClick={handleClose}>Cancelar</Modal.Action>
+
             <Modal.Action
               isLoading={isLoadingUserDisable}
-              onClick={() => console.log('aquii')}
+              onClick={handleDisableAccount}
               actions="dangerous"
             >
               Desativar

@@ -4,7 +4,7 @@ import { HTTPS_CODES } from '@/constants/http-codes'
 import { useLocalStorage } from '@/hooks/useLocalStorage'
 import { User } from '@/services/api/repositories/user'
 import { toast } from '@/utils/toast'
-import { useMutation } from '@tanstack/react-query'
+import { useMutation, useQuery } from '@tanstack/react-query'
 import { AxiosError } from 'axios'
 import { useRouter } from 'next/navigation'
 import { ReactNode, createContext, useState } from 'react'
@@ -13,7 +13,7 @@ import { clientApi } from '@/services/api'
 
 type authContextProviderProps = {
   children: ReactNode
-  user: User | null
+  user: { items: User[] } | null
 }
 
 type RequestSignInProps = {
@@ -47,6 +47,7 @@ type authContext = {
   user: User | null
   isAuthenticated: boolean
   errors: AxiosError | undefined
+  getUser: () => Promise<void>
 }
 
 export const AuthContext = createContext({} as authContext)
@@ -55,7 +56,7 @@ export function AuthContextProvider({
   children,
   user: userProp,
 }: authContextProviderProps) {
-  const [user, setUser] = useState<User | null>(userProp)
+  const [user, setUser] = useState<User | null>(userProp?.items[0] || null)
   const [errors, setError] = useState<AxiosError | undefined>(undefined)
   const { save, remove } = useLocalStorage()
   const router = useRouter()
@@ -63,18 +64,12 @@ export function AuthContextProvider({
 
   const isAuthenticated = !!user
 
-  async function handleRequest({ cpf, password }: RequestSignInProps) {
-    const signPayload = `${cpf.replace(/\D/g, '')}:${password}`
-
-    const signEncoded = btoa(signPayload)
-
-    const { data } = await clientApi.post('/oauth/token', null, {
-      headers: {
-        Authorization: `Basic ${signEncoded}`,
-      },
-    })
-    return data
-  }
+  const { refetch } = useQuery(['GET_USER'], () => User.getUser({}), {
+    onSuccess: (data) => {
+      setUser(data.items[0])
+    },
+    initialData: userProp,
+  })
 
   const { mutate, isLoading } = useMutation<
     RequestSignInResponse,
@@ -96,7 +91,7 @@ export function AuthContextProvider({
           save('token', accessToken)
           cookies.set('token', accessToken)
 
-          const data = await User.getUser()
+          const data = await User.getUser({})
 
           setUser(data.items[0])
           router.push(pathTo)
@@ -121,6 +116,23 @@ export function AuthContextProvider({
     router.push('/')
   }
 
+  async function handleRequest({ cpf, password }: RequestSignInProps) {
+    const signPayload = `${cpf.replace(/\D/g, '')}:${password}`
+
+    const signEncoded = btoa(signPayload)
+
+    const { data } = await clientApi.post('/oauth/token', null, {
+      headers: {
+        Authorization: `Basic ${signEncoded}`,
+      },
+    })
+    return data
+  }
+
+  async function getUser() {
+    await refetch()
+  }
+
   return (
     <AuthContext.Provider
       value={{
@@ -130,6 +142,7 @@ export function AuthContextProvider({
         user,
         handleSignOut,
         errors,
+        getUser,
       }}
     >
       {children}

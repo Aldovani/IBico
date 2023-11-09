@@ -1,18 +1,21 @@
 'use client'
 import { Button } from '@/components/Button'
 import { Input } from '@/components/Input'
-import { useChangePassword } from '@/hooks/useChangePassword'
+import { usePasswordConfig } from './usePasswordConfig'
 
 export default function PasswordConfig() {
   const {
     errors,
     handleSubmit,
-    register,
     handleToggleConfirmPassword,
     handleTogglePassword,
     isShowConfirmPassword,
     isShowPassword,
-  } = useChangePassword()
+    register,
+    isLoading,
+    handleChangePassword,
+  } = usePasswordConfig()
+
   return (
     <main className="w-full">
       <section className="flex items-center justify-between border-b-2 border-slate-200 pb-6">
@@ -38,9 +41,9 @@ export default function PasswordConfig() {
 
         <form
           className="grid grid-cols-2 gap-4 mt-6 items-center max-sm:grid-cols-1"
-          onSubmit={handleSubmit(() => {
-            console.log('')
-          })}
+          onSubmit={handleSubmit(({ password }) =>
+            handleChangePassword(password),
+          )}
         >
           <Input.Label id="password" error={!!errors.password} name="Senha">
             <Input.Wrapper>
@@ -49,11 +52,13 @@ export default function PasswordConfig() {
                 placeholder="•••••••••••••"
                 minLength={8}
                 error={!!errors.password}
+                isLoading={isLoading}
                 type={isShowPassword ? 'text' : 'password'}
               />
               <Input.Icon
                 error={!errors.password}
                 isPassword={isShowPassword}
+                isLoading={isLoading}
                 onClick={handleTogglePassword}
               />
             </Input.Wrapper>
@@ -69,11 +74,13 @@ export default function PasswordConfig() {
                 {...register('confirmPassword')}
                 placeholder="•••••••••••••"
                 minLength={8}
+                isLoading={isLoading}
                 error={!!errors.confirmPassword}
                 type={isShowConfirmPassword ? 'text' : 'password'}
               />
               <Input.Icon
                 error={!errors.confirmPassword}
+                isLoading={isLoading}
                 isPassword={isShowConfirmPassword}
                 onClick={handleToggleConfirmPassword}
               />

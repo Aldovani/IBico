@@ -1,5 +1,5 @@
 'use client'
-import { useOpportunity } from '@/contexts/opportunityContext'
+import { formatMoney } from '@/utils/formatMoney'
 import Link from 'next/link'
 import { FiBriefcase, FiEdit2, FiUsers, FiX } from 'react-icons/fi'
 
@@ -9,12 +9,19 @@ type OpportunityList = {
   value: number
 }
 
+export type ModalBody = OpportunityList
+
 type OpportunityListItemProps = {
   data: OpportunityList
+  onOpenDrawer: (id: string) => void
+  onOpenModal: (data: ModalBody) => void
 }
 
-export function OpportunityListItem({ data }: OpportunityListItemProps) {
-  const { handleOpenDrawer, handleOpenModal } = useOpportunity()
+export function OpportunityListItem({
+  data,
+  onOpenDrawer,
+  onOpenModal,
+}: OpportunityListItemProps) {
   return (
     <li className="flex border-2 justify-between items-center border-slate-200 rounded-lg p-3">
       <div className="flex items-center gap-3">
@@ -27,14 +34,14 @@ export function OpportunityListItem({ data }: OpportunityListItemProps) {
             {data.title}
           </h4>
           <span className="font-semibold font-poppins text-slate-900 text-base">
-            {data.value}
+            {formatMoney.format(data.value)}
           </span>
         </div>
       </div>
 
       <div className="flex gap-2">
         <button
-          onClick={() => handleOpenDrawer(data.id)}
+          onClick={() => onOpenDrawer(data.id)}
           className="hover:scale-105  hover:bg-blue-100 hover:border-blue-200 transition-all p-2 border text-blue-700 border-slate-200 rounded-lg"
         >
           <FiUsers size={24} />
@@ -47,7 +54,7 @@ export function OpportunityListItem({ data }: OpportunityListItemProps) {
         </Link>
 
         <button
-          onClick={() => handleOpenModal(data)}
+          onClick={() => onOpenModal(data)}
           className="hover:scale-105 hover:bg-red-100 hover:border-red-200 transition-all p-2 border text-red-700 border-slate-200 rounded-lg"
         >
           <FiX size={24} />

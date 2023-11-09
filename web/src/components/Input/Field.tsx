@@ -1,8 +1,9 @@
 import { tv, VariantProps } from 'tailwind-variants'
 import { ComponentProps, Ref, forwardRef } from 'react'
+import { Spinner } from '../Spinner'
 
 const field = tv({
-  base: 'w-full bg-slate-100   pr-4 font-poppins outline-0 pr-4 placeholder:text-slate-400 text-slate-700  border-slate-200 border-y border-x  pl-4 rounded-lg py-4  focus:border-blue-700 focus:text-blue-700 focus:bg-blue-50',
+  base: 'w-full bg-slate-100 disabled:bg-slate-200/50 disabled:border-slate-300   pr-4 font-poppins outline-0 pr-4 placeholder:text-slate-400 text-slate-700  border-slate-200 border-y border-x  pl-4 rounded-lg py-4  focus:border-blue-700 focus:text-blue-700 focus:bg-blue-50',
   variants: {
     error: {
       true: 'bg-red-50  border-red-500 text-red-500 focus:border-red-500 focus:bg-red-50 focus:text-red-500 placeholder:text-red-400 ',
@@ -14,18 +15,35 @@ const field = tv({
   },
 })
 
-type FieldProps = ComponentProps<'input'> & VariantProps<typeof field>
+type FieldProps = ComponentProps<'input'> &
+  VariantProps<typeof field> & {
+    isLoading?: boolean
+  }
 
 export const Field = forwardRef(function (
-  { error, sizes = 'medium', className, ...props }: FieldProps,
+  {
+    error,
+    sizes = 'medium',
+    className,
+    isLoading = false,
+    ...props
+  }: FieldProps,
   ref: Ref<HTMLInputElement> | null,
 ) {
   return (
-    <input
-      className={field({ error, sizes, className })}
-      ref={ref}
-      {...props}
-    />
+    <div className="relative w-full">
+      <input
+        disabled={isLoading}
+        className={field({ error, sizes, className })}
+        ref={ref}
+        {...props}
+      />
+      {isLoading && (
+        <div className="absolute right-4 top-1/2 -translate-y-1/2">
+          <Spinner colors="black" />
+        </div>
+      )}
+    </div>
   )
 })
 

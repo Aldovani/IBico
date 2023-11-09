@@ -18,7 +18,7 @@ export const APP_ROUTES = {
     landingPage: '/',
     signIn: '/auth/sign-in',
     register: '/auth/register',
-    'reset-password-verify-cpf': '/auth/reset-password/verify-cpf',
+    'reset-password-verify-cpf': '/auth/reset-password/validate-cpf',
     'reset-password-verify-code': '/auth/reset-password/verify-code',
     'reset-password-change-password': '/auth/reset-password/change-password',
   },

@@ -1,23 +1,41 @@
-import { serverApi } from '@/services/api'
-import { GetOpportunitiesResponse } from '@/services/api/repositories/opportunity'
-import { AxiosResponse } from 'axios'
-import { OpportunityProvider } from '@/contexts/opportunityContext'
-import { ContainerOpportunity } from './Container'
-import { ModalOpportunity } from './ModalOpportunity'
-import { DrawerOpportunity } from './DrawerOpportunity'
+'use client'
 
-export async function OpportunityList() {
-  const {
-    data: { items },
-  } = await serverApi.get<any, AxiosResponse<GetOpportunitiesResponse>>(
-    '/oportunities',
-  )
+import { Opportunity } from '@/services/api/repositories/opportunity'
+import { ModalBody, OpportunityListItem } from './item'
 
+type OpportunityListProps = {
+  onOpenDrawer: (id: string) => void
+  onOpenModal: (data: ModalBody) => void
+  opportunities: Opportunity[] | []
+  isLoading: boolean
+  isEmpty: boolean
+}
+
+export function OpportunityList({
+  onOpenDrawer,
+  onOpenModal,
+  opportunities,
+  isLoading,
+  isEmpty,
+}: OpportunityListProps) {
   return (
-    <OpportunityProvider>
-      <ContainerOpportunity opportunities={items} />
-      <ModalOpportunity />
-      <DrawerOpportunity />
-    </OpportunityProvider>
+    <>
+      <ul className="[&>*:not(:first-child)]:mt-3">
+        {isLoading && <h1>Carregando</h1>}
+        {isEmpty && <h1>Lista vazia</h1>}
+
+        {opportunities?.map((opportunity) => {
+          if (!opportunity) return null
+          return (
+            <OpportunityListItem
+              onOpenDrawer={onOpenDrawer}
+              onOpenModal={onOpenModal}
+              key={opportunity.id}
+              data={opportunity}
+            />
+          )
+        })}
+      </ul>
+    </>
   )
 }

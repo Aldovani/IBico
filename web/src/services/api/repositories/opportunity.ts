@@ -21,16 +21,14 @@ export type Opportunity = {
   }
 }
 
-type createOpportunityPayload = {
-  title: string
-  description: string
-  startDateTime: Date
-  endDateTime: Date
-  timeLoad: string
-  local: string
-  value: number
-  necessarySkills: { name: string }[]
-}
+type createOpportunityPayload = Omit<
+  Opportunity,
+  'id' | 'postedBy' | 'createdAt' | 'status'
+>
+type UpdateOpportunityPayload = Omit<
+  Opportunity,
+  'postedBy' | 'createdAt' | 'status'
+> & { id?: string }
 
 export type GetOpportunitiesResponse = {
   items: Opportunity[]
@@ -55,10 +53,10 @@ export function OpportunityRequest(httpProvider: AxiosInstance) {
   }: createOpportunityPayload) {
     const opportunityPayload = {
       description,
-      endDateTime: endDateTime.toISOString(),
+      endDateTime,
       local,
       necessarySkills,
-      startDateTime: startDateTime.toISOString(),
+      startDateTime,
       status: 'CREATED',
       timeLoad,
       title,
@@ -66,7 +64,7 @@ export function OpportunityRequest(httpProvider: AxiosInstance) {
     }
 
     const { data } = await httpProvider.post(
-      '/oportunities',
+      '/opportunities',
       opportunityPayload,
     )
 
@@ -77,16 +75,36 @@ export function OpportunityRequest(httpProvider: AxiosInstance) {
     const { data } = await httpProvider.get<
       any,
       AxiosResponse<GetOpportunitiesResponse>
-    >('/oportunities')
+    >('/opportunities')
+    return data
+  }
+
+  async function getOpportunityById(id: string) {
+    const { data } = await httpProvider.get(`/opportunities/${id}`)
     return data
   }
 
   async function deleteOpportunity(id: string) {
-    console.log({ id })
-    await httpProvider.delete(`/oportunities/${id}`)
+    await httpProvider.delete(`/opportunities/${id}`)
   }
 
-  return { createOpportunity, getOpportunities, deleteOpportunity }
+  async function updateOpportunity(payload: UpdateOpportunityPayload) {
+    const opportunityPayload = { ...payload, status: 'CREATED' }
+
+    const { data } = await httpProvider.put(
+      `/opportunities/${payload.id}`,
+      opportunityPayload,
+    )
+    return data
+  }
+
+  return {
+    createOpportunity,
+    getOpportunities,
+    deleteOpportunity,
+    updateOpportunity,
+    getOpportunityById,
+  }
 }
 
 export const Opportunity = OpportunityRequest(clientApi)

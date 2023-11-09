@@ -1,4 +1,4 @@
-import { api } from '@/services/api'
+import { clientApi } from '@/services/api/providers/clientSide'
 import { toast } from '@/utils/toast'
 import { useMutation } from '@tanstack/react-query'
 import { useRouter, useSearchParams } from 'next/navigation'
@@ -74,16 +74,16 @@ export function useVerifyCode() {
       code: finalCode,
     })
   }
-  // NTc2NDY5
+
   async function handleRequestVerifyCode({
     code,
     requestId,
     userCpf,
   }: RequestVerifyCodePayload) {
-    const { data } = await api.post('/password/validateCode', {
+    const { data } = await clientApi.post('/password/validateCode', {
       code,
       requestId,
-      userCpf,
+      userCpf: userCpf.replace(/\D/g, ''),
     })
 
     return data

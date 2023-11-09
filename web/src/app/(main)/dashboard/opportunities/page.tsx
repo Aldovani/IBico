@@ -1,18 +1,29 @@
+'use client'
 import Link from 'next/link'
 import { OpportunityList } from '@/components/OpportunityList'
-import { Suspense } from 'react'
+import { useOpportunity } from './useOpportunity'
+import { ModalOpportunity } from '@/components/OpportunityList/ModalOpportunity'
+import { DrawerOpportunity } from '@/components/OpportunityList/DrawerOpportunity'
 
-export default async function Opportunities() {
-  // const {
-  //   handleAnimationEndClose,
-  //   handleCloseModal,
-  //   handleOpenModal,
-  //   isLeave,
-  //   isOpen,
-  // } = useModal()
+export default function Opportunities() {
+  const {
+    closeDrawer,
+    closeModal,
+    handleAnimationEndClose,
+    handleDeleteOpportunity,
+    handleOpenDrawer,
+    handleOpenModal,
+    isDrawerOpen,
+    isModalLeave,
+    isModalOpen,
+    modalContent,
+    opportunities,
+    isOpportunityLoading,
+    isMounted,
+    isLoadingDelete,
+    isEmpty,
+  } = useOpportunity()
 
-  // console.log({ items })
-  // const { isOpen: isDrawerOpen, onClose, onOpen } = useDrawer()
   return (
     <div className="w-full">
       <section className="flex items-center justify-between border-b-2 border-slate-200 pb-6">
@@ -34,10 +45,27 @@ export default async function Opportunities() {
       </section>
 
       <div className="mt-6">
-        <Suspense fallback={<h1>Carregando...</h1>}>
-          <OpportunityList />
-        </Suspense>
+        <OpportunityList
+          onOpenDrawer={handleOpenDrawer}
+          onOpenModal={handleOpenModal}
+          opportunities={opportunities}
+          isLoading={isOpportunityLoading}
+          isEmpty={isEmpty}
+        />
       </div>
+
+      <ModalOpportunity
+        isMounted={isMounted}
+        isDeleteLoading={isLoadingDelete}
+        isLeave={isModalLeave}
+        isOpen={isModalOpen}
+        body={modalContent}
+        onAnimationEndClose={handleAnimationEndClose}
+        onClose={closeModal}
+        onDeleteOpportunity={handleDeleteOpportunity}
+      />
+
+      <DrawerOpportunity isOpen={isDrawerOpen} onClose={closeDrawer} />
     </div>
   )
 }

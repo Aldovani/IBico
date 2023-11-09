@@ -16,6 +16,7 @@ export function Container({ children }: ContainerProps) {
       delay-0 opacity-0
       data-[open='true']:translate-x-0 data-[open='true']:opacity-100  
       data-[open='true']:delay-200 
+      overflow-y-scroll
       "
     >
       {children}

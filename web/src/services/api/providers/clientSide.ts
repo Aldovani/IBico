@@ -1,3 +1,4 @@
+'use client'
 import { HTTPS_CODES } from '@/constants/http-codes'
 import { useLocalStorage } from '@/hooks/useLocalStorage'
 import axios, { AxiosError } from 'axios'
@@ -21,8 +22,7 @@ clientApi.interceptors.response.use(
 
 clientApi.interceptors.request.use(function (config) {
   const { get } = useLocalStorage()
-  const token = get('token')
-
+  const token = get('token') || get('token')
   if (!token) {
     return config
   }

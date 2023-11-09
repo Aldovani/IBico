@@ -15,6 +15,7 @@ const iconStyles = tv({
 type IconProps = {
   icon?: ReactNode
   isPassword?: boolean
+  isLoading?: boolean
   error?: boolean
 
   onClick?: () => void
@@ -26,7 +27,10 @@ export function Icon({
   onClick,
   error,
   isPassword = undefined,
+  isLoading,
 }: IconProps) {
+  if (isLoading) return null
+
   if (!onClick) {
     return (
       <span className={iconStyles({ positions })} onClick={onClick}>

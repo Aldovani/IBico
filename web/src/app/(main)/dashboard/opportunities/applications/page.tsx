@@ -8,9 +8,10 @@ import { FiUser, FiX, FiXCircle } from 'react-icons/fi'
 export default function Applications() {
   const {
     handleAnimationEndClose,
-    handleCloseModal,
-    handleOpenModal,
+    handleClose,
+    handleOpen,
     isLeave,
+    isMounted,
     isOpen,
   } = useModal()
 
@@ -42,7 +43,7 @@ export default function Applications() {
                 </h4>
                 <span className="text-xs font-poppins text-slate-400">
                   por{' '}
-                  <Link href="" className="text-blue-700">
+                  <Link href="/" className="text-blue-700">
                     Luize Santos da silva{' '}
                   </Link>
                 </span>
@@ -57,7 +58,7 @@ export default function Applications() {
             </div>
 
             <button
-              onClick={handleOpenModal}
+              onClick={handleOpen}
               className="hover:scale-105 hover:bg-red-100 hover:border-red-200 transition-all p-2 border text-red-700 border-slate-200 rounded-lg"
             >
               <FiX size={24} />
@@ -66,13 +67,14 @@ export default function Applications() {
         </ul>
       </div>
 
-      <Modal.Overlay isOpen={isOpen} onClose={handleCloseModal}>
+      <Modal.Overlay isOpen={isOpen} onClose={handleClose}>
         <Modal.Container
+          isMounted={isMounted}
           onAnimationEnd={handleAnimationEndClose}
           isLeave={isLeave}
           isOpen={isOpen}
         >
-          <Modal.Header onClose={handleCloseModal}>
+          <Modal.Header onClose={handleClose}>
             <div className="flex items-center gap-2">
               <div className="p-1 bg-red-100 rounded-lg text-red-700">
                 <FiXCircle size={18} />
@@ -97,7 +99,7 @@ export default function Applications() {
             </p>
           </Modal.Body>
           <Modal.Footer>
-            <Modal.Action onClick={handleCloseModal}>Cancelar</Modal.Action>
+            <Modal.Action onClick={handleClose}>Cancelar</Modal.Action>
             <Modal.Action actions="dangerous">
               Desistir da oportunidade
             </Modal.Action>

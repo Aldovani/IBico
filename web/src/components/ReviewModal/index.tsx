@@ -5,12 +5,13 @@ import { FiAward, FiFrown, FiMeh, FiSmile } from 'react-icons/fi'
 import { Input } from '../Input'
 
 export function ReviewModal() {
-  const { handleAnimationEndClose, handleClose, isLeave, isOpen } =
+  const { handleAnimationEndClose, handleClose, isLeave, isOpen, isMounted } =
     useReviewModal()
 
   return (
     <Modal.Overlay isOpen={isOpen} onClose={handleClose}>
       <Modal.Container
+        isMounted={isMounted}
         isLeave={isLeave}
         isOpen={isOpen}
         onAnimationEnd={handleAnimationEndClose}

@@ -34,6 +34,7 @@ export default async function RootLayout({
 }) {
   const cookiesAll = cookies().getAll()
   const user = await fetchUser()
+  console.log({ user })
 
   // const headersList = headers()
   // const url = headersList.get('x-url') || '/'
@@ -63,8 +64,7 @@ export default async function RootLayout({
 async function fetchUser() {
   try {
     const { data } = await serverApi.get('/users')
-    console.log({ dados: data })
-    return data.items[0]
+    return data
   } catch (err) {
     return null
   }

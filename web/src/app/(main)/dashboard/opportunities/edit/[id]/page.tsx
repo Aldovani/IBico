@@ -1,20 +1,12 @@
-import { Button } from '@/components/Button'
-import { Input } from '@/components/Input'
-import { Skills } from '@/components/Skills'
+'use client'
 import Link from 'next/link'
 import { FiArrowLeft } from 'react-icons/fi'
-import { headers } from 'next/headers'
-import { serverApi } from '@/services/api'
 
-export default async function EditOpportunity() {
-  const url = headers().get('x-url')
-  const { pathname } = new URL(url || '')
-  const id = pathname.split('/')[pathname.split('/').length - 1]
+import { OpportunityForm } from '@/components/Forms/Opportunity'
+import { useEditOpportunity } from './useEditOpportunity'
 
-  const { data } = await serverApi.get(`/oportunities/${id}`)
-
-  console.log({ data })
-
+export default function EditOpportunity() {
+  const { handleRequest, isLoading, data, isDataLoading } = useEditOpportunity()
   return (
     <div className="w-full">
       <Link
@@ -32,55 +24,12 @@ export default async function EditOpportunity() {
         libero et velit interdum, ac aliquet odio mattis.
       </p>
 
-      <form className="grid grid-cols-2 gap-x-6 gap-y-4 mt-8 max-md:grid-cols-1">
-        <Input.Label id="title" name="Titulo">
-          <Input.Field placeholder="Digite o titulo da oportunidade" />
-        </Input.Label>
-
-        <div className="col-start-2 col-end-3 flex gap-4 max-md:col-auto  max-sm:flex max-sm:flex-col">
-          <Input.Label
-            id="date-started"
-            className="flex-1"
-            name="Data de inicio"
-          >
-            <Input.Field type="date" />
-          </Input.Label>
-
-          <Input.Label
-            id="date-finished"
-            className="flex-1"
-            name="Data de termino"
-          >
-            <Input.Field type="date" />
-          </Input.Label>
-        </div>
-
-        <Input.Label id="place" name="Local">
-          <Input.Field placeholder="Digite o local da oportunidade" />
-        </Input.Label>
-
-        <Input.Label id="value" name="valor">
-          <Input.Field placeholder="Digite o valor da oportunidade" />
-        </Input.Label>
-
-        <Input.Label id="description" name="Descrição">
-          <Input.TextArea placeholder="Descreva um pouco sobre a oportunidade" />
-        </Input.Label>
-
-        <div>
-          {/* <Skills
-            onAddSkill={() => {
-              console.log('')
-            }}
-            onRemoveSkill={() => {
-              console.log('')
-            }}
-            skills={[]}
-          /> */}
-        </div>
-
-        <Button>Criar oportunidade</Button>
-      </form>
+      <OpportunityForm
+        handleRequest={handleRequest}
+        isDataLoading={isDataLoading}
+        initialData={data}
+        isLoading={isLoading}
+      />
     </div>
   )
 }

@@ -11,7 +11,7 @@ import { z } from 'zod'
 import { AxiosError } from 'axios'
 import { HTTPS_CODES } from '@/constants/http-codes'
 import { toast } from '@/utils/toast'
-import { User } from '@/services/api/user'
+import { User } from '@/services/api/repositories/user'
 
 export function useRegister() {
   const [isShowPassword, setIsShowPassword] = useState(false)

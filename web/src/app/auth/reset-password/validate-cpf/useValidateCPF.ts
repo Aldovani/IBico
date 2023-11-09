@@ -1,4 +1,4 @@
-import { api } from '@/services/api'
+import { clientApi } from '@/services/api/providers/clientSide'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useMutation } from '@tanstack/react-query'
 import { useForm } from 'react-hook-form'
@@ -37,7 +37,7 @@ export function useValidateCPF() {
   })
 
   async function handleRegister(cpf: string) {
-    const { data } = await api.get(
+    const { data } = await clientApi.get(
       `/password/generateCode/${cpf.replace(/\D/g, '')}`,
     )
     return data

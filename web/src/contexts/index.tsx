@@ -14,7 +14,7 @@ export type CookieRecord = {
 type ContextsProvidersProps = {
   children: ReactNode
   cookies: CookieRecord[]
-  user: User | null
+  user: { items: User[] } | null
 }
 
 export function AppProviders({

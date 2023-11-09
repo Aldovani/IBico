@@ -368,7 +368,7 @@ export default function Home() {
             <ul className="flex gap-4">
               <li>
                 <Link
-                  href=""
+                  href="/"
                   className="p-2 border border-l-slate-200 block rounded-lg text-slate-400 hover:text-blue-700 transition-colors"
                 >
                   <FiFacebook size={20} />
@@ -376,7 +376,7 @@ export default function Home() {
               </li>
               <li>
                 <Link
-                  href=""
+                  href="/"
                   className="p-2 border border-l-slate-200 block rounded-lg text-slate-400 hover:text-blue-700 transition-colors"
                 >
                   <FiTwitter size={20} />
@@ -384,7 +384,7 @@ export default function Home() {
               </li>
               <li>
                 <Link
-                  href=""
+                  href="/"
                   className="p-2 border border-l-slate-200 block rounded-lg text-slate-400 hover:text-blue-700 transition-colors"
                 >
                   <FiLinkedin size={20} />
@@ -392,7 +392,7 @@ export default function Home() {
               </li>
               <li>
                 <Link
-                  href=""
+                  href="/"
                   className="p-2 border border-l-slate-200 block rounded-lg text-slate-400 hover:text-blue-700 transition-colors"
                 >
                   <FiInstagram size={20} />

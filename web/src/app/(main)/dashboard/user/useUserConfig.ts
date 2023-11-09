@@ -12,14 +12,17 @@ import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
 export function useUserConfig() {
-  const { user } = useAuth()
+  const { user, getUser } = useAuth()
+
   const {
     handleAnimationEndClose,
-    handleCloseModal,
-    handleOpenModal,
+    handleClose,
+    handleOpen,
     isLeave,
     isOpen,
+    isMounted,
   } = useModal()
+
   const userSchema = z
     .object({
       cpf: z.string().max(14).min(14, 'Deve conter no mínimo 14 números'),
@@ -62,7 +65,8 @@ export function useUserConfig() {
   const { isLoading, mutate } = useMutation({
     mutationKey: ['UPDATE_USER'],
     mutationFn: User.updateUser,
-    onSuccess: () => {
+    onSuccess: async () => {
+      getUser()
       toast({
         title: 'Sucesso',
         text: 'alteração de perfil realizada com sucesso',
@@ -74,9 +78,10 @@ export function useUserConfig() {
   const { mutateAsync: disableUserMutate, isLoading: isLoadingUserDisable } =
     useMutation({
       mutationKey: ['DELETE_USER'],
-      mutationFn: User.deleteUser,
-      onSuccess: () => {
-        // handleCloseModal()
+      mutationFn: User.disableUser,
+      onSuccess: async () => {
+        await getUser()
+        handleClose()
       },
     })
 
@@ -92,6 +97,7 @@ export function useUserConfig() {
   }
 
   return {
+    user,
     register,
     mutate,
     isLoading,
@@ -103,9 +109,10 @@ export function useUserConfig() {
     handleDisableAccount,
     isLoadingUserDisable,
     handleAnimationEndClose,
-    handleCloseModal,
-    handleOpenModal,
+    handleClose,
+    handleOpen,
     isLeave,
     isOpen,
+    isMounted,
   }
 }

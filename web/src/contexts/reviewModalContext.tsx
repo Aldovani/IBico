@@ -8,6 +8,7 @@ type ReviewModalContextProps = {
   handleClose: () => void
   isLeave: boolean
   isOpen: boolean
+  isMounted: boolean
 }
 type ReviewModalProviderProps = {
   children: ReactNode
@@ -17,20 +18,22 @@ const ReviewModalContext = createContext({} as ReviewModalContextProps)
 export function ReviewModalProvider({ children }: ReviewModalProviderProps) {
   const {
     handleAnimationEndClose,
-    handleCloseModal,
-    handleOpenModal,
+    handleClose,
+    handleOpen,
     isLeave,
     isOpen,
+    isMounted,
   } = useModal()
 
   return (
     <ReviewModalContext.Provider
       value={{
-        handleOpen: handleOpenModal,
+        handleOpen,
         handleAnimationEndClose,
-        handleClose: handleCloseModal,
+        handleClose,
         isLeave,
         isOpen,
+        isMounted,
       }}
     >
       {children}
@@ -39,7 +42,6 @@ export function ReviewModalProvider({ children }: ReviewModalProviderProps) {
 }
 
 export function useReviewModal() {
-  const { handleOpen, handleAnimationEndClose, handleClose, isLeave, isOpen } =
-    useContext(ReviewModalContext)
-  return { handleOpen, handleAnimationEndClose, handleClose, isLeave, isOpen }
+  const data = useContext(ReviewModalContext)
+  return data
 }

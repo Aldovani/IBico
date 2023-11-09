@@ -1,10 +1,11 @@
-'use client'
 import { Button } from '@/components/Button'
-import { Copy } from '@/components/Copy'
-import { Modal } from '@/components/Modal'
-import { ShareList } from '@/components/ShareList'
-import { useModal } from '@/hooks/useModal'
+import { ShareModal } from '@/components/Search/shareModal'
 
+import { serverApi } from '@/services/api'
+import { Opportunity } from '@/services/api/repositories/opportunity'
+import { AxiosResponse } from 'axios'
+
+import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import {
   FiArrowLeft,
@@ -14,25 +15,36 @@ import {
   FiSlash,
   FiCalendar,
   FiMapPin,
-  FiCheck,
 } from 'react-icons/fi'
+import { ConfirmCandidature } from '@/components/ConfirmCandidature'
 
-export default function OpportunityDetails() {
-  const {
-    isOpen,
-    handleCloseModal,
-    handleOpenModal,
-    isLeave,
-    handleAnimationEndClose,
-  } = useModal()
+type OpportunityDetailsProps = {
+  params: { id: string }
+}
 
-  const {
-    isOpen: isOpenConfirmOpportunity,
-    handleCloseModal: handleCloseModalConfirmOpportunity,
-    handleOpenModal: handleOpenModalConfirmOpportunity,
-    isLeave: isLeaveConfirmOpportunity,
-    handleAnimationEndClose: handleAnimationEndCloseConfirmOpportunity,
-  } = useModal()
+async function getOpportunity(id: string) {
+  try {
+    const { data } = await serverApi.get<any, AxiosResponse<Opportunity>>(
+      `/opportunities/${id}`,
+    )
+    return data
+  } catch (err) {
+    return null
+  }
+}
+
+export default async function OpportunityDetails({
+  params,
+}: OpportunityDetailsProps) {
+  // const {
+  //   isOpen: isOpenConfirmOpportunity,
+  //   handleCloseModal: handleCloseModalConfirmOpportunity,
+  //   handleOpenModal: handleOpenModalConfirmOpportunity,
+  //   isLeave: isLeaveConfirmOpportunity,
+  //   handleAnimationEndClose: handleAnimationEndCloseConfirmOpportunity,
+  // } = useModal()
+  const data = await getOpportunity(params.id)
+  if (!data) notFound()
 
   return (
     <div className=" max-w-screen-xl mx-auto pt-28 px-6 pb-24 grid grid-cols-opportunity-details items-start justify-between max-lg:grid-cols-1">
@@ -43,19 +55,13 @@ export default function OpportunityDetails() {
               {<FiArrowLeft size={20} />} Voltar
             </span>
             <h1 className="font-lato text-4xl font-bold text-slate-900 mt-4 mb-2">
-              Faxineiro
+              {data.title}
             </h1>
             <span className="font-poppins text-sm text-slate-400 ">
-              postado 4 de setembro de 2023
+              {data.createdAt}
             </span>
             <div className="flex items-center gap-6 mt-4">
-              <span
-                className="flex items-center text-blue-700 gap-2"
-                onClick={handleOpenModal}
-              >
-                compartilhar
-                <FiShare2 />
-              </span>
+              <ShareModal />
               <span className="flex items-center whitespace-nowrap text-slate-400 gap-2">
                 Reportar vaga
                 <FiSlash />
@@ -64,12 +70,7 @@ export default function OpportunityDetails() {
           </div>
 
           <div className="w-48 max-sm:fixed max-sm:bottom-0 max-sm:left-0 max-sm:bg-slate-50  max-sm:w-full max-sm:px-6 max-sm:py-4 max-sm:border-t-2 border-slate-200 max-sm:shadow-2xl max-sm:shadow-slate-400">
-            <Button
-              onClick={handleOpenModalConfirmOpportunity}
-              className="flex-grow-1"
-            >
-              Candidata-se
-            </Button>
+            <ConfirmCandidature />
           </div>
         </section>
 
@@ -80,7 +81,7 @@ export default function OpportunityDetails() {
               Salario
             </span>
             <strong className="text-slate-900 font-poppins font-semibold">
-              R$600,00
+              {data.value}
             </strong>
           </div>
 
@@ -90,7 +91,7 @@ export default function OpportunityDetails() {
               Carga horaria
             </span>
             <strong className="text-slate-900 font-poppins font-semibold">
-              12 horas
+              {data.timeLoad}
             </strong>
           </div>
 
@@ -100,7 +101,7 @@ export default function OpportunityDetails() {
               Data
             </span>
             <strong className="text-slate-900 font-poppins font-semibold">
-              24/09/2023
+              {data.startDateTime}
             </strong>
           </div>
 
@@ -110,7 +111,7 @@ export default function OpportunityDetails() {
               Local
             </span>
             <strong className="text-slate-900 font-poppins font-semibold">
-              Rua luiz tira dentes
+              {data.local}
             </strong>
           </div>
         </section>
@@ -127,11 +128,11 @@ export default function OpportunityDetails() {
             />
             <div className="mt-3">
               <h4 className="font-poppins text-slate-900 font-medium">
-                Aldovani Henrique da costa
+                {data.postedBy.name}
               </h4>
               <Link
                 className="font-poppins text-blue-700 "
-                href="/user/aldovani"
+                href={`/profile/${data.postedBy.username}`}
               >
                 ver perfil
               </Link>
@@ -143,18 +144,7 @@ export default function OpportunityDetails() {
           <h3 className="text-slate-600 text-lg font-lato font-medium">
             Descrição
           </h3>
-          <p className="font-poppins text-slate-400 mt-3">
-            Morem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu
-            turpis molestie, dictum est a, mattis tellus. Sed dignissim, metus
-            nec fringilla accumsan, risus sem sollicitudin lacus, ut interdum
-            tellus elit sed risus. Maecenas eget condimentum velit, sit amet
-            feugiat lectus. Class aptent taciti sociosqu ad litora torquent per
-            conubia nostra, per inceptos himenaeos. Praesent auctor purus luctus
-            enim egestas, ac scelerisque ante pulvinar. Donec ut rhoncus ex.
-            Suspendisse ac rhoncus nisl, eu tempor urna. Curabitur vel bibendum
-            lorem. Morbi convallis convallis diam sit amet lacinia. Aliquam in
-            elementum tellu{' '}
-          </p>
+          <p className="font-poppins text-slate-400 mt-3">{data.description}</p>
         </section>
 
         <section className="mt-10 ">
@@ -162,14 +152,9 @@ export default function OpportunityDetails() {
             Competências
           </h3>
           <p className="font-poppins text-slate-400 mt-3">
-            Horem ipsum dolor sit amet, consectetur adipiscing elit. Nunc
-            vulputate libero et velit interdum, ac aliquet odio mattis. Horem
-            ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate
-            libero et velit interdum, ac aliquet odio mattis. Horem ipsum dolor
-            sit amet, consectetur adipiscing elit. Nunc vulputate libero et
-            velit interdum, ac aliquet odio mattis. Horem ipsum dolor sit amet,
-            consectetur adipiscing elit. Nunc vulputate libero et velit
-            interdum, ac aliquet odio mattis.
+            {data.necessarySkills.map((skill) => (
+              <span key={skill.name}>{skill.name}</span>
+            ))}
           </p>
         </section>
       </div>
@@ -336,68 +321,6 @@ export default function OpportunityDetails() {
           </article>
         </div>
       </section>
-
-      <Modal.Overlay isOpen={isOpen} onClose={handleCloseModal}>
-        <Modal.Container
-          isLeave={isLeave}
-          isOpen={isOpen}
-          onAnimationEnd={handleAnimationEndClose}
-        >
-          <Modal.Header onClose={handleCloseModal}>
-            <div className="flex items-center gap-1">
-              <div className="p-1 bg-blue-100 rounded-lg text-blue-700">
-                <FiShare2 size={18} />
-              </div>
-              <h3 className="font-lato text-lg font-semibold">Compartilhar</h3>
-            </div>
-          </Modal.Header>
-
-          <Modal.Body>
-            <p className="font-poppins text-slate-400 text-sm font-normal mb-4">
-              compartilhe essa oportunidades com amigos e familiares que
-              precisam de uma renda extra
-            </p>
-            <Copy text="htpps://ibico.com/opportunities/54565411sdadasdasdasdaskdajskldjasdkjal" />
-            <ShareList url="sdasdn" />
-          </Modal.Body>
-        </Modal.Container>
-      </Modal.Overlay>
-
-      <Modal.Overlay
-        isOpen={isOpenConfirmOpportunity}
-        onClose={handleCloseModalConfirmOpportunity}
-      >
-        <Modal.Container
-          isLeave={isLeaveConfirmOpportunity}
-          isOpen={isOpenConfirmOpportunity}
-          onAnimationEnd={handleAnimationEndCloseConfirmOpportunity}
-        >
-          <Modal.Header onClose={handleCloseModalConfirmOpportunity}>
-            <div className="flex items-center gap-1">
-              <div className="p-1 bg-blue-100 rounded-lg text-blue-700">
-                <FiCheck size={18} />
-              </div>
-              <h3 className="font-lato text-lg font-semibold">
-                Confirmar candidatura
-              </h3>
-            </div>
-          </Modal.Header>
-
-          <Modal.Body>
-            <p className="font-poppins text-slate-400 text-sm font-normal mb-4">
-              Tem certeza de que deseja confirmar sua candidatura para esta
-              oportunidade?
-            </p>
-          </Modal.Body>
-
-          <Modal.Footer>
-            <Modal.Action onClick={handleCloseModalConfirmOpportunity}>
-              Cancelar
-            </Modal.Action>
-            <Modal.Action actions="success">Confirmar</Modal.Action>
-          </Modal.Footer>
-        </Modal.Container>
-      </Modal.Overlay>
     </div>
   )
 }

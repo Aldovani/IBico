@@ -1,5 +1,5 @@
 import { SOCIAL_SHARE_MAP } from '@/constants/share-links'
-import { ShareItem } from './ShareItem'
+import { ShareItem } from './shareItem'
 
 type ShareLinksProps = {
   url: string

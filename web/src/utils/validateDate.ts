@@ -1,6 +1,6 @@
-export function validateDate(date: Date) {
+export function validateDate(date: string) {
   const currentDay = new Date()
-  const isValidDate = date.getTime() >= currentDay.getTime()
+  const isValidDate = new Date(date).getTime() >= currentDay.getTime()
 
   return isValidDate
 }
