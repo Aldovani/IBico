@@ -6,7 +6,7 @@ import axios, { AxiosError } from 'axios'
 import { env } from 'process'
 
 const clientApi = axios.create({
-  baseURL: env.NEXT_PUBLIC_API_URL || 'http://localhost:8080/v1',
+  baseURL:'http://ibico.sa-east-1.elasticbeanstalk.com',
 })
 clientApi.interceptors.response.use(
   function (response) {

@@ -4,7 +4,7 @@ import { getCookies } from 'next-client-cookies/server'
 import { HTTPS_CODES } from '@/constants/http-codes'
 
 export const serverApi = axios.create({
-  baseURL: env.NEXT_PUBLIC_API_URL || 'http://localhost:8080/v1',
+  baseURL:'http://ibico.sa-east-1.elasticbeanstalk.com',
 })
 
 serverApi.interceptors.response.use(
