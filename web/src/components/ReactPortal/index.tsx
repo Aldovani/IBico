@@ -28,7 +28,7 @@ export function ReactPortal({
 
   return mounted && containerRef.current
     ? ReactDOM.createPortal(
-        <>{children}</>,
+      {children},
         document.body.appendChild(containerRef.current) || document.body,
       )
     : null
