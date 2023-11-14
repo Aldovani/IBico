@@ -1,5 +1,5 @@
 import { tv, VariantProps } from 'tailwind-variants'
-import { ComponentProps, Ref, forwardRef } from 'react'
+import { ComponentProps, ReactNode, Ref, forwardRef } from 'react'
 import { Spinner } from '../Spinner'
 
 const field = tv({
@@ -18,6 +18,7 @@ const field = tv({
 type FieldProps = ComponentProps<'input'> &
   VariantProps<typeof field> & {
     isLoading?: boolean
+    children?: ReactNode
   }
 
 export const Field = forwardRef(function (
@@ -25,6 +26,7 @@ export const Field = forwardRef(function (
     error,
     sizes = 'medium',
     className,
+    children,
     isLoading = false,
     ...props
   }: FieldProps,
@@ -38,6 +40,8 @@ export const Field = forwardRef(function (
         ref={ref}
         {...props}
       />
+
+      {children}
       {isLoading && (
         <div className="absolute right-4 top-1/2 -translate-y-1/2">
           <Spinner colors="black" />

@@ -1,4 +1,3 @@
-import { Button } from '@/components/Button'
 import { ShareModal } from '@/components/Search/shareModal'
 
 import { serverApi } from '@/services/api'
@@ -7,16 +6,20 @@ import { AxiosResponse } from 'axios'
 
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
+
 import {
-  FiArrowLeft,
   FiClock,
   FiDollarSign,
-  FiShare2,
   FiSlash,
   FiCalendar,
   FiMapPin,
 } from 'react-icons/fi'
 import { ConfirmCandidature } from '@/components/ConfirmCandidature'
+import { LinkBack } from '@/components/LinkBack'
+import { SimilarOpportunities } from '@/components/Opportunity/SimilarOpportunities'
+import { Suspense } from 'react'
+import { Skeleton } from '@/components/skeleton'
+import { formatDate } from '@/utils/formatDate'
 
 type OpportunityDetailsProps = {
   params: { id: string }
@@ -24,7 +27,7 @@ type OpportunityDetailsProps = {
 
 async function getOpportunity(id: string) {
   try {
-    const { data } = await serverApi.get<any, AxiosResponse<Opportunity>>(
+    const { data } = await serverApi.get<unknown, AxiosResponse<Opportunity>>(
       `/opportunities/${id}`,
     )
     return data
@@ -36,13 +39,6 @@ async function getOpportunity(id: string) {
 export default async function OpportunityDetails({
   params,
 }: OpportunityDetailsProps) {
-  // const {
-  //   isOpen: isOpenConfirmOpportunity,
-  //   handleCloseModal: handleCloseModalConfirmOpportunity,
-  //   handleOpenModal: handleOpenModalConfirmOpportunity,
-  //   isLeave: isLeaveConfirmOpportunity,
-  //   handleAnimationEndClose: handleAnimationEndCloseConfirmOpportunity,
-  // } = useModal()
   const data = await getOpportunity(params.id)
   if (!data) notFound()
 
@@ -51,14 +47,12 @@ export default async function OpportunityDetails({
       <div>
         <section className="flex items-center justify-between ">
           <div className="flex-1">
-            <span className="flex items-center text-slate-500 gap-1 font-poppins font-medium">
-              {<FiArrowLeft size={20} />} Voltar
-            </span>
+            <LinkBack />
             <h1 className="font-lato text-4xl font-bold text-slate-900 mt-4 mb-2">
               {data.title}
             </h1>
             <span className="font-poppins text-sm text-slate-400 ">
-              {data.createdAt}
+              postado {formatDate.format(new Date(data.createdAt))}
             </span>
             <div className="flex items-center gap-6 mt-4">
               <ShareModal />
@@ -70,7 +64,7 @@ export default async function OpportunityDetails({
           </div>
 
           <div className="w-48 max-sm:fixed max-sm:bottom-0 max-sm:left-0 max-sm:bg-slate-50  max-sm:w-full max-sm:px-6 max-sm:py-4 max-sm:border-t-2 border-slate-200 max-sm:shadow-2xl max-sm:shadow-slate-400">
-            <ConfirmCandidature />
+            <ConfirmCandidature opportunityId={data.id} />
           </div>
         </section>
 
@@ -162,164 +156,9 @@ export default async function OpportunityDetails({
         <h2 className="text-slate-700 text-2xl font-lato font-medium ">
           Vagas semelhantes
         </h2>
-
-        <div className="flex flex-col max-lg:flex-wrap justify-between gap-4 mt-4 ">
-          <article className="min-w-80 border-x border-y border-slate-200 rounded-lg px-4 py-6">
-            <header>
-              <h3 className="font-lato font-semibold text-xl">Faxineira</h3>
-              <span className="font-poppins text-xs text-slate-500">
-                por
-                <Link href="user/id-muito-foda" className="text-blue-500">
-                  {' '}
-                  Luize Santos da silva{' '}
-                </Link>
-              </span>
-            </header>
-            <main className="mt-3">
-              <p className="text-slate-400 text-xs font-poppins ">
-                Rorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc
-                vulputate libero et velit interdum, ac aliquet odio mattis.
-              </p>
-
-              <div className="mt-4 flex items-center gap-5 ">
-                <div className="flex items-center gap-1 ">
-                  <FiClock size={16} color="#64748B" />
-                  <span className="text-slate-400 font-poppins">12h</span>
-                </div>
-                <div className="flex items-center gap-1">
-                  <FiDollarSign size={16} color="#64748B" />
-                  <span className="text-slate-400 font-poppins">R$150/h</span>
-                </div>
-              </div>
-            </main>
-
-            <footer className="mt-5">
-              <Link
-                href="opportunities/id-muito-foda/"
-                className="text-blue-700 font-poppins"
-              >
-                Ver vaga
-              </Link>
-            </footer>
-          </article>
-
-          <article className="min-w-80 border-x border-y border-slate-200 rounded-lg  px-4 py-6">
-            <header>
-              <h3 className="font-lato font-semibold text-xl">Faxineira</h3>
-              <span className="font-poppins text-xs text-slate-500">
-                por
-                <Link href="user/id-muito-foda" className="text-blue-500">
-                  {' '}
-                  Luize Santos da silva{' '}
-                </Link>
-              </span>
-            </header>
-            <main className="mt-3">
-              <p className="text-slate-400 text-xs font-poppins ">
-                Rorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc
-                vulputate libero et velit interdum, ac aliquet odio mattis.
-              </p>
-
-              <div className="mt-4 flex items-center gap-5 ">
-                <div className="flex items-center gap-1 ">
-                  <FiClock size={16} color="#64748B" />
-                  <span className="text-slate-400 font-poppins">12h</span>
-                </div>
-                <div className="flex items-center gap-1">
-                  <FiDollarSign size={16} color="#64748B" />
-                  <span className="text-slate-400 font-poppins">R$150/h</span>
-                </div>
-              </div>
-            </main>
-
-            <footer className="mt-5">
-              <Link
-                href="opportunities/id-muito-foda/"
-                className="text-blue-700 font-poppins"
-              >
-                Ver vaga
-              </Link>
-            </footer>
-          </article>
-
-          <article className="min-w-80 border-x border-y border-slate-200 rounded-lg px-4 py-6">
-            <header>
-              <h3 className="font-lato font-semibold text-xl">Faxineira</h3>
-              <span className="font-poppins text-xs text-slate-500">
-                por
-                <Link href="user/id-muito-foda" className="text-blue-500">
-                  {' '}
-                  Luize Santos da silva{' '}
-                </Link>
-              </span>
-            </header>
-            <main className="mt-3">
-              <p className="text-slate-400 text-xs font-poppins ">
-                Rorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc
-                vulputate libero et velit interdum, ac aliquet odio mattis.
-              </p>
-
-              <div className="mt-4 flex items-center gap-5 ">
-                <div className="flex items-center gap-1 ">
-                  <FiClock size={16} color="#64748B" />
-                  <span className="text-slate-400 font-poppins">12h</span>
-                </div>
-                <div className="flex items-center gap-1">
-                  <FiDollarSign size={16} color="#64748B" />
-                  <span className="text-slate-400 font-poppins">R$150/h</span>
-                </div>
-              </div>
-            </main>
-
-            <footer className="mt-5">
-              <Link
-                href="opportunities/id-muito-foda/"
-                className="text-blue-700 font-poppins"
-              >
-                Ver vaga
-              </Link>
-            </footer>
-          </article>
-
-          <article className="min-w-80 border-x border-y border-slate-200 rounded-lg  px-4 py-6">
-            <header>
-              <h3 className="font-lato font-semibold text-xl">Faxineira</h3>
-              <span className="font-poppins text-xs text-slate-500">
-                por
-                <Link href="user/id-muito-foda" className="text-blue-500">
-                  {' '}
-                  Luize Santos da silva{' '}
-                </Link>
-              </span>
-            </header>
-            <main className="mt-3">
-              <p className="text-slate-400 text-xs font-poppins ">
-                Rorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc
-                vulputate libero et velit interdum, ac aliquet odio mattis.
-              </p>
-
-              <div className="mt-4 flex items-center gap-5 ">
-                <div className="flex items-center gap-1 ">
-                  <FiClock size={16} color="#64748B" />
-                  <span className="text-slate-400 font-poppins">12h</span>
-                </div>
-                <div className="flex items-center gap-1">
-                  <FiDollarSign size={16} color="#64748B" />
-                  <span className="text-slate-400 font-poppins">R$150/h</span>
-                </div>
-              </div>
-            </main>
-
-            <footer className="mt-5">
-              <Link
-                href="opportunities/id-muito-foda/"
-                className="text-blue-700 font-poppins"
-              >
-                Ver vaga
-              </Link>
-            </footer>
-          </article>
-        </div>
+        <Suspense fallback={<Skeleton className="h-100" />}>
+          <SimilarOpportunities />
+        </Suspense>
       </section>
     </div>
   )

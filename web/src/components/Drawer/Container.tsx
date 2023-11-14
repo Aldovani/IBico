@@ -10,7 +10,7 @@ export function Container({ children }: ContainerProps) {
   return (
     <aside
       data-open={isOpen}
-      className="rounded-l-lg px-4 py-6 w-1/4 h-full bg-slate-50 absolute 
+      className="rounded-l-lg px-4 py-6 w-[40%] h-full bg-slate-50 absolute 
       right-0 border-l border-slate-200  translate-x-full 
       transition-all 
       delay-0 opacity-0

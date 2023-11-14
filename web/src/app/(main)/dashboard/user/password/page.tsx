@@ -46,22 +46,21 @@ export default function PasswordConfig() {
           )}
         >
           <Input.Label id="password" error={!!errors.password} name="Senha">
-            <Input.Wrapper>
-              <Input.Field
-                {...register('password')}
-                placeholder="•••••••••••••"
-                minLength={8}
-                error={!!errors.password}
-                isLoading={isLoading}
-                type={isShowPassword ? 'text' : 'password'}
-              />
+            <Input.Field
+              {...register('password')}
+              placeholder="•••••••••••••"
+              minLength={8}
+              error={!!errors.password}
+              isLoading={isLoading}
+              type={isShowPassword ? 'text' : 'password'}
+            >
               <Input.Icon
                 error={!errors.password}
                 isPassword={isShowPassword}
                 isLoading={isLoading}
                 onClick={handleTogglePassword}
               />
-            </Input.Wrapper>
+            </Input.Field>
             <Input.MessageError message={errors.password?.message} />
           </Input.Label>
           <Input.Label
@@ -69,22 +68,21 @@ export default function PasswordConfig() {
             error={!!errors.confirmPassword}
             name="Confirmar senha"
           >
-            <Input.Wrapper>
-              <Input.Field
-                {...register('confirmPassword')}
-                placeholder="•••••••••••••"
-                minLength={8}
-                isLoading={isLoading}
-                error={!!errors.confirmPassword}
-                type={isShowConfirmPassword ? 'text' : 'password'}
-              />
+            <Input.Field
+              {...register('confirmPassword')}
+              placeholder="•••••••••••••"
+              minLength={8}
+              isLoading={isLoading}
+              error={!!errors.confirmPassword}
+              type={isShowConfirmPassword ? 'text' : 'password'}
+            >
               <Input.Icon
                 error={!errors.confirmPassword}
                 isLoading={isLoading}
                 isPassword={isShowConfirmPassword}
                 onClick={handleToggleConfirmPassword}
               />
-            </Input.Wrapper>
+            </Input.Field>
             <Input.MessageError message={errors.confirmPassword?.message} />
           </Input.Label>
 

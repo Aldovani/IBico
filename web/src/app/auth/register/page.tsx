@@ -115,21 +115,20 @@ export default function Register() {
           name="Senha"
           error={!!errors.password?.message}
         >
-          <Input.Wrapper>
-            <Input.Field
-              error={!!errors.password?.message}
-              id="password"
-              {...register('password')}
-              placeholder="••••••••••••••••"
-              className="pr-16"
-              type={!isShowPassword ? 'password' : 'text'}
-            />
+          <Input.Field
+            error={!!errors.password?.message}
+            id="password"
+            {...register('password')}
+            placeholder="••••••••••••••••"
+            className="pr-16"
+            type={!isShowPassword ? 'password' : 'text'}
+          >
             <Input.Icon
               onClick={handleToggleIconPassword}
               isPassword={isShowPassword}
               error={!errors.password}
             />
-          </Input.Wrapper>
+          </Input.Field>
           <Input.MessageError message={errors.password?.message} />
         </Input.Label>
 
@@ -139,21 +138,20 @@ export default function Register() {
           name="Confirmar senha"
           error={!!errors.confirmPassword?.message}
         >
-          <Input.Wrapper>
-            <Input.Field
-              error={!!errors.confirmPassword?.message}
-              id="confirmPassword"
-              {...register('confirmPassword')}
-              placeholder="••••••••••••••••"
-              type={!isShowConfirmPassword ? 'password' : 'text'}
-              className="pr-16"
-            />
+          <Input.Field
+            error={!!errors.confirmPassword?.message}
+            id="confirmPassword"
+            {...register('confirmPassword')}
+            placeholder="••••••••••••••••"
+            type={!isShowConfirmPassword ? 'password' : 'text'}
+            className="pr-16"
+          >
             <Input.Icon
               onClick={handleToggleIconConfirmPassword}
               isPassword={isShowConfirmPassword}
               error={!errors.confirmPassword}
             />
-          </Input.Wrapper>
+          </Input.Field>
           <Input.MessageError message={errors.confirmPassword?.message} />
         </Input.Label>
 

@@ -8,7 +8,8 @@ import { useConfig } from './useConfig'
 import { Skills } from '@/components/Skills'
 
 export default function Register() {
-  const { skills, handleAddSkill, handleSubmit, removeSkill } = useConfig()
+  const { skills, handleAddSkill, handleSubmit, removeSkill, isLoading } =
+    useConfig()
 
   return (
     <div className=" pb-10 max-w-lg w-full max-md:m-auto max-sm:px-6">
@@ -21,7 +22,7 @@ export default function Register() {
           contratar seus serviços
         </p>
       </header>
-      <form className="flex flex-col mt-8" onSubmit={(e) => handleSubmit(e)}>
+      <form className="flex flex-col mt-8" onSubmit={handleSubmit}>
         <Skills
           onAddSkill={handleAddSkill}
           onRemoveSkill={removeSkill}
@@ -35,7 +36,7 @@ export default function Register() {
           >
             pular
           </Link>
-          <Button className="mt-5 w-52" type="submit">
+          <Button loading={isLoading} className="mt-5 w-52" type="submit">
             Finalizar
           </Button>
         </div>

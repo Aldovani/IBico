@@ -8,7 +8,8 @@ const action = tv({
     actions: {
       dangerous:
         'data-[loading="true"]:bg-red-500  text-red-700  border-red-500 hover:bg-red-500 hover:text-slate-50 ',
-      success: 'text-blue-700 hover:bg-blue-700 hover:text-slate-50',
+      success:
+        'data-[loading="true"]:bg-blue-700 text-blue-700 hover:bg-blue-700 hover:text-slate-50',
     },
   },
 })

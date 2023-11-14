@@ -1,10 +1,10 @@
 'use client'
 import { useDrawer } from '@/contexts/useDrawer'
 import { useModal } from '@/hooks/useModal'
-import { Opportunity } from '@/services/api/repositories/opportunity'
+import { Candidate, Opportunity } from '@/services/api/repositories/opportunity'
 import { toast } from '@/utils/toast'
 import { useMutation, useQuery } from '@tanstack/react-query'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 type ModalContent = {
   id: string
@@ -33,8 +33,11 @@ export function useOpportunity() {
   const [modalContent, setModalContent] = useState<ModalContent | undefined>(
     undefined,
   )
+  const [opportunityId, setOpportunityId] = useState('')
+  const [candidates, setCandidates] = useState<Candidate[]>([])
 
   const isEmpty = opportunities.length === 0
+  const isCandidateListEmpty = candidates.length === 0
 
   const { mutate, isLoading: isLoadingDelete } = useMutation({
     mutationFn: Opportunity.deleteOpportunity,
@@ -53,7 +56,7 @@ export function useOpportunity() {
 
   const { isLoading: isOpportunityLoading, refetch } = useQuery(
     ['GET_OPPORTUNITIES'],
-    Opportunity.getOpportunities,
+    Opportunity.getMeOpportunities,
     {
       onSuccess: (data) => {
         setOpportunities(data?.items || [])
@@ -63,8 +66,39 @@ export function useOpportunity() {
     },
   )
 
+  const { refetch: getCandidates, isLoading: isCandidatesLoading } = useQuery({
+    queryKey: ['GET_CANDIDATES', opportunityId],
+    queryFn: () => Opportunity.getCandidates(opportunityId),
+    onSuccess: (data) => {
+      setCandidates(data.items)
+    },
+    refetchOnMount: false,
+    enabled: false,
+  })
+
+  const { isLoading: isSelectCandidateLoading, mutate: handleSelectCandidate } =
+    useMutation({
+      mutationKey: ['SELECT_CANDIDATE'],
+      mutationFn: Opportunity.selectCandidate,
+      onSuccess: async () => {
+        toast({
+          title: 'Sucesso',
+          text: 'Candidato escolhido com sucesso',
+          type: 'SUCCESS',
+        })
+        await refetch()
+        closeDrawer()
+      },
+    })
+
+  useEffect(() => {
+    if (!opportunityId) return
+    getCandidates()
+  }, [getCandidates, opportunityId])
+
   async function handleOpenDrawer(id: string) {
     openDrawer()
+    setOpportunityId(id)
   }
 
   function handleDeleteOpportunity() {
@@ -78,6 +112,7 @@ export function useOpportunity() {
   }
 
   return {
+    isCandidateListEmpty,
     handleAnimationEndClose,
     handleDeleteOpportunity,
     handleOpenDrawer,
@@ -93,5 +128,9 @@ export function useOpportunity() {
     isOpportunityLoading,
     isMounted,
     isEmpty,
+    candidates,
+    isCandidatesLoading,
+    isSelectCandidateLoading,
+    handleSelectCandidate,
   }
 }

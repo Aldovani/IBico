@@ -58,21 +58,20 @@ export default function SignIn() {
           className="mt-4"
           name="Senha"
         >
-          <Input.Wrapper>
-            <Input.Field
-              error={!!errors.password}
-              id="password"
-              type={isShowPassword ? 'text' : 'password'}
-              {...register('password')}
-              placeholder="••••••••••••••••"
-              autoComplete="current-password"
-            />
+          <Input.Field
+            error={!!errors.password}
+            id="password"
+            type={isShowPassword ? 'text' : 'password'}
+            {...register('password')}
+            placeholder="••••••••••••••••"
+            autoComplete="current-password"
+          >
             <Input.Icon
               onClick={handleTogglePassword}
               isPassword={isShowPassword}
               error={!errors.password}
             />
-          </Input.Wrapper>
+          </Input.Field>
           <Input.MessageError message={errors.password?.message} />
         </Input.Label>
 

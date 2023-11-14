@@ -1,8 +1,8 @@
+/* eslint-disable @next/next/no-img-element */
 'use client'
 
 import { Button } from '@/components/Button'
 import { Input } from '@/components/Input'
-import Image from 'next/image'
 import { useUserConfig } from './useUserConfig'
 import { Modal } from '@/components/Modal'
 
@@ -27,6 +27,9 @@ export default function UserConfig() {
     isLoadingUserDisable,
     user,
     isMounted,
+    handleUpdateAvatar,
+    handleDeleteAvatar,
+    isLoadingDeleteUserAvatar,
   } = useUserConfig()
 
   return (
@@ -53,8 +56,8 @@ export default function UserConfig() {
         </div>
 
         <div className="flex gap-4 mt-4 items-center">
-          <Image
-            src="/img/avatar.png"
+          <img
+            src={user?.imgURL || ''}
             width={80}
             height={80}
             alt=""
@@ -63,11 +66,28 @@ export default function UserConfig() {
 
           <div>
             <p className="text-xs text-slate-400 font-poppins ">
-              Suporte para PNGs, JPEGs e GIFS abaixo de 10mb
+              Suporte para PNGs, abaixo de 5mb
             </p>
             <div className="flex gap-4 mt-3">
-              <Button variants="secondary">Enviar avatar</Button>
-              <Button action="dangerous" variants="secondary">
+              <label
+                htmlFor="uploadImage"
+                className="border-2 cursor-pointer border-slate-300 bg-transparent text-slate-500 hover:bg-slate-200 font-poppins font-medium whitespace-nowrap flex  items-center rounded-lg  justify-center w-full  py-2 px-6   duration-150 ease-out "
+              >
+                Enviar avatar
+                <input
+                  className="hidden"
+                  type="file"
+                  onChange={handleUpdateAvatar}
+                  name=""
+                  id="uploadImage"
+                />
+              </label>
+              <Button
+                loading={isLoadingDeleteUserAvatar}
+                onClick={handleDeleteAvatar}
+                action="dangerous"
+                variants="secondary"
+              >
                 Deletar Avatar
               </Button>
             </div>

@@ -1,11 +1,14 @@
 'use client'
 
-import { useModal } from '@/hooks/useModal'
 import { Modal } from '../Modal'
 import { FiCheck } from 'react-icons/fi'
 import { Button } from '../Button'
+import { useConfirmCandidature } from './useConfirmCandidature'
+type ConfirmCandidatureProps = {
+  opportunityId: string
+}
 
-export function ConfirmCandidature() {
+export function ConfirmCandidature({ opportunityId }: ConfirmCandidatureProps) {
   const {
     handleAnimationEndClose,
     handleClose,
@@ -13,7 +16,9 @@ export function ConfirmCandidature() {
     isLeave,
     isMounted,
     isOpen,
-  } = useModal()
+    handleSubmitCandidature,
+    isLoading,
+  } = useConfirmCandidature()
   return (
     <>
       <Button onClick={handleOpen} className="flex-grow-1">
@@ -46,7 +51,13 @@ export function ConfirmCandidature() {
 
           <Modal.Footer>
             <Modal.Action onClick={handleClose}>Cancelar</Modal.Action>
-            <Modal.Action actions="success">Confirmar</Modal.Action>
+            <Modal.Action
+              onClick={() => handleSubmitCandidature(opportunityId)}
+              isLoading={isLoading}
+              actions="success"
+            >
+              Confirmar
+            </Modal.Action>
           </Modal.Footer>
         </Modal.Container>
       </Modal.Overlay>

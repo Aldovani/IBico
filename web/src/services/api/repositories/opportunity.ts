@@ -30,6 +30,24 @@ type UpdateOpportunityPayload = Omit<
   'postedBy' | 'createdAt' | 'status'
 > & { id?: string }
 
+export type Candidate = {
+  id: string
+  candidatureDate: string
+  candidateName: string
+  candidateUsername: string
+  candidateImgURL: string
+  opportunityId: string
+}
+
+export type GetCandidatesResponse = {
+  items: Candidate[]
+  pageNo: number
+  pageSize: number
+  totalElements: number
+  totalPages: number
+  last: boolean
+  self: boolean
+}
 export type GetOpportunitiesResponse = {
   items: Opportunity[]
   pageNo: number
@@ -38,6 +56,19 @@ export type GetOpportunitiesResponse = {
   totalPages: number
   last: boolean
   self: boolean
+}
+
+type GetOpportunitiesOptions = {
+  pageNo?: number
+  pageSize?: number
+  sortBy?: keyof Opportunity
+  sortDir?: 'ASC' | 'DESC'
+  query?: string
+}
+
+type selectCandidatePayload = {
+  username: string
+  opportunityId: string
 }
 
 export function OpportunityRequest(httpProvider: AxiosInstance) {
@@ -71,11 +102,27 @@ export function OpportunityRequest(httpProvider: AxiosInstance) {
     return data
   }
 
-  async function getOpportunities() {
+  async function getOpportunities({
+    pageNo = 0,
+    pageSize = 12,
+    sortBy = 'id',
+    sortDir = 'ASC',
+    query = '',
+  }: GetOpportunitiesOptions) {
     const { data } = await httpProvider.get<
-      any,
+      unknown,
       AxiosResponse<GetOpportunitiesResponse>
-    >('/opportunities')
+    >('/opportunities', {
+      params: { pageNo, pageSize, sortBy, sortDir, query },
+    })
+    return data
+  }
+
+  async function getMeOpportunities() {
+    const { data } = await httpProvider.get<
+      unknown,
+      AxiosResponse<GetOpportunitiesResponse>
+    >('/users/opportunites')
     return data
   }
 
@@ -97,13 +144,32 @@ export function OpportunityRequest(httpProvider: AxiosInstance) {
     )
     return data
   }
+  async function selectCandidate({
+    opportunityId,
+    username,
+  }: selectCandidatePayload) {
+    const { data } = await httpProvider.post(
+      `opportunities/${opportunityId}/candidates/${username}`,
+    )
+    return data
+  }
 
+  async function getCandidates(id: string) {
+    const { data } = await httpProvider.get<
+      unknown,
+      AxiosResponse<GetCandidatesResponse>
+    >(`/opportunities/${id}/candidates`)
+    return data
+  }
   return {
     createOpportunity,
     getOpportunities,
     deleteOpportunity,
     updateOpportunity,
     getOpportunityById,
+    getCandidates,
+    getMeOpportunities,
+    selectCandidate,
   }
 }
 

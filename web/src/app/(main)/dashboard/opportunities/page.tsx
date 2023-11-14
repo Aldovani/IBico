@@ -22,6 +22,11 @@ export default function Opportunities() {
     isMounted,
     isLoadingDelete,
     isEmpty,
+    isCandidatesLoading,
+    candidates,
+    handleSelectCandidate,
+    isSelectCandidateLoading,
+    isCandidateListEmpty,
   } = useOpportunity()
 
   return (
@@ -65,7 +70,15 @@ export default function Opportunities() {
         onDeleteOpportunity={handleDeleteOpportunity}
       />
 
-      <DrawerOpportunity isOpen={isDrawerOpen} onClose={closeDrawer} />
+      <DrawerOpportunity
+        isEmpty={isCandidateListEmpty}
+        onSelectCandidate={handleSelectCandidate}
+        isSelectCandidateLoading={isSelectCandidateLoading}
+        candidates={candidates}
+        isLoading={isCandidatesLoading}
+        isOpen={isDrawerOpen}
+        onClose={closeDrawer}
+      />
     </div>
   )
 }

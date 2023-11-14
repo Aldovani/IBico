@@ -68,12 +68,22 @@ const config: Config = {
           '0%': { transform: 'translateX(0) scale(1)', opacity: '1' },
           '100%': { transform: 'translateX(100%) scale(.5)', opacity: '0' },
         },
+
+        'skeleton-loading': {
+          '0%': {
+            'background-color': 'hsl(214.29999999999995, 31.8%, 91.4%);',
+          },
+          '100%': {
+            'background-color': 'hsl(210, 40%, 98%)',
+          },
+        },
       },
       animation: {
         'fade-in': 'fadeIn .3s cubic-bezier(0.65,0.05,0.36,1)  forwards',
         'fade-out': 'fadeOut .3s cubic-bezier(0.65,0.05,0.36,1) forwards',
         'from-right': 'fromRight .3s ease forwards',
         'leave-right': 'leaveRight .3s ease forwards',
+        skeleton: 'skeleton-loading 1s linear infinite alternate;',
       },
     },
     plugins: [],

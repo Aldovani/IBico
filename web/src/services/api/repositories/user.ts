@@ -1,5 +1,6 @@
 import { AxiosInstance, AxiosResponse } from 'axios'
 import { clientApi } from '../providers/clientSide'
+import avatar from '../../../assets/img/avatar.png'
 
 type CreateUser = {
   cellphone: string
@@ -34,6 +35,11 @@ type UpdateUserDTO = {
   currentData: Omit<User, 'passwd'>
 }
 
+type updateUserAvatarPayload = {
+  username: string
+  file: File
+}
+
 type UserRequestDTO = {
   name?: string
 }
@@ -57,15 +63,72 @@ export function UserRequest(httpProvider: AxiosInstance) {
       name,
       username,
       imgURL: '',
+      active: true,
       passwd: password,
       skills: [],
     }
 
+    const response = await fetch(avatar.src)
+    const imageBlob = await response.blob()
+
+    const file = new File([imageBlob], 'nomeDaImagem.jpg', {
+      type: 'image/jpeg',
+    })
+    const formData = new FormData()
+
+    const userPayloadJSON = JSON.stringify(userPayload)
+    formData.append('profilePic', file)
+    const blob = new Blob([userPayloadJSON], {
+      type: 'application/json',
+    })
+    formData.append('payload', blob)
+
     const { data } = await httpProvider.post<
       unknown,
       AxiosResponse<UserCreated>
-    >('/users', userPayload)
+    >('/users', formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    })
 
+    return data
+  }
+
+  async function updateUserAvatar({ file, username }: updateUserAvatarPayload) {
+    const formData = new FormData()
+    formData.append('profilePic', file)
+    const { data } = await httpProvider.post(
+      `/users/${username}/update-profile-pic`,
+      formData,
+      {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      },
+    )
+    return data
+  }
+
+  async function deleteUserAvatar(username: string) {
+    const response = await fetch(avatar.src)
+    const imageBlob = await response.blob()
+
+    const file = new File([imageBlob], 'nomeDaImagem.jpg', {
+      type: 'image/jpeg',
+    })
+
+    const formData = new FormData()
+    formData.append('profilePic', file)
+    const { data } = await httpProvider.post(
+      `/users/${username}/update-profile-pic`,
+      formData,
+      {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      },
+    )
     return data
   }
 
@@ -93,6 +156,8 @@ export function UserRequest(httpProvider: AxiosInstance) {
     createUser,
     updateUser,
     getUser,
+    updateUserAvatar,
+    deleteUserAvatar,
   }
 }
 

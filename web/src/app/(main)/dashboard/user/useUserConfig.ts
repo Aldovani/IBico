@@ -8,6 +8,7 @@ import { maskCellphone } from '@/utils/maskCellphone'
 import { toast } from '@/utils/toast'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useMutation } from '@tanstack/react-query'
+import { ChangeEvent } from 'react'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
@@ -75,7 +76,7 @@ export function useUserConfig() {
     },
   })
 
-  const { mutateAsync: disableUserMutate, isLoading: isLoadingUserDisable } =
+  const { mutate: disableUserMutate, isLoading: isLoadingUserDisable } =
     useMutation({
       mutationKey: ['DELETE_USER'],
       mutationFn: User.disableUser,
@@ -85,8 +86,42 @@ export function useUserConfig() {
       },
     })
 
-  async function handleDisableAccount() {
-    await disableUserMutate()
+  const { mutate: mutateUpdateAvatar } = useMutation({
+    mutationKey: ['UPDATE_USER_AVATAR'],
+    mutationFn: User.updateUserAvatar,
+    onSuccess: async () => {
+      await getUser()
+      handleClose()
+    },
+  })
+
+  const { mutate: mutateDeleteAvatar, isLoading: isLoadingDeleteUserAvatar } =
+    useMutation({
+      mutationKey: ['DELETE_USER_AVATAR'],
+      mutationFn: User.deleteUserAvatar,
+      onSuccess: async () => {
+        await getUser()
+        handleClose()
+      },
+    })
+
+  function handleDeleteAvatar() {
+    mutateDeleteAvatar(user!.username)
+  }
+
+  function handleUpdateAvatar(event: ChangeEvent<HTMLInputElement>) {
+    if (!event.target.files) return
+
+    const file = event.target.files[0]
+
+    mutateUpdateAvatar({
+      username: user!.username,
+      file,
+    })
+  }
+
+  function handleDisableAccount() {
+    disableUserMutate()
   }
 
   function handleChangeCPF(value: string) {
@@ -114,5 +149,8 @@ export function useUserConfig() {
     isLeave,
     isOpen,
     isMounted,
+    handleDeleteAvatar,
+    isLoadingDeleteUserAvatar,
+    handleUpdateAvatar,
   }
 }

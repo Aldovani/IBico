@@ -1,6 +1,7 @@
 'use client'
 import { HTTPS_CODES } from '@/constants/http-codes'
 import { useLocalStorage } from '@/hooks/useLocalStorage'
+import { toast } from '@/utils/toast'
 import axios, { AxiosError } from 'axios'
 import { env } from 'process'
 
@@ -12,6 +13,9 @@ clientApi.interceptors.response.use(
     return response
   },
   function (error: AxiosError) {
+    if (error.code === 'ERR_NETWORK') {
+      toast({ title: 'Error', text: 'Erro ', type: 'ERROR' })
+    }
     if (error.response?.status === HTTPS_CODES.UNAUTHORIZED) {
       const { remove } = useLocalStorage()
       remove('token')
@@ -22,7 +26,7 @@ clientApi.interceptors.response.use(
 
 clientApi.interceptors.request.use(function (config) {
   const { get } = useLocalStorage()
-  const token = get('token') || get('token')
+  const token = get('token')
   if (!token) {
     return config
   }

@@ -7,7 +7,7 @@ import { toast } from '@/utils/toast'
 import { useMutation, useQuery } from '@tanstack/react-query'
 import { AxiosError } from 'axios'
 import { useRouter } from 'next/navigation'
-import { ReactNode, createContext, useState } from 'react'
+import { ReactNode, createContext, useState, useTransition } from 'react'
 import { useCookies } from 'next-client-cookies'
 import { clientApi } from '@/services/api'
 
@@ -58,6 +58,7 @@ export function AuthContextProvider({
 }: authContextProviderProps) {
   const [user, setUser] = useState<User | null>(userProp?.items[0] || null)
   const [errors, setError] = useState<AxiosError | undefined>(undefined)
+  const [_, startTransition] = useTransition()
   const { save, remove } = useLocalStorage()
   const router = useRouter()
   const cookies = useCookies()
@@ -68,44 +69,44 @@ export function AuthContextProvider({
     onSuccess: (data) => {
       setUser(data.items[0])
     },
+    enabled: false,
+    retry: 0,
     initialData: userProp,
   })
 
   const { mutate, isLoading } = useMutation<
     RequestSignInResponse,
     AxiosError,
-    { cpf: string; password: string },
+    { cpf: string; password: string; pathTo: string },
     unknown
   >({
     mutationFn: handleRequest,
+
+    onSuccess: async (data: { access_token: string }, { pathTo }) => {
+      save('token', data.access_token)
+      cookies.set('token', data.access_token)
+
+      const dataUser = await User.getUser({})
+      startTransition(() => {
+        setUser(dataUser.items[0])
+        router.push(pathTo)
+      })
+    },
+    onError: (error) => {
+      if (error.response?.status === HTTPS_CODES.INTERNAL_SERVER_ERROR) {
+        toast({ text: '', title: 'Erro no servidor', type: 'ERROR' })
+        return
+      }
+
+      setError(error)
+    },
   })
 
-  function handleSignIn(
+  async function handleSignIn(
     { cpf, password }: RequestSignInProps,
     pathTo = '/opportunities',
   ) {
-    mutate(
-      { cpf, password },
-      {
-        onSuccess: async ({ access_token: accessToken }) => {
-          save('token', accessToken)
-          cookies.set('token', accessToken)
-
-          const data = await User.getUser({})
-
-          setUser(data.items[0])
-          router.push(pathTo)
-        },
-        onError: (error) => {
-          if (error.response?.status === HTTPS_CODES.INTERNAL_SERVER_ERROR) {
-            toast({ text: '', title: 'Erro no servidor', type: 'ERROR' })
-            return
-          }
-
-          setError(error)
-        },
-      },
-    )
+    mutate({ cpf, password, pathTo })
   }
 
   function handleSignOut() {

@@ -1,7 +1,6 @@
 'use client'
 
 import { useAuth } from '@/hooks/useAuth'
-import Image from 'next/image'
 import Link from 'next/link'
 import { useEffect, useRef, useState } from 'react'
 
@@ -15,7 +14,7 @@ import {
 } from 'react-icons/fi'
 
 export function UserMenu() {
-  const { handleSignOut } = useAuth()
+  const { handleSignOut, user } = useAuth()
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const menuRef = useRef<HTMLUListElement>(null)
 
@@ -38,9 +37,9 @@ export function UserMenu() {
   return (
     <div className="relative flex ">
       <button onClick={handleClick}>
-        <Image
+        <img
           className="  rounded-full border-2 transition-colors hover:border-blue-700 "
-          src="/img/avatar.png"
+          src={user!.imgURL}
           alt=""
           width={42}
           height={42}
@@ -54,12 +53,12 @@ export function UserMenu() {
         }}
         ref={menuRef}
         data-open={isMenuOpen}
-        className=" border translate-y-2 shadow-modal top-full px-2 py-2 opacity-0 transition-all  pointer-events-none data-[open='true']:opacity-100 data-[open='true']:pointer-events-auto data-[open='true']:-translate-y-0 absolute bg-slate-50  flex flex-col gap-3 right-0  border-slate-200 rounded-lg"
+        className="z-[999] border translate-y-2 shadow-modal top-full px-2 py-2 opacity-0 transition-all  pointer-events-none data-[open='true']:opacity-100 data-[open='true']:pointer-events-auto data-[open='true']:-translate-y-0 absolute bg-slate-50  flex flex-col gap-3 right-0  border-slate-200 rounded-lg"
       >
         <li>
           <Link
             className="font-poppins flex items-center gap-2 rounded-lg  font-medium px-4 py-1  text-slate-500 transition-colors  hover:bg-slate-100   hover:text-blue-700"
-            href="/dashboard/user"
+            href={`/profile/${user!.username}`}
           >
             <FiUser size={16} />
             Perfil

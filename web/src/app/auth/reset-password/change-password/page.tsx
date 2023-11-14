@@ -36,22 +36,20 @@ export default function ChangePassword() {
         })}
       >
         <Input.Label id="password" name="Nova senha" error={!!errors.password}>
-          <Input.Wrapper>
-            <Input.Field
-              error={!!errors.password}
-              placeholder="••••••••••••••••"
-              {...register('password')}
-              type={isShowPassword ? 'text' : 'password'}
-              id="password"
-              minLength={8}
-            />
-
+          <Input.Field
+            error={!!errors.password}
+            placeholder="••••••••••••••••"
+            {...register('password')}
+            type={isShowPassword ? 'text' : 'password'}
+            id="password"
+            minLength={8}
+          >
             <Input.Icon
               onClick={handleTogglePassword}
               isPassword={isShowPassword}
               error={!errors.password}
             />
-          </Input.Wrapper>
+          </Input.Field>
           <Input.MessageError message={errors.password?.message} />
         </Input.Label>
 
@@ -61,21 +59,20 @@ export default function ChangePassword() {
           name="Confirmar senha"
           error={!!errors.confirmPassword}
         >
-          <Input.Wrapper>
-            <Input.Field
-              id="confirmPassword"
-              {...register('confirmPassword')}
-              type={isShowConfirmPassword ? 'text' : 'password'}
-              placeholder="••••••••••••••••"
-              minLength={8}
-              error={!!errors.confirmPassword}
-            />
+          <Input.Field
+            id="confirmPassword"
+            {...register('confirmPassword')}
+            type={isShowConfirmPassword ? 'text' : 'password'}
+            placeholder="••••••••••••••••"
+            minLength={8}
+            error={!!errors.confirmPassword}
+          >
             <Input.Icon
               onClick={handleToggleConfirmPassword}
               isPassword={isShowConfirmPassword}
               error={!errors.confirmPassword}
             />
-          </Input.Wrapper>
+          </Input.Field>
           <Input.MessageError message={errors.confirmPassword?.message} />
         </Input.Label>
         <Button className="mt-5" loading={isLoading}>

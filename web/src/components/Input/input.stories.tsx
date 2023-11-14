@@ -4,15 +4,9 @@ import { Input } from './index'
 
 const InputComplete = () => (
   <Input.Label id="input" name="Input">
-    <Input.Wrapper>
-      <Input.Field></Input.Field>
-      <Input.Icon
-        icon={<FiEye />}
-        onClick={() => {
-          console.log('aqui')
-        }}
-      />
-    </Input.Wrapper>
+    <Input.Field>
+      <Input.Icon icon={<FiEye />} />
+    </Input.Field>
   </Input.Label>
 )
 

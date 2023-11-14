@@ -2,6 +2,7 @@
 
 import { Opportunity } from '@/services/api/repositories/opportunity'
 import { ModalBody, OpportunityListItem } from './item'
+import { Skeleton } from '../skeleton'
 
 type OpportunityListProps = {
   onOpenDrawer: (id: string) => void
@@ -21,9 +22,15 @@ export function OpportunityList({
   return (
     <>
       <ul className="[&>*:not(:first-child)]:mt-3">
-        {isLoading && <h1>Carregando</h1>}
-        {isEmpty && <h1>Lista vazia</h1>}
-
+        {isLoading && (
+          <>
+            <Skeleton className="h-16 " />
+            <Skeleton className="h-16 " />
+            <Skeleton className="h-16 " />
+            <Skeleton className="h-16 " />
+          </>
+        )}
+        {!isLoading && isEmpty && <h1>Lista vazia</h1>}
         {opportunities?.map((opportunity) => {
           if (!opportunity) return null
           return (

@@ -1,20 +1,25 @@
 'use client'
 
 import { Modal } from '@/components/Modal'
-import { useModal } from '@/hooks/useModal'
 import Link from 'next/link'
-import { FiUser, FiX, FiXCircle } from 'react-icons/fi'
+import { FiUser, FiX, FiXCircle, FiLink } from 'react-icons/fi'
+import { useApplications } from './useApplications'
+import { Skeleton } from '@/components/skeleton'
 
 export default function Applications() {
   const {
     handleAnimationEndClose,
     handleClose,
-    handleOpen,
+    handleOpenModal,
     isLeave,
     isMounted,
     isOpen,
-  } = useModal()
-
+    candidatures,
+    isLoading,
+    handleUnsubscribe,
+    isUnsubscribeLoading,
+    isEmpty,
+  } = useApplications()
   return (
     <div className="w-full">
       <section className="flex items-center justify-between border-b-2 border-slate-200 pb-6">
@@ -31,39 +36,58 @@ export default function Applications() {
 
       <div className="mt-6">
         <ul className="[&>*:not(:first-child)]:mt-3">
-          <li className="flex border-2 justify-between items-center border-slate-200 rounded-lg p-3">
-            <div className="flex items-center gap-3">
+          {isLoading && (
+            <>
+              <Skeleton className="h-12" />
+              <Skeleton className="h-12" />
+              <Skeleton className="h-12" />
+              <Skeleton className="h-12" />
+            </>
+          )}
+          {!isLoading && isEmpty && (
+            <p>Voce não possui nenhuma candidatura ativa no momento</p>
+          )}
+
+          {candidatures.map((candidacy) => (
+            <li
+              key={candidacy.id}
+              className="flex border-2  items-center border-slate-200 rounded-lg p-3"
+            >
               <div className="p-3 bg-slate-100 rounded-full">
                 <FiUser size="32" color="#334155" />
               </div>
 
               <div className="flex flex-col">
                 <h4 className="font-medium font-poppins text-slate-900 text-base">
-                  Faxineira
+                  {candidacy.candidateName}
                 </h4>
                 <span className="text-xs font-poppins text-slate-400">
                   por{' '}
-                  <Link href="/" className="text-blue-700">
-                    Luize Santos da silva{' '}
+                  <Link
+                    href={`/profile/${candidacy.candidateUsername}`}
+                    className="text-blue-700"
+                  >
+                    {candidacy.candidateUsername}
                   </Link>
                 </span>
               </div>
 
-              <div className="flex flex-col">
-                <span className="font-poppins text-slate-500">20/09/2023</span>
-                <span className="font-semibold font-poppins text-slate-900 text-base">
-                  R$ 2000.00
-                </span>
+              <div className="flex gap-2 ml-auto">
+                <Link
+                  href={`/opportunities/${candidacy.opportunityId}`}
+                  className="hover:scale-105 hover:bg-blue-100 hover:border-blue-200 transition-all p-2 border text-blue-700 border-slate-200 rounded-lg"
+                >
+                  <FiLink size={24} />
+                </Link>
+                <button
+                  onClick={() => handleOpenModal(candidacy.id)}
+                  className="hover:scale-105 hover:bg-red-100 hover:border-red-200 transition-all p-2 border text-red-700 border-slate-200 rounded-lg"
+                >
+                  <FiX size={24} />
+                </button>
               </div>
-            </div>
-
-            <button
-              onClick={handleOpen}
-              className="hover:scale-105 hover:bg-red-100 hover:border-red-200 transition-all p-2 border text-red-700 border-slate-200 rounded-lg"
-            >
-              <FiX size={24} />
-            </button>
-          </li>
+            </li>
+          ))}
         </ul>
       </div>
 
@@ -86,21 +110,17 @@ export default function Applications() {
           </Modal.Header>
           <Modal.Body>
             <p className="text-slate-400 font-poppins text-sm">
-              Tem certeza de que deseja excluir esta{' '}
-              <strong>oportunidade</strong>? Esta ação é irreversível e a
-              <strong> oportunidade</strong> será permanentemente removido da
-              plataforma.
-            </p>
-
-            <p className="mt-2 text-slate-700 font-poppins text-sm">
-              <strong>titulo oportunidade:</strong> Faxineira
-              <br />
-              <strong> valor:</strong> R$155.00
+              Tem certeza de que deseja desistir desta{' '}
+              <strong>oportunidade</strong>?
             </p>
           </Modal.Body>
           <Modal.Footer>
             <Modal.Action onClick={handleClose}>Cancelar</Modal.Action>
-            <Modal.Action actions="dangerous">
+            <Modal.Action
+              onClick={handleUnsubscribe}
+              isLoading={isUnsubscribeLoading}
+              actions="dangerous"
+            >
               Desistir da oportunidade
             </Modal.Action>
           </Modal.Footer>
