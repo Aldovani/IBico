@@ -5,7 +5,7 @@ import ReactDOM from 'react-dom'
 
 type ReactPortalProps = {
   containerId: string
-  children: React.ReactNode
+  children: any
 }
 
 export function ReactPortal({

@@ -1,10 +1,9 @@
-import { env } from 'process'
 import axios, { AxiosError } from 'axios'
 import { getCookies } from 'next-client-cookies/server'
 import { HTTPS_CODES } from '@/constants/http-codes'
 
 export const serverApi = axios.create({
-  baseURL:'http://ibico.sa-east-1.elasticbeanstalk.com',
+  baseURL: 'http://ibico.sa-east-1.elasticbeanstalk.com',
 })
 
 serverApi.interceptors.response.use(
