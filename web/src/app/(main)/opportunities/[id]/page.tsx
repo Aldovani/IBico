@@ -20,6 +20,7 @@ import { SimilarOpportunities } from '@/components/Opportunity/SimilarOpportunit
 import { Suspense } from 'react'
 import { Skeleton } from '@/components/skeleton'
 import { formatDate } from '@/utils/formatDate'
+import Image from 'next/image'
 
 type OpportunityDetailsProps = {
   params: { id: string }
@@ -115,7 +116,7 @@ export default async function OpportunityDetails({
             Postado por
           </h3>
           <div className="flex items-center gap-3">
-            <img
+            <Image
               src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8dXNlcnxlbnwwfHwwfHx8MA%3D%3D&w=1000&q=80"
               alt="user picture"
               className="w-12 h-12 rounded-full"

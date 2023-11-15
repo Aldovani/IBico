@@ -1,4 +1,4 @@
-import { AnimationEvent, ReactNode, useEffect, useRef } from 'react'
+import { AnimationEvent, ReactNode } from 'react'
 
 type ContainerProps = {
   children: ReactNode

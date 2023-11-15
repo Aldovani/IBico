@@ -1,6 +1,7 @@
 'use client'
 
 import { useAuth } from '@/hooks/useAuth'
+import Image from 'next/image'
 import Link from 'next/link'
 import { useEffect, useRef, useState } from 'react'
 
@@ -37,9 +38,9 @@ export function UserMenu() {
   return (
     <div className="relative flex ">
       <button onClick={handleClick}>
-        <img
-          className="  rounded-full border-2 transition-colors hover:border-blue-700 "
-          src={user!.imgURL}
+        <Image
+          className="rounded-full border-2 transition-colors hover:border-blue-700 "
+          src={user?.imgURL || ''}
           alt=""
           width={42}
           height={42}
@@ -58,7 +59,7 @@ export function UserMenu() {
         <li>
           <Link
             className="font-poppins flex items-center gap-2 rounded-lg  font-medium px-4 py-1  text-slate-500 transition-colors  hover:bg-slate-100   hover:text-blue-700"
-            href={`/profile/${user!.username}`}
+            href={`/profile/${user?.username}`}
           >
             <FiUser size={16} />
             Perfil

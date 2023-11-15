@@ -28,10 +28,9 @@ export function OpportunitiesFeedProvider({
 }: OpportunitiesFeedProviderProps) {
   const [opportunities, setOpportunities] = useState<Opportunity[]>([])
   const [sortDir, setSortDir] = useState<'ASC' | 'DESC'>('ASC')
-  const [sortBy, setSortBy] = useState<keyof Opportunity>('createdAt')
+  const [sortBy] = useState<keyof Opportunity>('createdAt')
   const [currentPage, setCurrentPage] = useState(0)
   const [title, setTitle] = useState('')
-  const [local, setLocal] = useState('')
   const [totalElements, setTotalElements] = useState(0)
 
   const { isLoading, refetch } = useQuery({

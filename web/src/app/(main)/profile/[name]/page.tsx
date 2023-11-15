@@ -7,6 +7,7 @@ import { notFound } from 'next/navigation'
 import { SkillsList } from '@/components/Skills/SkillsList'
 import Link from 'next/link'
 import { formatDate } from '@/utils/formatDate'
+import Image from 'next/image'
 
 type ProfileProps = {
   params: {
@@ -46,8 +47,8 @@ export default async function Profile({ params }: ProfileProps) {
 
       <div className="flex flex-col items-center justify-center max-w-[640px] mx-auto ">
         <header className="-translate-y-6 flex flex-col items-center justify-center">
-          <img
-            src={user!.imgURL}
+          <Image
+            src={user?.imgURL || ''}
             className="border-8 border-slate-50 rounded-full"
             alt="avatar"
             width={190}

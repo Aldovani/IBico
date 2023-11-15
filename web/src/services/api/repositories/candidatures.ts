@@ -22,7 +22,7 @@ type getCandidaturesResponse = {
 export function CandidacyRequest(httpProvider: AxiosInstance) {
   async function getCandidatures() {
     const { data } = await httpProvider.get<
-      any,
+      unknown,
       AxiosResponse<getCandidaturesResponse>
     >('/candidatures')
     return data

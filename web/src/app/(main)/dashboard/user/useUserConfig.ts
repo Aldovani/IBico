@@ -106,7 +106,8 @@ export function useUserConfig() {
     })
 
   function handleDeleteAvatar() {
-    mutateDeleteAvatar(user!.username)
+    if (!user) return
+    mutateDeleteAvatar(user.username)
   }
 
   function handleUpdateAvatar(event: ChangeEvent<HTMLInputElement>) {
@@ -114,8 +115,10 @@ export function useUserConfig() {
 
     const file = event.target.files[0]
 
+    if (!user) return
+
     mutateUpdateAvatar({
-      username: user!.username,
+      username: user.username,
       file,
     })
   }

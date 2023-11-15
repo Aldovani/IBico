@@ -58,7 +58,7 @@ export function AuthContextProvider({
 }: authContextProviderProps) {
   const [user, setUser] = useState<User | null>(userProp?.items[0] || null)
   const [errors, setError] = useState<AxiosError | undefined>(undefined)
-  const [_, startTransition] = useTransition()
+  const [, startTransition] = useTransition()
   const { save, remove } = useLocalStorage()
   const router = useRouter()
   const cookies = useCookies()

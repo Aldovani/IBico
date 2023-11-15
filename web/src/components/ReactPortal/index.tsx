@@ -1,11 +1,11 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
+import { ReactNode, useEffect, useRef, useState } from 'react'
 import ReactDOM from 'react-dom'
 
 type ReactPortalProps = {
   containerId: string
-  children: any
+  children: ReactNode
 }
 
 export function ReactPortal({
@@ -28,7 +28,7 @@ export function ReactPortal({
 
   return mounted && containerRef.current
     ? ReactDOM.createPortal(
-      <>{children}</>,
+        <>{children}</>,
         document.body.appendChild(containerRef.current) || document.body,
       )
     : null

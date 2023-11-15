@@ -1,5 +1,4 @@
 'use client'
-import Image from 'next/image'
 import { Drawer } from '../Drawer'
 import Link from 'next/link'
 
@@ -7,6 +6,7 @@ import { FiCheck, FiX } from 'react-icons/fi'
 import { Candidate } from '@/services/api/repositories/opportunity'
 import { Skeleton } from '../skeleton'
 import { Button } from '../Button'
+import Image from 'next/image'
 
 type DrawerOpportunity = {
   isOpen: boolean
@@ -55,7 +55,7 @@ export function DrawerOpportunity({
                   key={item.id}
                   className="flex gap-4 justify-between items-center"
                 >
-                  <img
+                  <Image
                     className="rounded-full"
                     src={item.candidateImgURL}
                     alt={item.candidateName}
