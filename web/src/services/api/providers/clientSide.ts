@@ -5,7 +5,7 @@ import { toast } from '@/utils/toast'
 import axios, { AxiosError } from 'axios'
 
 const clientApi = axios.create({
-  baseURL: 'http://ibico.sa-east-1.elasticbeanstalk.com',
+  baseURL: 'http://ibico.sa-east-1.elasticbeanstalk.com/v1/',
 })
 clientApi.interceptors.response.use(
   function (response) {
