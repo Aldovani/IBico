@@ -7,6 +7,7 @@ import { Page } from '@/components/Page'
 import { Metadata } from 'next'
 import { serverApi } from '@/services/api'
 import { ReviewModal } from '@/components/ReviewModal'
+import Head from 'next/head'
 
 const poppins = Poppins({
   variable: '--font-poppins',
@@ -23,6 +24,9 @@ const lato = Lato({
 export const metadata: Metadata = {
   title: 'iBico',
   description: '',
+  other: {
+    'Content-Security-Policy': 'upgrade-insecure-requests',
+  },
 }
 
 export default async function RootLayout({
@@ -35,6 +39,12 @@ export default async function RootLayout({
 
   return (
     <html lang="pt-br">
+      <Head>
+        <meta
+          http-equiv="Content-Security-Policy"
+          content="upgrade-insecure-requests"
+        />
+      </Head>
       <AppProviders cookies={cookiesAll} user={user}>
         <body className={`${poppins.variable} ${lato.variable}`}>
           <Page>{children}</Page>

@@ -3,9 +3,13 @@ import { HTTPS_CODES } from '@/constants/http-codes'
 import { useLocalStorage } from '@/hooks/useLocalStorage'
 import { toast } from '@/utils/toast'
 import axios, { AxiosError } from 'axios'
+import process from 'process'
 
 const clientApi = axios.create({
-  baseURL: 'http://ibico.sa-east-1.elasticbeanstalk.com/v1/',
+  baseURL: process.env.API_URL,
+  headers: {
+    referrerPolicy: 'unsafe_url',
+  },
 })
 clientApi.interceptors.response.use(
   function (response) {

@@ -1,9 +1,13 @@
 import axios, { AxiosError } from 'axios'
 import { getCookies } from 'next-client-cookies/server'
 import { HTTPS_CODES } from '@/constants/http-codes'
+import process from 'process'
 
 export const serverApi = axios.create({
-  baseURL: 'http://ibico.sa-east-1.elasticbeanstalk.com/v1/',
+  baseURL: process.env.API_URL,
+  headers: {
+    referrerPolicy: 'unsafe_url',
+  },
 })
 
 serverApi.interceptors.response.use(

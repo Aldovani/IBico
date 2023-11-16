@@ -1,9 +1,9 @@
 'use client'
 
-import { env } from 'process'
+import process from 'process'
 
 export function useLocalStorage() {
-  const LocalStorageKey = 'ibico:dev' || env.NEXT_PUBLIC_LOCAL_STORAGE_KEY
+  const LocalStorageKey = process.env.API_URL
 
   function save(key: string, value: string) {
     localStorage.setItem(`${LocalStorageKey}:${key}`, value)
