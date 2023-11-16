@@ -4,7 +4,7 @@ import { HTTPS_CODES } from '@/constants/http-codes'
 import process from 'process'
 
 export const serverApi = axios.create({
-  baseURL: process.env.API_URL,
+  baseURL: process.env.NEXT_PUBLIC_API_URL,
   headers: {
     referrerPolicy: 'unsafe_url',
   },

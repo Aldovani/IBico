@@ -3,7 +3,7 @@
 import process from 'process'
 
 export function useLocalStorage() {
-  const LocalStorageKey = process.env.API_URL
+  const LocalStorageKey = process.env.NEXT_PUBLIC_LOCAL_STORAGE_KEY
 
   function save(key: string, value: string) {
     localStorage.setItem(`${LocalStorageKey}:${key}`, value)

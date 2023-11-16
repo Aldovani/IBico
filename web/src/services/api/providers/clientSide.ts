@@ -6,7 +6,7 @@ import axios, { AxiosError } from 'axios'
 import process from 'process'
 
 const clientApi = axios.create({
-  baseURL: process.env.API_URL,
+  baseURL: process.env.NEXT_PUBLIC_API_URL,
   headers: {
     referrerPolicy: 'unsafe_url',
   },
