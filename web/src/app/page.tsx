@@ -27,7 +27,7 @@ export default function Home() {
             <ul className="flex gap-8">
               <li>
                 <Link
-                  className="text-slate-400 font-poppins transcition hover:text-blue-700"
+                  className="text-slate-400 font-poppins transition hover:text-blue-700"
                   href="/"
                 >
                   Inicio
@@ -35,7 +35,7 @@ export default function Home() {
               </li>
               <li>
                 <Link
-                  className="text-slate-400 font-poppins transcition hover:text-blue-700"
+                  className="text-slate-400 font-poppins transition hover:text-blue-700"
                   href="/opportunities"
                 >
                   Oportunidades
@@ -43,7 +43,7 @@ export default function Home() {
               </li>
               <li>
                 <Link
-                  className="text-slate-400 font-poppins transcition hover:text-blue-700"
+                  className="text-slate-400 font-poppins transition hover:text-blue-700"
                   href="#about"
                 >
                   sobre
@@ -51,7 +51,7 @@ export default function Home() {
               </li>
               <li>
                 <Link
-                  className="text-slate-400 font-poppins transcition hover:text-blue-700"
+                  className="text-slate-400 font-poppins transition hover:text-blue-700"
                   href="#app"
                 >
                   App
@@ -95,6 +95,10 @@ export default function Home() {
           </Link>
         </div>
       </main>
+
+      <h1 className="text-5xl">{process.env.API_URL}</h1>
+      <br />
+      <h1 className="text-5xl">{process.env.NEXT_PUBLIC_API_URL}</h1>
 
       <section className="bg-slate-100 py-20">
         <div className="max-w-screen-xl m-auto flex items-center justify-between">
