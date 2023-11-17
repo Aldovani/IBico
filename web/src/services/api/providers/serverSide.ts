@@ -4,7 +4,7 @@ import { HTTPS_CODES } from '@/constants/http-codes'
 import process from 'process'
 
 export const serverApi = axios.create({
-  baseURL: process.env.API_URL,
+  baseURL: 'https://ibico.sa-east-1.elasticbeanstalk.com/v1/',
   headers: {
     referrerPolicy: 'unsafe_url',
   },

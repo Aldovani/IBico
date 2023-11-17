@@ -6,7 +6,7 @@ import axios, { AxiosError } from 'axios'
 import process from 'process'
 
 const clientApi = axios.create({
-  baseURL: process.env.API_URL,
+  baseURL: 'https://ibico.sa-east-1.elasticbeanstalk.com/v1/',
   headers: {
     referrerPolicy: 'unsafe_url',
   },
