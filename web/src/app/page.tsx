@@ -96,10 +96,6 @@ export default function Home() {
         </div>
       </main>
 
-      <h1 className="text-5xl">{process.env.API_URL}</h1>
-      <br />
-      <h1 className="text-5xl">{process.env.NEXT_PUBLIC_API_URL}</h1>
-
       <section className="bg-slate-100 py-20">
         <div className="max-w-screen-xl m-auto flex items-center justify-between">
           <div>
