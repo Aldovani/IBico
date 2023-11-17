@@ -1,7 +1,5 @@
 'use client'
 
-import process from 'process'
-
 export function useLocalStorage() {
   const LocalStorageKey = 'ibico:dev'
 
