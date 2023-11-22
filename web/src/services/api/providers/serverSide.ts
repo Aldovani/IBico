@@ -8,7 +8,7 @@ const baseUrl = {
 }
 
 export const serverApi = axios.create({
-  baseURL: baseUrl.local,
+  baseURL: baseUrl.nuvem,
   headers: {
     referrerPolicy: 'unsafe_url',
   },
