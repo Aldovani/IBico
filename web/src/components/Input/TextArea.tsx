@@ -40,7 +40,7 @@ export const TextArea = forwardRef(function (
       />
       {isLoading && (
         <div className="absolute right-4 top-4 ">
-          <Spinner colors="blue" />
+          <Spinner colors="black" />
         </div>
       )}
     </div>

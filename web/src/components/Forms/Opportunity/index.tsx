@@ -14,6 +14,7 @@ type OpportunityFormProps = {
   isLoading: boolean
   initialData?: Opportunity
   isDataLoading?: boolean
+  isEditing?: boolean
 }
 
 export function OpportunityForm({
@@ -21,6 +22,7 @@ export function OpportunityForm({
   isLoading,
   initialData,
   isDataLoading = false,
+  isEditing = false,
 }: OpportunityFormProps) {
   const {
     errors,
@@ -141,12 +143,13 @@ export function OpportunityForm({
             onAddSkill={handleAddSkill}
             onRemoveSkill={handleRemoveSkill}
             skills={skills}
+            isLoading={isDataLoading}
           />
         </div>
       </div>
 
       <Button loading={isLoading} className="mt-4">
-        Criar oportunidade
+        {!isEditing ? 'Criar oportunidade' : 'Editar oportunidade'}
       </Button>
     </form>
   )

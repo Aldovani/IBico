@@ -44,7 +44,7 @@ export function ModalOpportunity({
             <div className="p-1 bg-red-100 rounded-lg text-red-700">
               <FiXCircle size={18} />
             </div>
-            <h4 className="font-lato text-2xl font-semibold">
+            <h4 className="font-inter text-2xl font-semibold">
               Voce deseja excluir
             </h4>
           </div>

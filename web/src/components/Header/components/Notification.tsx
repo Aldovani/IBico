@@ -15,7 +15,7 @@ export function Notifications() {
       <div className="pt-4 absolute translate-y-2 right-0 opacity-0 transition-all pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto group-hover:translate-y-0 ">
         <div className="w-96  border rounded-lg border-slate-200 px-4 py-6 bg-slate-50">
           <div className="flex items-center justify-between border-b pb-4 border-slate-200">
-            <h3 className="text-slate-900 text-lg font-bold font-lato">
+            <h3 className="text-slate-900 text-lg font-bold font-inter">
               Suas notificações
             </h3>
             <Link

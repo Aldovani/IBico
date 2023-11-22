@@ -49,7 +49,7 @@ export default async function OpportunityDetails({
         <section className="flex items-center justify-between ">
           <div className="flex-1">
             <LinkBack />
-            <h1 className="font-lato text-4xl font-bold text-slate-900 mt-4 mb-2">
+            <h1 className="font-inter text-4xl font-bold text-slate-900 mt-4 mb-2">
               {data.title}
             </h1>
             <span className="font-poppins text-sm text-slate-400 ">
@@ -112,7 +112,7 @@ export default async function OpportunityDetails({
         </section>
 
         <section className="mt-10 ">
-          <h3 className="text-slate-600 text-lg font-lato font-medium">
+          <h3 className="text-slate-600 text-lg font-inter font-medium">
             Postado por
           </h3>
           <div className="flex items-center gap-3">
@@ -136,14 +136,14 @@ export default async function OpportunityDetails({
         </section>
 
         <section className="mt-10 ">
-          <h3 className="text-slate-600 text-lg font-lato font-medium">
+          <h3 className="text-slate-600 text-lg font-inter font-medium">
             Descrição
           </h3>
           <p className="font-poppins text-slate-400 mt-3">{data.description}</p>
         </section>
 
         <section className="mt-10 ">
-          <h3 className="text-slate-600 text-lg font-lato font-medium">
+          <h3 className="text-slate-600 text-lg font-inter font-medium">
             Competências
           </h3>
           <p className="font-poppins text-slate-400 mt-3">
@@ -154,7 +154,7 @@ export default async function OpportunityDetails({
         </section>
       </div>
       <section className="max-w-xs max-lg:max-w-none  w-full max-md:mt-6">
-        <h2 className="text-slate-700 text-2xl font-lato font-medium ">
+        <h2 className="text-slate-700 text-2xl font-inter font-medium ">
           Vagas semelhantes
         </h2>
         <Suspense fallback={<Skeleton className="h-100" />}>

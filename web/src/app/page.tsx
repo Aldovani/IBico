@@ -14,11 +14,11 @@ import {
 export default function Home() {
   return (
     <>
-      <header className="border-b fixed w-full bg-slate-50 border-slate-200 py-4 shadow-sm">
+      <header className="border-b fixed w-full bg-slate-50 border-slate-200 py-4 ">
         <div className="max-w-screen-xl m-auto flex items-center justify-between">
           <Link
             href="/"
-            className="text-3xl font-lato font-extrabold text-blue-700"
+            className="text-3xl font-inter font-semibold text-blue-700"
           >
             iBico
           </Link>
@@ -39,14 +39,6 @@ export default function Home() {
                   href="/opportunities"
                 >
                   Oportunidades
-                </Link>
-              </li>
-              <li>
-                <Link
-                  className="text-slate-400 font-poppins transition hover:text-blue-700"
-                  href="#about"
-                >
-                  sobre
                 </Link>
               </li>
               <li>
@@ -77,50 +69,57 @@ export default function Home() {
         </div>
       </header>
 
-      <main className="pt-20  h-screen bg-hero bg-no-repeat bg-cover ">
-        <div className="max-w-screen-xl flex h-full justify-center flex-col  m-auto">
-          <h1 className="text-6xl font-lato font-extrabold max-w-xl  text-slate-50">
-            Explore as melhores oportunidades de emprego
-          </h1>
-          <p className="text-slate-200 font-poppins max-w-448  mt-3 mb-6">
-            Vorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc
-            vulputate libero et velit interdum, ac aliquet odio mattis.
-          </p>
+      <main className="pt-20  h-screen   max-w-screen-xl mx-auto ">
+        <div className="w-full h-full flex justify-between items-center">
+          <div>
+            <h1 className="text-[64px] leading-[120%] font-inter font-medium max-w-2xl  text-blue-900">
+              Explore as melhores oportunidades de emprego
+            </h1>
+            <p className="text-slate-500 font-poppins max-w-lg  mt-3 mb-6">
+              Vorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc
+              vulputate libero et velit interdum, ac aliquet odio mattis.
+            </p>
 
-          <Link
-            href="/opportunities"
-            className="p-2 border w-60 bg-slate-50  border-slate-200 text-blue-700 h-10 px-4  flex items-center justify-center font-poppins font-medium rounded-lg"
-          >
-            Buscar oportunidades
-          </Link>
+            <Link
+              href="/opportunities"
+              className="p-2 border w-60 bg-slate-50  border-slate-200 text-blue-700 h-10 px-4  flex items-center justify-center font-poppins font-medium rounded-lg"
+            >
+              Buscar oportunidades
+            </Link>
+          </div>
+          <div className="grid gap-4 grid-cols-2 grid-rows-2 w-full h-full max-w-xl max-h-[490px]  ">
+            <div className="rounded-tl-lg bg-hero-01 col-start-1 col-end-2 row-start-1 row-end-2"></div>
+            <div className="rounded-bl-lg bg-hero-02 col-start-1 col-end-2 row-start-2 row-end-3"></div>
+            <div className="rounded-r-lg bg-hero-03 col-start-2 col-end-3 row-start-1 row-end-3"></div>
+          </div>
         </div>
       </main>
 
-      <section className="bg-slate-100 py-20">
-        <div className="max-w-screen-xl m-auto flex items-center justify-between">
+      <section className="bg-blue-700 py-28">
+        <div className="max-w-screen-xl m-auto flex items-start justify-between">
           <div>
-            <h4 className="text-8xl font-lato font-extrabold text-slate-900">
-              5.000<span className="text-blue-700">+</span>
+            <h4 className="text-8xl font-inter leading-none font-extrabold text-slate-50">
+              5.000+
             </h4>
-            <p className="text-slate-500 max-w-304">
+            <p className="text-slate-100 max-w-304">
               oportunidades cadastrado em nossa plataforma{' '}
             </p>
           </div>
 
           <div>
-            <h4 className="text-8xl font-lato font-extrabold text-slate-900">
-              10k<span className="text-blue-700">+</span>
+            <h4 className="text-8xl leading-none font-inter font-extrabold text-slate-50">
+              10k+
             </h4>
-            <p className="text-slate-500 max-w-304">
+            <p className="text-slate-100 max-w-304">
               usuários registrado na nossa plataforma{' '}
             </p>
           </div>
 
           <div>
-            <h4 className="text-8xl font-lato font-extrabold text-slate-900">
-              50<span className="text-blue-700">%</span>
+            <h4 className="text-8xl leading-none font-inter font-extrabold text-slate-50">
+              50%
             </h4>
-            <p className="text-slate-500 max-w-304">
+            <p className="text-slate-100 max-w-304">
               oportunidades cadastrado em nossa plataforma{' '}
             </p>
           </div>
@@ -128,10 +127,10 @@ export default function Home() {
       </section>
 
       <section className="pt-20 pb-24 max-w-screen-xl m-auto   ">
-        <span className="font-poppins font-bold text-sm text-slate-400">
+        <span className="font-poppins font-semibold text-sm text-blue-700">
           vantagens
         </span>
-        <h2 className="font-lato font-extrabold text-blue-900  mt-3 text-[2.5rem] max-w-xl ">
+        <h2 className="font-inter leading-[120%] font-medium text-blue-900  mt-3 text-[2.5rem] max-w-[620px] ">
           Confira algumas da vantagens da nossa plataforma{' '}
         </h2>
         <p className="max-w-md font-poppins text-slate-400 mt-4">
@@ -143,7 +142,7 @@ export default function Home() {
           <div className="px-4 py-6 max-w-304 border border-slate-200 rounded-lg">
             <FiCrosshair size={32} className="text-blue-700" />
             <h3 className="font-poppins text-slate-900 font-semibold text-xl mt-5 mb-3">
-              + Objetivo
+              Objetivo
             </h3>
             <p className="text-slate-400 text-sm ">
               Encontre empregos que atendam aos seus objetivos de carreira e
@@ -153,7 +152,7 @@ export default function Home() {
           <div className="px-4 py-6 max-w-304 border border-slate-200 rounded-lg">
             <FiCompass size={32} className="text-blue-700" />
             <h3 className="font-poppins text-slate-900 font-semibold text-xl mt-5 mb-3">
-              + Velocidade
+              Velocidade
             </h3>
             <p className="text-slate-400 text-sm ">
               Inicie sua próxima oportunidade de trabalho em tempo recorde,
@@ -164,7 +163,7 @@ export default function Home() {
           <div className="px-4 py-6 max-w-304 border border-slate-200 rounded-lg">
             <FiSearch size={32} className="text-blue-700" />
             <h3 className="font-poppins text-slate-900 font-semibold text-xl mt-5 mb-3">
-              + Procura
+              Procura
             </h3>
             <p className="text-slate-400 text-sm ">
               Simplificamos a busca de empregos temporários, permitindo que você
@@ -175,7 +174,7 @@ export default function Home() {
           <div className="px-4 py-6 max-w-304 border border-slate-200 rounded-lg">
             <FiClock size={32} className="text-blue-700" />
             <h3 className="font-poppins text-slate-900 font-semibold text-xl mt-5 mb-3">
-              + Tempo
+              Tempo
             </h3>
             <p className="text-slate-400 text-sm ">
               Economize tempo e aproveite a flexibilidade para trabalhar quando
@@ -188,15 +187,15 @@ export default function Home() {
       <section className="bg-slate-100 pt-20 pb-20">
         <div className="max-w-screen-xl m-auto">
           <header>
-            <span className="font-poppins font-bold text-sm text-slate-400">
+            <span className="font-poppins font-semibold text-sm text-blue-700">
               facilidade & agilidade
             </span>
             <div className="flex justify-between items-center">
-              <h2 className="font-lato font-extrabold text-blue-900  text-[2.5rem] max-w-xl ">
+              <h2 className="mt-3 font-inter font-medium text-blue-900  text-4xl leading-[120%] max-w-[540px] ">
                 Veja como é simples e fácil cadastrar uma oportunidade na
                 plataforma
               </h2>
-              <p className="max-w-md font-poppins text-slate-400 mt-4">
+              <p className="max-w-md font-poppins text-slate-500 mt-4">
                 Vorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc
                 vulputate libero et velit interdum, ac aliquet odio mattis.
               </p>
@@ -209,10 +208,10 @@ export default function Home() {
             </div>
             <div className="p-10 bg-slate-50 border flex-1 border-slate-200 rounded-lg ">
               <header className="border-b border-slate-200 pb-6 ">
-                <span className="font-lato font-bold text-3xl text-slate-400">
+                <span className="font-inter font-bold text-3xl text-slate-400">
                   01
                 </span>
-                <h3 className="font-lato font-bold text-2xl text-slate-900 mt-6 mb-3">
+                <h3 className="font-inter font-bold text-2xl text-slate-900 mt-6 mb-3">
                   Cria uma conta
                 </h3>
                 <p className="font-poppins text-slate-400">
@@ -286,9 +285,9 @@ export default function Home() {
               <div className="px-4 bg-slate-50 py-6 max-w-304 border border-slate-200 rounded-lg">
                 <span className="text-2xl font-poppins text-slate-400">04</span>
                 <h3 className="font-poppins text-slate-900 font-semibold text-xl mt-2 mb-3">
-                  + Objetivo
+                  Selecione o candidato
                 </h3>
-                <p className="text-slate-400 text-sm ">
+                <p className="text-slate-500 text-sm ">
                   Vorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc
                   vulputate libero et velit interdum, ac aliquet odio mattis.
                 </p>
@@ -298,14 +297,15 @@ export default function Home() {
         </div>
       </section>
 
-      <section id="about" className="max-w-screen-xl m-auto py-20 ">
-        <div className="flex justify-between item">
+      <section id="about" className="max-w-screen-xl m-auto pt-20 pb-28 ">
+        <div className="flex  justify-between items-center">
           <div>
-            <span className="font-poppins font-bold text-sm text-slate-400">
+            <span className="font-poppins font-bold text-sm text-blue-700">
               pra quem é
             </span>
-            <h2 className="font-lato font-extrabold text-blue-900  mt-3 text-[2.5rem] max-w-sm ">
-              Por que decidimos criar o iBico ?
+            <h2 className="font-inter font-medium text-blue-900 leading-[120%]  mt-3 text-[40px] max-w-sm ">
+              Por que decidimos criar o <span className="font-bold">iBico</span>{' '}
+              ?
             </h2>
             <div className="max-w-[520px]">
               <p className="font-poppins text-slate-400 mt-5 ">
@@ -323,11 +323,6 @@ export default function Home() {
                 nostra, per inceptos himenaeos. Curabitur tempus urna at turpis
                 condimentum lobortis.
               </p>
-
-              <p className="font-poppins text-slate-400 mt-4 ">
-                Vorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc
-                vulputate libero et velit interdum, ac aliquet odio mattis.
-              </p>
             </div>
           </div>
 
@@ -339,28 +334,31 @@ export default function Home() {
         </div>
       </section>
 
-      <section id="app" className="bg-app bg-no-repeat h-[580px]  ">
+      <section id="app" className="bg-slate-100 py-36 ">
         <div className="max-w-7xl  mx-auto h-full flex flex-col  justify-center ">
-          <span className="font-poppins font-bold text-sm text-slate-50">
+          <span className="font-poppins font-semibold text-sm text-blue-700">
             baixe nosso app
           </span>
-          <h2 className="font-lato font-extrabold text-slate-50  text-[2.5rem] max-w-sm ">
+          <h2 className="font-inter font-medium text-blue-900  text-[40px]">
             Por que decidimos criar o iBico ?
           </h2>
-          <p className="max-w-md font-poppins text-slate-200 mt-4">
-            Vorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc
-            vulputate libero et velit interdum, ac aliquet odio mattis.
-          </p>
-
           <div>
-            <div></div>
+            <p className="max-w-md font-poppins text-slate-500 mt-4">
+              Korem ipsum dolor sit amet, consectetur adipiscing elit. Nunc
+              vulputate libero et velit interdum, ac aliquet odio mattis.
+            </p>
+            <p className="max-w-md font-poppins text-slate-500 mt-4">
+              Class aptent taciti sociosqu ad litora torquent per conubia
+              nostra, per inceptos himenaeos. Curabitur tempus urna at turpis
+              condimentum lobortis.
+            </p>
           </div>
         </div>
       </section>
 
       <footer className="max-w-screen-xl m-auto  py-20 ">
         <div className=" flex justify-between items-center border-b border-slate-200 pb-6">
-          <span className="text-3xl font-lato font-extrabold text-blue-700">
+          <span className="text-3xl font-inter font-semibold text-blue-700">
             iBico
           </span>
 

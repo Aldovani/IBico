@@ -4,9 +4,11 @@ import { useAuth } from '@/hooks/useAuth'
 import { User } from '@/services/api/repositories/user'
 import { toast } from '@/utils/toast'
 import { useMutation } from '@tanstack/react-query'
+import { useRouter } from 'next/navigation'
 import { FormEvent, useState } from 'react'
 
 export function useConfig() {
+  const router = useRouter()
   const { user, getUser } = useAuth()
   const [skills, setSkills] = useState<Skills[]>(() => {
     const data = user?.skills.map((skill) => {
@@ -32,6 +34,7 @@ export function useConfig() {
         text: 'alteração das competências realizada com sucesso',
         type: 'SUCCESS',
       })
+      router.push('/opportunities')
     },
   })
 

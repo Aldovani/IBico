@@ -1,14 +1,20 @@
 import { Input } from '../Input'
 import { useSkills } from './useSkills'
-import { Skills, SkillsList } from './SkillsList'
+import { Skills as SkillsType, SkillsList } from './SkillsList'
 
 type SkillProps = {
-  onAddSkill: (data: Skills) => void
+  onAddSkill: (data: SkillsType) => void
   onRemoveSkill: (id: number) => void
-  skills: Skills[]
+  skills: SkillsType[]
+  isLoading?: boolean
 }
 
-export function Skills({ onAddSkill, onRemoveSkill, skills }: SkillProps) {
+export function Skills({
+  onAddSkill,
+  onRemoveSkill,
+  skills,
+  isLoading = false,
+}: SkillProps) {
   const { clearErrors, errors, register, handleKeyDown } = useSkills({
     handleAddSkill: onAddSkill,
     skills,
@@ -23,6 +29,7 @@ export function Skills({ onAddSkill, onRemoveSkill, skills }: SkillProps) {
               clearErrors('skills')
             },
           })}
+          isLoading={isLoading}
           id="skills"
           placeholder="Digite sua competência"
           onKeyDown={(e) => handleKeyDown(e)}

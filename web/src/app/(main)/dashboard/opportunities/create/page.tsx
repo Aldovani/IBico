@@ -16,10 +16,10 @@ export default function CreateOpportunity() {
         {<FiArrowLeft size={20} />} Voltar
       </Link>
 
-      <h1 className="text-2xl text-slate-900 font-lato font-bold mb-2">
+      <h1 className="text-2xl text-slate-900 font-inter font-bold mb-2">
         Publique sua oportunidade
       </h1>
-      <p className="max-w-448 font-poppins text-slate-400 ">
+      <p className="max-w-md font-poppins text-slate-500 ">
         Forem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate
         libero et velit interdum, ac aliquet odio mattis.
       </p>

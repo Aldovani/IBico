@@ -17,6 +17,9 @@ const config: Config = {
         'people-01': "url('/img/people-01.png')",
         'people-02': "url('/img/people-02.png')",
         'people-03': "url('/img/people-03.png')",
+        'hero-01': "url('/img/image-1.png')",
+        'hero-02': "url('/img/image-2.png')",
+        'hero-03': "url('/img/image-3.png')",
         hero: 'linear-gradient(0deg, rgba(15, 23, 42, 0.25) 0%, rgba(15, 23, 42, 0.25) 100%), url("/img/bg-hero.jpg") ',
       },
       gridTemplateColumns: {
@@ -32,7 +35,7 @@ const config: Config = {
       },
       height: {},
       fontFamily: {
-        lato: ['var(--font-lato)', ...fontFamily.sans],
+        inter: ['var(--font-inter)', ...fontFamily.sans],
         poppins: ['var(--font-poppins)', ...fontFamily.sans],
       },
       boxShadow: {

@@ -20,7 +20,7 @@ export default function ChangePassword() {
   return (
     <div className="max-w-lg  pb-10 w-full max-md:m-auto max-sm:px-6">
       <header className="mt-8">
-        <h2 className="text-slate-900 text-3xl font-lato font-semibold">
+        <h2 className="text-slate-900 text-3xl font-inter font-semibold">
           Redefina sua senha
         </h2>
         <p className="text-slate-400  mt-2 font-poppins">

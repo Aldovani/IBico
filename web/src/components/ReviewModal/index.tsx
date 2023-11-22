@@ -21,7 +21,7 @@ export function ReviewModal() {
             <div className="p-1 bg-blue-100 rounded-lg text-blue-700">
               <FiAward size={18} />
             </div>
-            <h3 className="font-lato text-lg font-semibold">
+            <h3 className="font-inter text-lg font-semibold">
               Avaliar oportunidade
             </h3>
           </div>
@@ -32,22 +32,19 @@ export function ReviewModal() {
             illum veniam maiores neque aperiam accusantium
           </p>
           <div className="flex mt-6 mb-4 w-auto justify-evenly items-center text-slate-400 ">
-            <label
-              className=" group flex flex-col items-center  cursor-pointer"
-              htmlFor="great"
-            >
+            <label className="group cursor-pointer  flex flex-col items-center">
               <input
-                className="peer w-0 h-0"
                 type="radio"
                 name="review"
-                id="great"
+                id="bad"
+                className="peer w-0 h-0"
               />
-              <FiSmile
+              <FiFrown
                 size={48}
-                className="group-hover:text-green-500 transition-colors peer-checked:text-green-600"
+                className="group-hover:text-red-500  peer-checked:text-red-500  transition-colors"
               />
-              <span className="group-hover:text-green-500  transition-colors peer-checked:text-green-600">
-                Ótimo
+              <span className="group-hover:text-red-500  peer-checked:text-red-500 transition-colors">
+                Péssimo
               </span>
             </label>
 
@@ -60,26 +57,29 @@ export function ReviewModal() {
               />
               <FiMeh
                 size={48}
-                className="group-hover:text-yellow-500 peer-checked:text-yellow-600 transition-colors"
+                className="group-hover:text-yellow-500 peer-checked:text-yellow-500 transition-colors"
               />
-              <span className="group-hover:text-yellow-500 peer-checked:text-yellow-600 transition-colors">
+              <span className="group-hover:text-yellow-500 peer-checked:text-yellow-5''00 transition-colors">
                 Mediano
               </span>
             </label>
 
-            <label className="group cursor-pointer  flex flex-col items-center">
+            <label
+              className=" group flex flex-col items-center  cursor-pointer"
+              htmlFor="great"
+            >
               <input
+                className="peer w-0 h-0"
                 type="radio"
                 name="review"
-                id="bad"
-                className="peer w-0 h-0"
+                id="great"
               />
-              <FiFrown
+              <FiSmile
                 size={48}
-                className="group-hover:text-red-500  peer-checked:text-red-600  transition-colors"
+                className="group-hover:text-green-500 transition-colors peer-checked:text-green-500"
               />
-              <span className="group-hover:text-red-500  peer-checked:text-red-600 transition-colors">
-                Péssimo
+              <span className="group-hover:text-green-500  transition-colors peer-checked:text-green-500">
+                Ótimo
               </span>
             </label>
           </div>

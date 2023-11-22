@@ -94,7 +94,11 @@ export function AuthContextProvider({
     },
     onError: (error) => {
       if (error.response?.status === HTTPS_CODES.INTERNAL_SERVER_ERROR) {
-        toast({ text: '', title: 'Erro no servidor', type: 'ERROR' })
+        toast({
+          title: 'Error',
+          text: 'Ops! Encontramos um problema interno no servidor. Estamos trabalhando para corrigi-lo. Desculpe pelo inconveniente.',
+          type: 'ERROR',
+        })
         return
       }
 

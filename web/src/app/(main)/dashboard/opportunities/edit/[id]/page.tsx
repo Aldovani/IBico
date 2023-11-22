@@ -16,7 +16,7 @@ export default function EditOpportunity() {
         {<FiArrowLeft size={20} />} Voltar
       </Link>
 
-      <h1 className="text-2xl text-slate-900 font-lato font-bold mb-2">
+      <h1 className="text-2xl text-slate-900 font-inter font-bold mb-2">
         Edite sua oportunidade
       </h1>
       <p className="max-w-448 font-poppins text-slate-400 ">
@@ -29,6 +29,7 @@ export default function EditOpportunity() {
         isDataLoading={isDataLoading}
         initialData={data}
         isLoading={isLoading}
+        isEditing
       />
     </div>
   )

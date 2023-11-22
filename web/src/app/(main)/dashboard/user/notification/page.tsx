@@ -5,7 +5,7 @@ export default function Notification() {
     <main className="w-full">
       <section className="flex items-center justify-between border-b-2 border-slate-200 pb-6">
         <div className="max-w-304">
-          <h1 className="font-lato text-xl text-slate-900 font-bold mb-2">
+          <h1 className="font-inter text-xl text-slate-900 font-bold mb-2">
             Configurar notificações
           </h1>
           <p className="font-poppins text-slate-400 text-sm">
@@ -16,7 +16,7 @@ export default function Notification() {
 
       <section className=" mt-8   border-b-2 border-slate-200 pb-6 flex justify-between max-sm:flex-col max-sm:gap-6">
         <div>
-          <h2 className="font-lato text-base text-slate-700 font-medium mb-1">
+          <h2 className="font-inter text-base text-slate-700 font-medium mb-1">
             Notificações por e-mail
           </h2>
           <p className="font-poppins text-slate-400 text-sm max-w-304">
@@ -51,7 +51,7 @@ export default function Notification() {
 
       <section className=" mt-8   border-b-2 border-slate-200 pb-6 flex justify-between max-sm:flex-col max-sm:gap-6 ">
         <div>
-          <h2 className="font-lato text-base text-slate-700 font-medium mb-1">
+          <h2 className="font-inter text-base text-slate-700 font-medium mb-1">
             Notificações por SMS
           </h2>
           <p className="font-poppins text-slate-400 text-sm max-w-304">

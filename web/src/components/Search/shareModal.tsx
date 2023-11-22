@@ -36,7 +36,7 @@ export function ShareModal() {
               <div className="p-1 bg-blue-100 rounded-lg text-blue-700">
                 <FiShare2 size={18} />
               </div>
-              <h3 className="font-lato text-lg font-semibold">Compartilhar</h3>
+              <h3 className="font-inter text-lg font-semibold">Compartilhar</h3>
             </div>
           </Modal.Header>
 

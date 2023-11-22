@@ -10,7 +10,7 @@ export function OpportunityItem({ data }: OpportunityItemProps) {
   return (
     <article className="border-x border-y border-slate-200 rounded-lg min-w-full px-4 py-6">
       <header>
-        <h3 className="font-lato font-semibold text-xl">{data.title}</h3>
+        <h3 className="font-inter font-semibold text-xl">{data.title}</h3>
         <span className="font-poppins text-xs text-slate-500">
           por
           <Link
@@ -23,8 +23,7 @@ export function OpportunityItem({ data }: OpportunityItemProps) {
       </header>
       <main className="mt-3">
         <p className="text-slate-400 text-xs font-poppins ">
-          Rorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc
-          vulputate libero et velit interdum, ac aliquet odio mattis.
+          {data.description}
         </p>
 
         <div className="mt-4 flex items-center gap-5 ">

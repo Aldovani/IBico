@@ -23,7 +23,7 @@ export default function Register() {
   return (
     <div className="pb-10 max-w-lg w-full max-md:m-auto max-sm:px-6">
       <header className="mt-8">
-        <h2 className="font-lato text-slate-900 text-3xl font-semibold">
+        <h2 className="font-inter text-slate-900 text-3xl font-semibold">
           Cadastra-se no iBico
         </h2>
         <p className="font-poppins text-slate-400  mt-2">
@@ -35,7 +35,13 @@ export default function Register() {
         className="flex flex-col mt-8"
         onSubmit={handleSubmit(
           async ({ cellphone, cpf, name, password, username }) => {
-            handleRegister({ cellphone, cpf, name, password, username })
+            handleRegister({
+              cellphone: `+55${cellphone}`,
+              cpf,
+              name,
+              password,
+              username,
+            })
           },
         )}
       >

@@ -36,7 +36,7 @@ export default function UserConfig() {
     <main className="w-full">
       <section className=" left-0 flex items-center justify-between border-b-2 border-slate-200 pb-6">
         <div className="max-w-304">
-          <h1 className="font-lato text-xl text-slate-900 font-bold mb-2">
+          <h1 className="font-inter text-xl text-slate-900 font-bold mb-2">
             Configurar perfil
           </h1>
           <p className="font-poppins text-slate-400 text-sm">
@@ -47,7 +47,7 @@ export default function UserConfig() {
 
       <section className=" mt-8 items-center  border-b-2 border-slate-200 pb-6">
         <div>
-          <h2 className="font-lato text-base text-slate-700 font-medium mb-1">
+          <h2 className="font-inter text-base text-slate-700 font-medium mb-1">
             Foto de perfil
           </h2>
           <p className="font-poppins text-slate-400 text-sm">
@@ -97,7 +97,7 @@ export default function UserConfig() {
 
       <section className=" mt-8 items-center  border-b-2 border-slate-200 pb-6">
         <div>
-          <h2 className="font-lato text-base text-slate-700 font-medium mb-1">
+          <h2 className="font-inter text-base text-slate-700 font-medium mb-1">
             Dados pessoais{' '}
           </h2>
           <p className="font-poppins text-slate-400 text-sm">
@@ -189,7 +189,7 @@ export default function UserConfig() {
 
       <section className=" mt-8 items-center  border-b-2 border-slate-200 pb-6">
         <div>
-          <h2 className="font-lato text-base text-slate-700 font-medium mb-1">
+          <h2 className="font-inter text-base text-slate-700 font-medium mb-1">
             Zona de perigo
           </h2>
           <p className="font-poppins text-slate-400 text-sm">
@@ -220,7 +220,7 @@ export default function UserConfig() {
               <div className="p-1 bg-red-100 rounded-lg text-red-700">
                 <FiXCircle size={18} />
               </div>
-              <h3 className="font-lato text-lg font-semibold">
+              <h3 className="font-inter text-lg font-semibold">
                 Desativar conta
               </h3>
             </div>

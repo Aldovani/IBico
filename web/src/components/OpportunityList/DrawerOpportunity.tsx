@@ -32,7 +32,9 @@ export function DrawerOpportunity({
       <Drawer.Overlay>
         <Drawer.Container>
           <div className="flex justify-between items-center">
-            <h3 className="font-lato font-bold text-xl">Lista de candidatos</h3>
+            <h3 className="font-inter font-bold text-xl">
+              Lista de candidatos
+            </h3>
 
             <button
               onClick={onClose}

@@ -56,12 +56,11 @@ export function useVerifyCode() {
     e.preventDefault()
 
     if (!resetPasswordInfo?.requestId && !resetPasswordInfo?.userCpf) {
-      toast({ text: '', title: '', type: 'ERROR' })
       return
     }
 
     if (code.size <= 5) {
-      toast({ text: '', title: '', type: 'ERROR' })
+      toast({ text: 'Código invalido', title: 'Error', type: 'ERROR' })
 
       return
     }

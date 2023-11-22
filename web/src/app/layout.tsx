@@ -1,5 +1,5 @@
 import './globals.css'
-import { Lato, Poppins } from 'next/font/google'
+import { Inter, Poppins } from 'next/font/google'
 import { AppProviders } from '@/contexts'
 import { ToastContainer } from '@/components/Toast'
 import { cookies } from 'next/headers'
@@ -15,18 +15,15 @@ const poppins = Poppins({
   weight: ['400', '500', '600', '700', '900'],
 })
 
-const lato = Lato({
-  variable: '--font-lato',
-  weight: ['400', '700', '900'],
+const inter = Inter({
+  variable: '--font-inter',
+  weight: ['400', '500', '700', '800', '900'],
   subsets: ['latin'],
 })
 
 export const metadata: Metadata = {
   title: 'iBico',
   description: '',
-  other: {
-    'Content-Security-Policy': 'upgrade-insecure-requests',
-  },
 }
 
 export default async function RootLayout({
@@ -35,7 +32,7 @@ export default async function RootLayout({
   children: React.ReactNode
 }) {
   const cookiesAll = cookies().getAll()
-  const user = await fetchUser()
+  const user = await getServerSide()
 
   return (
     <html lang="pt-br">
@@ -46,7 +43,7 @@ export default async function RootLayout({
         />
       </Head>
       <AppProviders cookies={cookiesAll} user={user}>
-        <body className={`${poppins.variable} ${lato.variable}`}>
+        <body className={`${poppins.variable} ${inter.variable}`}>
           <Page>{children}</Page>
           <ToastContainer />
           <ReviewModal />
@@ -55,10 +52,9 @@ export default async function RootLayout({
     </html>
   )
 }
-async function fetchUser() {
+async function getServerSide() {
   try {
     const { data } = await serverApi.get('/users')
-    console.log(data)
     return data
   } catch (err) {
     return null

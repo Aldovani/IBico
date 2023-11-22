@@ -24,7 +24,7 @@ export default function Applications() {
     <div className="w-full">
       <section className="flex items-center justify-between border-b-2 border-slate-200 pb-6">
         <div className="max-w-304">
-          <h1 className="font-lato text-xl text-slate-900 font-bold mb-2">
+          <h1 className="font-inter text-xl text-slate-900 font-bold mb-2">
             Minhas candidaturas
           </h1>
           <p className="font-poppins text-slate-400 text-sm">
@@ -103,7 +103,7 @@ export default function Applications() {
               <div className="p-1 bg-red-100 rounded-lg text-red-700">
                 <FiXCircle size={18} />
               </div>
-              <h4 className="font-lato text-2xl font-semibold">
+              <h4 className="font-inter text-2xl font-semibold">
                 Voce deseja desistir
               </h4>
             </div>

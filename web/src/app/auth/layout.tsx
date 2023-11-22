@@ -11,7 +11,7 @@ export default function AuthLayout({ children }: AuthLayoutProps) {
       <div className="w-1/3 bg-cover min-h-screen bg-[url('/img/auth-image.jpg')] bg-no-repeat pt-8 pl-16 max-md:hidden">
         <Link
           href="/"
-          className="font-extrabold font-lato  text-slate-50 text-4xl"
+          className="font-semibold font-inter  text-slate-50 text-4xl"
         >
           iBico
         </Link>

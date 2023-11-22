@@ -4,8 +4,13 @@ import { useLocalStorage } from '@/hooks/useLocalStorage'
 import { toast } from '@/utils/toast'
 import axios, { AxiosError } from 'axios'
 
+const baseUrl = {
+  local: 'http://localhost:8080/v1',
+  nuvem: 'https://ibico.sa-east-1.elasticbeanstalk.com/v1',
+}
+
 const clientApi = axios.create({
-  baseURL: 'https://ibico.sa-east-1.elasticbeanstalk.com/v1/',
+  baseURL: baseUrl.nuvem,
   headers: {
     referrerPolicy: 'unsafe_url',
   },
@@ -16,7 +21,11 @@ clientApi.interceptors.response.use(
   },
   function (error: AxiosError) {
     if (error.code === 'ERR_NETWORK') {
-      toast({ title: 'Error', text: 'Erro ', type: 'ERROR' })
+      toast({
+        title: 'Error',
+        text: 'Ops! Encontramos um problema interno no servidor. Estamos trabalhando para corrigi-lo. Desculpe pelo inconveniente.',
+        type: 'ERROR',
+      })
     }
     if (error.response?.status === HTTPS_CODES.UNAUTHORIZED) {
       const { remove } = useLocalStorage()

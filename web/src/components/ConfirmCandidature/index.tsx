@@ -36,7 +36,7 @@ export function ConfirmCandidature({ opportunityId }: ConfirmCandidatureProps) {
               <div className="p-1 bg-blue-100 rounded-lg text-blue-700">
                 <FiCheck size={18} />
               </div>
-              <h3 className="font-lato text-lg font-semibold">
+              <h3 className="font-inter text-lg font-semibold">
                 Confirmar candidatura
               </h3>
             </div>

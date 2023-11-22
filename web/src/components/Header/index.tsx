@@ -10,7 +10,7 @@ export function Header() {
       <div className="mx-auto flex  px-6 items-center justify-between max-w-screen-xl">
         <Link
           href="/opportunities"
-          className="text-blue-700 font-lato font-black text-4xl"
+          className="text-blue-700 font-inter font-semibold text-4xl"
         >
           iBico
         </Link>

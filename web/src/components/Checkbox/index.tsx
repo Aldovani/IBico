@@ -28,7 +28,7 @@ export function Checkbox({ id, description, title }: checkboxProps) {
         ></span>
       </div>
       <label htmlFor={id}>
-        <span className="font-lato text-base  text-slate-900 font-medium mb-1">
+        <span className="font-inter text-base  text-slate-900 font-medium mb-1">
           {title}
         </span>
         <p className="font-poppins text-slate-400 text-sm">{description}</p>

@@ -22,7 +22,7 @@ export function ToastItem({ data, onClose }: ToastItemProps) {
     <li
       onAnimationEnd={handleAnimationEnd}
       data-leaving={isLeaving}
-      className="flex items-start rounded-lg shadow-modal border bg-slate-50 border-slate-200 p-2 h-20 w-80 gap-3 data-[leaving='false']:animate-from-right data-[leaving='true']:animate-leave-right"
+      className="flex items-start rounded-lg shadow-modal border bg-slate-50 border-slate-200 p-2 min-h-[80px] w-80 gap-3 data-[leaving='false']:animate-from-right data-[leaving='true']:animate-leave-right"
     >
       {data.type === 'SUCCESS' && (
         <div className="w-6 h-6 p-1 rounded-lg text-green-700 bg-green-100">
@@ -45,7 +45,7 @@ export function ToastItem({ data, onClose }: ToastItemProps) {
         <div className="flex  justify-between items-center w-full">
           <h4
             data-type={data.type}
-            className="font-lato font-semibold text-sm data-[type='ERROR']:text-red-700 data-[type='SUCCESS']:text-green-700 data-[type='WARNING']:text-yellow-700"
+            className="font-inter font-semibold text-sm data-[type='ERROR']:text-red-700 data-[type='SUCCESS']:text-green-700 data-[type='WARNING']:text-yellow-700"
           >
             {data.title}
           </h4>
