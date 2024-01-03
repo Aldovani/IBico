@@ -7,15 +7,17 @@ const button = tv({
   variants: {
     variants: {
       primary:
-        'text-lg  hover:bg-blue-600  bg-blue-700 text-slate-50 disable:border-2 disable:bg-blue-800 disable:cursor-not-allowed  disable:hover:bg-blue-800',
+        '  hover:bg-blue-900/90  bg-blue-900 text-slate-50  disabled:bg-blue-900 disabled:opacity-60 disabled:cursor-not-allowed  disabled:hover:bg-blue-900/90',
       secondary:
-        'border-2 border-slate-300 bg-transparent text-slate-500 hover:bg-slate-200',
+        'border border-slate-300 bg-transparent text-slate-500 hover:bg-slate-200',
     },
     action: {
-      dangerous: 'border-red-500 text-red-500 bg-slate-50 hover:bg-red-50 ',
+      dangerous: 'border-rose-600 text-rose-600 bg-slate-50 hover:bg-rose-50 ',
     },
     sizes: {
-      sm: ' text-sm',
+      small: 'text-sm',
+      normal: 'text-base',
+      big: 'text-lg',
     },
   },
 })
@@ -28,7 +30,7 @@ export type ButtonProps = {
 
 export function Button({
   children,
-  sizes,
+  sizes = 'normal',
   loading = false,
   className,
   variants = 'primary',

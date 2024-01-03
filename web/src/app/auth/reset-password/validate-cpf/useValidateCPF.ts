@@ -1,4 +1,4 @@
-import { clientApi } from '@/services/api/providers/clientSide'
+import { api } from '@/services/api'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useMutation } from '@tanstack/react-query'
 import { useForm } from 'react-hook-form'
@@ -37,21 +37,15 @@ export function useValidateCPF() {
   })
 
   async function handleRegister(cpf: string) {
-    const { data } = await clientApi.get(
-      `/password/generateCode/${cpf.replace(/\D/g, '')}`,
-    )
+    const { data } = await api.post(`/users/reset-password/generate-code`, {
+      cpf: cpf.replace(/\D/g, ''),
+    })
     return data
   }
 
   const { mutate, isLoading } = useMutation({
     mutationFn: handleRegister,
     onSuccess: (data: verifyCodeResponse, cpf) => {
-      toast({
-        text: 'SMS envida com sucesso para o numero cadastrado em nossa base de dados',
-        title: 'Sucesso',
-        type: 'SUCCESS',
-      })
-
       const dataToVerifyCode = {
         requestId: data.requestId,
         userCpf: cpf,
@@ -59,6 +53,11 @@ export function useValidateCPF() {
 
       const dataToBase64 = btoa(JSON.stringify(dataToVerifyCode))
       router.push(`/auth/reset-password/verify-code?data=${dataToBase64}`)
+      toast({
+        text: 'SMS envida com sucesso para o numero cadastrado em nossa base de dados',
+        title: 'Sucesso',
+        type: 'SUCCESS',
+      })
     },
     onError: () => {
       toast({

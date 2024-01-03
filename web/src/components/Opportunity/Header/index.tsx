@@ -13,7 +13,7 @@ export function OpportunityHeader() {
     <header className="flex items-center justify-between">
       <p className="text-slate-500 text-base font-poppins">
         Oportunidades encontradas{' '}
-        <strong className="text-blue-700">
+        <strong className="text-blue-900">
           {totalElements?.toString().padStart(0, '0') || '00'}
         </strong>
       </p>
@@ -23,7 +23,7 @@ export function OpportunityHeader() {
         className="text-slate-500 text-base  font-poppins"
       >
         ordem <strong>Alfabética</strong>{' '}
-        <strong className="text-blue-700">
+        <strong className="text-blue-900">
           {sortDir === 'ASC' ? 'A-Z' : 'Z-A'}
         </strong>
       </p>

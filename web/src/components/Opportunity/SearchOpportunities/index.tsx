@@ -9,6 +9,10 @@ export function SearchOpportunities() {
     handleChangeTitleSearch,
     handleChangeLocalSearch,
     fetchOpportunities,
+    handleClearFilter,
+    local,
+    title,
+    isLoading,
   } = useOpportunitiesFeed()
   return (
     <section className="mt-10 ">
@@ -18,11 +22,12 @@ export function SearchOpportunities() {
             <Input.Field
               onChange={(e) => handleChangeTitleSearch(e.target.value)}
               className="pl-10"
+              value={title}
               placeholder="Titulo da vaga"
             >
               <Input.Icon
                 positions="left"
-                icon={<FiSearch size="20" className="text-blue-700 z-[9]" />}
+                icon={<FiSearch size="20" className="text-blue-900 z-[9]" />}
               />
             </Input.Field>
           </Input.Label>
@@ -32,10 +37,11 @@ export function SearchOpportunities() {
               onChange={(e) => handleChangeLocalSearch(e.target.value)}
               className="pl-10"
               placeholder="Localização"
+              value={local}
             >
               <Input.Icon
                 positions="left"
-                icon={<FiMapPin size="20" className="text-blue-700" />}
+                icon={<FiMapPin size="20" className="text-blue-900" />}
               />
             </Input.Field>
           </Input.Label>
@@ -44,11 +50,17 @@ export function SearchOpportunities() {
         <div className="flex gap-2 max-md:w-full max-md:flex-col ">
           <Button
             variants="secondary"
+            onClick={handleClearFilter}
             className=" flex gap-1 items-center max-md:w-full"
+            loading={isLoading}
           >
             Limpar campos
           </Button>
-          <Button onClick={fetchOpportunities} className=" max-md:w-full">
+          <Button
+            loading={isLoading}
+            onClick={fetchOpportunities}
+            className=" max-md:w-full"
+          >
             Buscar
           </Button>
         </div>

@@ -1,30 +1,63 @@
 import { AxiosInstance, AxiosResponse } from 'axios'
-import { clientApi } from '../providers/clientSide'
-export type Candidacy = {
+import { api } from '../index'
+export type Candidature = {
   id: string
-  candidatureDate: string
-  candidateName: string
-  candidateUsername: string
-  candidateImgURL: string
   opportunityId: string
+  opportunity: {
+    amount: number
+    description: string
+    title: string
+    author: {
+      name: string
+      username: string
+      avatar: string
+    }
+  }
 }
 
 type getCandidaturesResponse = {
-  items: Candidacy[]
+  data: Candidature[]
+  pageNo: number
+  pageSize: number
+  total: number
+  totalPages: number
+  last: true
+}
+
+type GetCandidatures = {
+  status: 'CREATED' | 'PENDING' | 'CLOSED'
+  page: number
+}
+
+type Candidate = {
+  id: string
+  avatar: string
+  username: string
+  name: string
+  rating: number
+}
+
+export type GetCandidatesResponse = {
+  data: Candidate[]
   pageNo: number
   pageSize: number
   totalElements: number
   totalPages: number
-  last: true
-  self: true
+  last: boolean
+  self: boolean
 }
 
-export function CandidacyRequest(httpProvider: AxiosInstance) {
-  async function getCandidatures() {
+export function CandidatureRequest(httpProvider: AxiosInstance) {
+  async function getCandidatures({ page, status }: GetCandidatures) {
     const { data } = await httpProvider.get<
       unknown,
       AxiosResponse<getCandidaturesResponse>
-    >('/candidatures')
+    >('/candidatures', {
+      params: {
+        status,
+        page,
+      },
+    })
     return data
   }
   async function unsubscribeCandidature(id: string) {
@@ -34,24 +67,35 @@ export function CandidacyRequest(httpProvider: AxiosInstance) {
   }
 
   async function applyCandidature(id: string) {
-    const { data } = await httpProvider.post(
-      '/candidatures',
-      {},
-      {
-        params: {
-          opportunityId: id,
-        },
-      },
-    )
+    const { data } = await httpProvider.post(`/candidatures/${id}`)
 
+    return data
+  }
+
+  async function fetchCandidates({
+    opportunityId,
+    page,
+  }: {
+    opportunityId: string
+    page: number
+  }) {
+    const { data } = await httpProvider.get<
+      unknown,
+      AxiosResponse<GetCandidatesResponse>
+    >(`/candidatures/${opportunityId}/candidates`, {
+      params: {
+        page,
+      },
+    })
     return data
   }
 
   return {
     getCandidatures,
+    fetchCandidates,
     applyCandidature,
     unsubscribeCandidature,
   }
 }
 
-export const Candidacy = CandidacyRequest(clientApi)
+export const CandidatureRepository = CandidatureRequest(api)

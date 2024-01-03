@@ -1,0 +1,135 @@
+//// ------------------------------------------------------
+//// THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+//// ------------------------------------------------------
+
+Table users {
+  id String [pk]
+  name String [not null]
+  cellphone String [not null]
+  username String [unique, not null]
+  cpf String [unique, not null]
+  avatar String
+  password String [not null]
+  rating Float [not null]
+  active Boolean [not null]
+  createdAt DateTime [not null]
+  skills user_skills [not null]
+  Candidatures candidatures [not null]
+  Review reviews [not null]
+  AuthorOpportunity opportunities [not null]
+  CandidateOpportunity opportunities [not null]
+  PasswordCode password_codes [not null]
+}
+
+Table skills {
+  id String [pk]
+  name String [not null]
+  UserSkill user_skills [not null]
+  OpportunitySkill opportunity_skills [not null]
+}
+
+Table user_skills {
+  skillId String [not null]
+  Skill skills [not null]
+  userId String [not null]
+  User users [not null]
+
+  indexes {
+    (skillId, userId) [pk]
+  }
+}
+
+Table opportunities {
+  id String [pk]
+  title String [not null]
+  description String [not null]
+  amount Float [not null]
+  local String [not null]
+  status String [not null]
+  startDateTime DateTime [not null]
+  endDateTime DateTime [not null]
+  timeLoad String [not null]
+  opportunityClosedTime DateTime
+  createdAt DateTime [not null]
+  Author users [not null]
+  authorId String [not null]
+  Candidate users
+  candidateId String
+  canidatures candidatures [not null]
+  skills opportunity_skills [not null]
+  Review reviews [not null]
+}
+
+Table opportunity_skills {
+  skillId String [not null]
+  skill skills [not null]
+  opportunityId String [not null]
+  Opportunity opportunities [not null]
+
+  indexes {
+    (skillId, opportunityId) [pk]
+  }
+}
+
+Table candidatures {
+  id String [pk]
+  createdAt DateTime [not null]
+  opportunityId String [not null]
+  userId String [not null]
+  User users [not null]
+  Opportunity opportunities [not null]
+}
+
+Table reviews {
+  id String [pk]
+  description String [not null]
+  rating Float [not null]
+  createdAt DateTime [not null]
+  Author users [not null]
+  authorId String [not null]
+  Opportunity opportunities [not null]
+  opportunityId String [not null]
+}
+
+Table password_codes {
+  id String [pk]
+  code String [not null]
+  expiresAt DateTime [not null]
+  createdAt DateTime [not null]
+  userId String [not null]
+  user users [not null]
+  PasswordReset password_resets [not null]
+}
+
+Table password_resets {
+  id String [pk]
+  expiresAt DateTime [not null]
+  createdAt DateTime [not null]
+  used Boolean [not null]
+  request password_codes [not null]
+  passwordCodeId String [not null]
+}
+
+Ref: user_skills.skillId > skills.id [delete: Cascade]
+
+Ref: user_skills.userId > users.id [delete: Cascade]
+
+Ref: opportunities.authorId > users.id [delete: Cascade]
+
+Ref: opportunities.candidateId > users.id [delete: Cascade]
+
+Ref: opportunity_skills.skillId > skills.id [delete: Cascade]
+
+Ref: opportunity_skills.opportunityId > opportunities.id [delete: Cascade]
+
+Ref: candidatures.userId > users.id [delete: Cascade]
+
+Ref: candidatures.opportunityId > opportunities.id [delete: Cascade]
+
+Ref: reviews.authorId > users.id [delete: Cascade]
+
+Ref: reviews.opportunityId > opportunities.id [delete: Cascade]
+
+Ref: password_codes.userId > users.id
+
+Ref: password_resets.passwordCodeId > password_codes.id

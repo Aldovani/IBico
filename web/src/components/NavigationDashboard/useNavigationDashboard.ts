@@ -23,6 +23,11 @@ const LINKS = [
     pathName: 'opportunities',
   },
   {
+    href: '/dashboard/candidatures',
+    title: 'Candidaturas',
+    pathName: 'candidatures',
+  },
+  {
     href: '/dashboard/notifications',
     title: 'Notificações',
     pathName: 'notifications',

@@ -4,8 +4,11 @@ import { Modal } from '../Modal'
 import { ShareList } from './shareList'
 import { Copy } from '../Copy'
 import { FiShare2 } from 'react-icons/fi'
+type ShareModalProps = {
+  url: string
+}
 
-export function ShareModal() {
+export function ShareModal({ url }: ShareModalProps) {
   const {
     handleAnimationEndClose,
     handleClose,
@@ -18,7 +21,7 @@ export function ShareModal() {
   return (
     <>
       <span
-        className="flex items-center text-blue-700 gap-2"
+        className="flex items-center text-blue-900 hover:text-opacity-60 transition-opacity gap-2 cursor-pointer"
         onClick={handleOpen}
       >
         compartilhar
@@ -32,11 +35,13 @@ export function ShareModal() {
           onAnimationEnd={handleAnimationEndClose}
         >
           <Modal.Header onClose={handleClose}>
-            <div className="flex items-center gap-1">
-              <div className="p-1 bg-blue-100 rounded-lg text-blue-700">
+            <div className="flex items-center gap-2">
+              <div className="p-1 bg-blue-900/10 rounded-lg text-blue-900">
                 <FiShare2 size={18} />
               </div>
-              <h3 className="font-inter text-lg font-semibold">Compartilhar</h3>
+              <h3 className="font-inter text-xl font-medium text-blue-900">
+                Compartilhar
+              </h3>
             </div>
           </Modal.Header>
 
@@ -45,8 +50,8 @@ export function ShareModal() {
               compartilhe essa oportunidades com amigos e familiares que
               precisam de uma renda extra
             </p>
-            <Copy text="htpps://ibico.com/opportunities/54565411sdadasdasdasdaskdajskldjasdkjal" />
-            <ShareList url="sdasdn" />
+            <Copy text={url} />
+            <ShareList url={url} />
           </Modal.Body>
         </Modal.Container>
       </Modal.Overlay>

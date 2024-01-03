@@ -37,8 +37,9 @@ export function Skills({
         />
         <Input.MessageError message={errors.skills?.message} />
       </Input.Label>
-
-      <SkillsList skills={skills} onRemove={onRemoveSkill} />
+      <div className="mt-4">
+        <SkillsList skills={skills} onRemove={onRemoveSkill} />
+      </div>
     </>
   )
 }

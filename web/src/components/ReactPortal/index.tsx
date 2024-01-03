@@ -1,11 +1,11 @@
 'use client'
 
-import { ReactNode, useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import ReactDOM from 'react-dom'
 
 type ReactPortalProps = {
   containerId: string
-  children: ReactNode
+  children: React.ReactNode
 }
 
 export function ReactPortal({

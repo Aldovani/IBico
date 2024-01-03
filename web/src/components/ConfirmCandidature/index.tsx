@@ -6,9 +6,15 @@ import { Button } from '../Button'
 import { useConfirmCandidature } from './useConfirmCandidature'
 type ConfirmCandidatureProps = {
   opportunityId: string
+  authorUsername: string
+  isCandidate: boolean
 }
 
-export function ConfirmCandidature({ opportunityId }: ConfirmCandidatureProps) {
+export function ConfirmCandidature({
+  opportunityId,
+  isCandidate: isAlreadyCandidate,
+  authorUsername,
+}: ConfirmCandidatureProps) {
   const {
     handleAnimationEndClose,
     handleClose,
@@ -18,12 +24,22 @@ export function ConfirmCandidature({ opportunityId }: ConfirmCandidatureProps) {
     isOpen,
     handleSubmitCandidature,
     isLoading,
-  } = useConfirmCandidature()
+    isAuthor,
+    isApply,
+  } = useConfirmCandidature({ authorUsername })
+
   return (
     <>
-      <Button onClick={handleOpen} className="flex-grow-1">
-        Candidata-se
-      </Button>
+      {!isAuthor && (
+        <Button
+          variants="primary"
+          onClick={handleOpen}
+          disabled={isAlreadyCandidate || isApply}
+          className="flex-grow-1"
+        >
+          {isAlreadyCandidate || isApply ? 'Candidatou-se' : 'Candidatar-se'}
+        </Button>
+      )}
       <Modal.Overlay isOpen={isOpen} onClose={handleClose}>
         <Modal.Container
           isLeave={isLeave}
@@ -33,10 +49,10 @@ export function ConfirmCandidature({ opportunityId }: ConfirmCandidatureProps) {
         >
           <Modal.Header onClose={handleClose}>
             <div className="flex items-center gap-1">
-              <div className="p-1 bg-blue-100 rounded-lg text-blue-700">
+              <div className="p-1 bg-blue-900 rounded-lg text-blue-900">
                 <FiCheck size={18} />
               </div>
-              <h3 className="font-inter text-lg font-semibold">
+              <h3 className="font-inter text-lg font-medium text-blue-900">
                 Confirmar candidatura
               </h3>
             </div>

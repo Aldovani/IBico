@@ -2,12 +2,25 @@ import { NavigationAside } from '@/components/NavigationAside'
 import { FiBriefcase } from 'react-icons/fi'
 
 const links = [
-  { href: '/dashboard/notifications', text: 'Todas' },
   {
-    href: '/dashboard/notifications?filter=as',
-    text: 'Candidaturas',
+    href: '/dashboard/notifications',
+    path: '/dashboard/notifications',
+    text: 'Todas',
+    queryParams: '',
   },
-  { href: '', text: 'Minhas oportunidades' },
+
+  {
+    href: '/dashboard/notifications?filter=candidatures',
+    path: '/dashboard/notifications',
+    text: 'Candidaturas',
+    queryParams: 'candidatures',
+  },
+  {
+    href: '/dashboard/notifications?filter=opportunities',
+    path: '/dashboard/notifications',
+    text: 'Minhas oportunidades',
+    queryParams: 'opportunities',
+  },
 ]
 
 export default function Notification() {
@@ -17,7 +30,7 @@ export default function Notification() {
       <div className="w-full">
         <section className="flex items-center justify-between border-b-2 border-slate-200 pb-6">
           <div className="max-w-304">
-            <h1 className="font-inter text-xl text-slate-900 font-bold mb-2">
+            <h1 className="font-inter text-xl text-blue-900 font-medium mb-2">
               Minhas notificações
             </h1>
             <p className="font-poppins text-slate-400 text-sm">

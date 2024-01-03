@@ -35,17 +35,17 @@ export function UserMenu() {
     setIsMenuOpen((prev) => !prev)
   }
 
+  if (!user) {
+    return
+  }
+
   return (
     <div className="relative flex ">
-      <button onClick={handleClick}>
-        <Image
-          className="rounded-full border-2 transition-colors hover:border-blue-700 "
-          src={user?.imgURL || ''}
-          alt=""
-          width={42}
-          height={42}
-          id="button-menu"
-        />
+      <button
+        className="w-[42px] h-[42px] flex items-center justify-center rounded-xl border transition-colors hover:border-blue-900 "
+        onClick={handleClick}
+      >
+        <FiUser size={24} className="text-blue-900" />
       </button>
 
       <ul
@@ -58,8 +58,8 @@ export function UserMenu() {
       >
         <li>
           <Link
-            className="font-poppins flex items-center gap-2 rounded-lg  font-medium px-4 py-1  text-slate-500 transition-colors  hover:bg-slate-100   hover:text-blue-700"
-            href={`/profile/${user?.username}`}
+            className="font-poppins flex items-center gap-2 rounded-lg  font-medium px-4 py-1  text-slate-500 transition-colors  hover:bg-slate-100   hover:text-blue-900"
+            href={`/profile/${user.username}`}
           >
             <FiUser size={16} />
             Perfil
@@ -67,7 +67,7 @@ export function UserMenu() {
         </li>
         <li>
           <Link
-            className="font-poppins flex items-center gap-2 rounded-lg  font-medium px-4 py-1  text-slate-500 transition-colors  hover:bg-slate-100   hover:text-blue-700"
+            className="font-poppins flex items-center gap-2 rounded-lg  font-medium px-4 py-1  text-slate-500 transition-colors  hover:bg-slate-100   hover:text-blue-900"
             href="/dashboard/user"
           >
             <FiSettings size={16} />
@@ -76,7 +76,7 @@ export function UserMenu() {
         </li>
         <li>
           <Link
-            className="font-poppins flex items-center gap-2 rounded-lg font-medium px-4 py-1 text-slate-500 transition-colors   hover:bg-slate-100 hover:text-blue-700"
+            className="font-poppins flex items-center gap-2 rounded-lg font-medium px-4 py-1 text-slate-500 transition-colors   hover:bg-slate-100 hover:text-blue-900"
             href="/dashboard/notifications"
           >
             <FiBell size={16} />
@@ -85,7 +85,7 @@ export function UserMenu() {
         </li>
         <li>
           <Link
-            className="font-poppins flex items-center gap-2 rounded-lg font-medium px-4 py-1 text-slate-500 transition-colors   hover:bg-slate-100 hover:text-blue-700"
+            className="font-poppins flex items-center gap-2 rounded-lg font-medium px-4 py-1 text-slate-500 transition-colors   hover:bg-slate-100 hover:text-blue-900"
             href="/dashboard/history"
           >
             <FiFileText size={16} />
@@ -94,7 +94,7 @@ export function UserMenu() {
         </li>
         <li>
           <Link
-            className="font-poppins flex items-center gap-2 rounded-lg font-medium px-4 py-1 text-slate-500 transition-colors   hover:bg-slate-100 hover:text-blue-700"
+            className="font-poppins flex items-center gap-2 rounded-lg font-medium px-4 py-1 text-slate-500 transition-colors   hover:bg-slate-100 hover:text-blue-900"
             href="/dashboard/opportunities"
           >
             <FiBriefcase size={16} />
@@ -105,7 +105,7 @@ export function UserMenu() {
         <li>
           <button
             onClick={handleSignOut}
-            className="font-poppins w-full flex items-center gap-2 rounded-lg font-medium px-4 py-1 text-slate-500 transition-colors   hover:bg-slate-100 hover:text-blue-700"
+            className="font-poppins w-full flex items-center gap-2 rounded-lg font-medium px-4 py-1 text-slate-500 transition-colors   hover:bg-slate-100 hover:text-blue-900"
           >
             <FiLogOut size={16} />
             Sair

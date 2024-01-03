@@ -7,7 +7,7 @@ export function Notifications() {
       <Link
         href="/dashboard/notifications"
         title="notificações"
-        className=" border block border-slate-200 rounded-lg p-2 hover:text-blue-700"
+        className=" w-[42px] h-[42px] border flex items-center justify-center border-slate-200 rounded-lg p-2 hover:text-blue-900"
       >
         <FiBell size={20} />
       </Link>
@@ -15,12 +15,12 @@ export function Notifications() {
       <div className="pt-4 absolute translate-y-2 right-0 opacity-0 transition-all pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto group-hover:translate-y-0 ">
         <div className="w-96  border rounded-lg border-slate-200 px-4 py-6 bg-slate-50">
           <div className="flex items-center justify-between border-b pb-4 border-slate-200">
-            <h3 className="text-slate-900 text-lg font-bold font-inter">
+            <h3 className="text-blue-900 text-lg font-bold font-inter">
               Suas notificações
             </h3>
             <Link
               href="/dashboard/notifications"
-              className="text-blue-700 font-poppins font-medium"
+              className="text-blue-900 font-poppins font-medium"
             >
               ver todos
             </Link>

@@ -7,7 +7,7 @@ import { useUserConfig } from './useUserConfig'
 import { Modal } from '@/components/Modal'
 
 import { FiXCircle } from 'react-icons/fi'
-import { User } from '@/contexts/authContext'
+import Image from 'next/image'
 
 export default function UserConfig() {
   const {
@@ -32,11 +32,13 @@ export default function UserConfig() {
     isLoadingDeleteUserAvatar,
   } = useUserConfig()
 
+  if (!user) return <h1>Carregando</h1>
+
   return (
     <main className="w-full">
       <section className=" left-0 flex items-center justify-between border-b-2 border-slate-200 pb-6">
         <div className="max-w-304">
-          <h1 className="font-inter text-xl text-slate-900 font-bold mb-2">
+          <h1 className="font-inter text-xl text-blue-900 font-medium mb-2">
             Configurar perfil
           </h1>
           <p className="font-poppins text-slate-400 text-sm">
@@ -56,11 +58,11 @@ export default function UserConfig() {
         </div>
 
         <div className="flex gap-4 mt-4 items-center">
-          <img
-            src={user?.imgURL || ''}
+          <Image
+            src={user.avatar}
             width={80}
             height={80}
-            alt=""
+            alt={user.name}
             className="w-20 h-20 rounded-full"
           />
 
@@ -71,14 +73,13 @@ export default function UserConfig() {
             <div className="flex gap-4 mt-3">
               <label
                 htmlFor="uploadImage"
-                className="border-2 cursor-pointer border-slate-300 bg-transparent text-slate-500 hover:bg-slate-200 font-poppins font-medium whitespace-nowrap flex  items-center rounded-lg  justify-center w-full  py-2 px-6   duration-150 ease-out "
+                className="border cursor-pointer border-slate-300 bg-transparent text-slate-500 hover:bg-slate-200 font-poppins font-medium whitespace-nowrap flex  items-center rounded-lg  justify-center w-full  py-2 px-6   duration-150 ease-out "
               >
                 Enviar avatar
                 <input
                   className="hidden"
                   type="file"
                   onChange={handleUpdateAvatar}
-                  name=""
                   id="uploadImage"
                 />
               </label>
@@ -109,13 +110,13 @@ export default function UserConfig() {
           className="grid grid-cols-2 gap-4 mt-6 items-center max-md:grid-cols-1"
           onSubmit={handleSubmit(({ cellphone, cpf, name, username }) => {
             mutate({
-              currentData: user as User,
-              payload: {
-                telephone: cellphone,
-                cpf,
-                name,
-                username,
-              },
+              cellphone,
+              cpf,
+              name,
+              username,
+              currentPassword: undefined,
+              newPassword: undefined,
+              skills: user?.skills || [],
             })
           })}
         >
@@ -173,7 +174,7 @@ export default function UserConfig() {
               inputMode="tel"
               autoComplete="cc-number"
               minLength={14}
-              maxLength={15}
+              maxLength={17}
             />
             <Input.MessageError message={errors.cellphone?.message} />
           </Input.Label>
@@ -198,12 +199,11 @@ export default function UserConfig() {
         </div>
 
         <div className=" flex items-center max-w-304 gap-6 mt-6">
-          <Button
-            onClick={handleOpen}
-            variants="secondary"
-            action={user?.active ? 'dangerous' : undefined}
-          >
-            {user?.active ? 'Desativar' : 'Ativar'}
+          <Button onClick={handleOpen} variants="secondary">
+            {user.active ? 'Desativar conta' : 'Ativar conta'}
+          </Button>
+          <Button onClick={handleOpen} variants="primary" action="dangerous">
+            Deletar conta
           </Button>
         </div>
       </section>
@@ -217,10 +217,10 @@ export default function UserConfig() {
         >
           <Modal.Header onClose={handleClose}>
             <div className="flex items-center gap-1">
-              <div className="p-1 bg-red-100 rounded-lg text-red-700">
+              <div className="p-1 bg-rose-100 rounded-lg text-rose-600">
                 <FiXCircle size={18} />
               </div>
-              <h3 className="font-inter text-lg font-semibold">
+              <h3 className="font-inter text-xl font-medium text-rose-600">
                 Desativar conta
               </h3>
             </div>

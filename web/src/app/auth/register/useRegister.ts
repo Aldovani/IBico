@@ -11,11 +11,10 @@ import { z } from 'zod'
 import { AxiosError } from 'axios'
 import { HTTPS_CODES } from '@/constants/http-codes'
 import { toast } from '@/utils/toast'
-import { User } from '@/services/api/repositories/user'
+import { UserRepository } from '@/services/api/repositories/user'
 
 export function useRegister() {
   const [isShowPassword, setIsShowPassword] = useState(false)
-  const [isShowConfirmPassword, setIsShowConfirmPassword] = useState(false)
   const { handleSignIn } = useAuth()
 
   const registerSchema = z
@@ -38,19 +37,10 @@ export function useRegister() {
           /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?.&])[A-Za-z\d@$!%*?.&]{8,}$/,
           'Senha deve conter letra maiúscula e minuscula , numero e um carácter especial ',
         ),
-      confirmPassword: z.string().min(8, 'Deve conter no minion 8 caracteres'),
     })
     .superRefine((val, ctx) => {
       if (!isValidCPF(val.cpf)) {
         ctx.addIssue({ message: 'CPF invalido', code: 'custom', path: ['cpf'] })
-      }
-
-      if (val.password !== val.confirmPassword) {
-        ctx.addIssue({
-          message: 'Senhas diferentes',
-          code: 'custom',
-          path: ['confirmPassword'],
-        })
       }
     })
 
@@ -68,7 +58,7 @@ export function useRegister() {
   })
 
   const { mutate, isLoading } = useMutation({
-    mutationFn: User.createUser,
+    mutationFn: UserRepository.createUser,
     onSuccess: (_, { cpf, password }) => {
       handleSignIn({ cpf, password }, '/auth/config')
     },
@@ -86,9 +76,6 @@ export function useRegister() {
   function handleToggleIconPassword() {
     setIsShowPassword((prev) => !prev)
   }
-  function handleToggleIconConfirmPassword() {
-    setIsShowConfirmPassword((prev) => !prev)
-  }
 
   function handleChangeCPF(value: string) {
     setValue('cpf', maskCPF(value))
@@ -102,8 +89,6 @@ export function useRegister() {
     handleSubmit,
     errors,
     handleToggleIconPassword,
-    handleToggleIconConfirmPassword,
-    isShowConfirmPassword,
     isShowPassword,
     handleRegister: mutate,
     isLoading,

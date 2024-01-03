@@ -20,6 +20,7 @@ export function ToastItem({ data, onClose }: ToastItemProps) {
 
   return (
     <li
+      data-toast-type={data.type}
       onAnimationEnd={handleAnimationEnd}
       data-leaving={isLeaving}
       className="flex items-start rounded-lg shadow-modal border bg-slate-50 border-slate-200 p-2 min-h-[80px] w-80 gap-3 data-[leaving='false']:animate-from-right data-[leaving='true']:animate-leave-right"
@@ -31,7 +32,7 @@ export function ToastItem({ data, onClose }: ToastItemProps) {
       )}
 
       {data.type === 'ERROR' && (
-        <div className="w-6 h-6 p-1 rounded-lg text-red-700 bg-red-100">
+        <div className="w-6 h-6 p-1 rounded-lg text-rose-700 bg-rose-100">
           <FiXCircle size={16} />
         </div>
       )}
@@ -45,14 +46,14 @@ export function ToastItem({ data, onClose }: ToastItemProps) {
         <div className="flex  justify-between items-center w-full">
           <h4
             data-type={data.type}
-            className="font-inter font-semibold text-sm data-[type='ERROR']:text-red-700 data-[type='SUCCESS']:text-green-700 data-[type='WARNING']:text-yellow-700"
+            className="font-inter font-semibold text-sm data-[type='ERROR']:text-rose-700 data-[type='SUCCESS']:text-green-700 data-[type='WARNING']:text-yellow-700"
           >
             {data.title}
           </h4>
 
           <button
             onClick={handleClose}
-            className="border border-slate-200 p-1 rounded-lg text-slate-400 transition-colors hover:text-red-700 hover:border-red-200"
+            className="border border-slate-200 p-1 rounded-lg text-slate-400 transition-colors hover:text-rose-700 hover:border-rose-200"
           >
             <FiX size={12} />
           </button>

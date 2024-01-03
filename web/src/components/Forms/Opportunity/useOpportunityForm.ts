@@ -9,7 +9,9 @@ import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
 type useOpportunityFormProps = {
-  initialData?: Opportunity
+  initialData?: {
+    data: Opportunity
+  }
 }
 
 export function useOpportunityForm({ initialData }: useOpportunityFormProps) {
@@ -18,10 +20,10 @@ export function useOpportunityForm({ initialData }: useOpportunityFormProps) {
   useEffect(() => {
     setSkills(() => {
       if (!initialData) return []
-      const data = initialData.necessarySkills.map((skill) => {
-        return { name: skill.name, id: Math.random() }
-      })
-      return data as Skills[]
+      return initialData.data.skills.map((skill) => ({
+        id: Math.random(),
+        name: skill,
+      }))
     })
   }, [initialData])
 
@@ -37,7 +39,7 @@ export function useOpportunityForm({ initialData }: useOpportunityFormProps) {
         .refine(validateDate, { message: 'Data invalida' }),
       timeLoad: z.string().min(1),
       local: z.string().min(5),
-      value: z.coerce.number().min(1),
+      amount: z.coerce.number().min(1),
     })
     .superRefine(({ startDateTime, endDateTime }, ctx) => {
       const isEndDateValid =
@@ -61,18 +63,18 @@ export function useOpportunityForm({ initialData }: useOpportunityFormProps) {
   } = useForm<OpportunitySchema>({
     resolver: zodResolver(opportunitySchema),
     values: {
-      description: initialData?.description || '',
-      endDateTime: initialData?.endDateTime || '',
-      local: initialData?.local || '',
-      startDateTime: initialData?.startDateTime || '',
-      timeLoad: initialData?.timeLoad || '',
-      title: initialData?.title || '',
-      value: initialData?.value || 0,
+      description: initialData?.data.description || '',
+      endDateTime: initialData?.data.endDateTime || '',
+      local: initialData?.data.local || '',
+      startDateTime: initialData?.data?.startDateTime || '',
+      timeLoad: initialData?.data.timeLoad || '',
+      title: initialData?.data.title || '',
+      amount: initialData?.data.amount || 0,
     },
   })
 
-  function handleAddSkill({ id, name }: Skills) {
-    setSkills((prev) => [...prev, { id, name }])
+  function handleAddSkill({ name }: Skills) {
+    setSkills((prev) => [...prev, { name, id: Math.random() }])
   }
 
   function handleRemoveSkill(id: number) {

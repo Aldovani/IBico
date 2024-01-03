@@ -1,6 +1,15 @@
-import { AxiosInstance, AxiosResponse } from 'axios'
-import { clientApi } from '../providers/clientSide'
-import avatar from '../../../assets/img/avatar.png'
+import { AxiosInstance } from 'axios'
+import { api } from '../'
+
+export type UserType = {
+  name: string
+  cpf: string
+  username: string
+  amount: number
+  rating: number
+  cellphone: string
+  skills: string[]
+}
 
 type CreateUser = {
   cellphone: string
@@ -10,139 +19,68 @@ type CreateUser = {
   username: string
 }
 
-type UserCreated = {
-  name: string
-  username: string
-  imgURL: string
-}
-
-type Skill = {
-  name: string
-}
-
-type User = {
-  name: string
-  passwd: string
-  username: string
-  telephone: string
+type UpdateUser = {
   cpf: string
-  imgURL: string
-  skills: Skill[]
-  active: boolean
-}
-type UpdateUserDTO = {
-  payload: Partial<User>
-  currentData: Omit<User, 'passwd'>
-}
-
-type updateUserAvatarPayload = {
+  name: string
   username: string
-  file: File
+  cellphone: string
+  skills: string[]
+  currentPassword: string | undefined
+  newPassword: string | undefined
 }
 
-type UserRequestDTO = {
-  name?: string
-}
+function UserRequest(httpProvider: AxiosInstance) {
+  async function getUser() {
+    const { data } = await httpProvider.get(`/users/me`)
 
-export function UserRequest(httpProvider: AxiosInstance) {
-  async function getUser({ name }: UserRequestDTO) {
-    const { data } = await httpProvider.get(`/users${name ? `${name}` : ''}`)
+    return data
+  }
+  async function getProfile(username: string) {
+    const { data } = await httpProvider.get(`/users/profile/${username}`)
+
     return data
   }
 
-  async function createUser({
-    cellphone,
-    cpf,
-    name,
-    password,
-    username,
-  }: CreateUser) {
-    const userPayload = {
-      telephone: cellphone.replace(/\D/g, ''),
-      cpf: cpf.replace(/\D/g, ''),
-      name,
-      username,
-      imgURL: '',
-      active: true,
-      passwd: password,
-      skills: [],
+  async function createUser(user: CreateUser) {
+    const payload = {
+      cellphone: user.cellphone.replace(/\D/g, ''),
+      cpf: user.cpf.replace(/\D/g, ''),
+      name: user.name,
+      username: user.username,
+      password: user.password,
     }
 
-    const response = await fetch(avatar.src)
-    const imageBlob = await response.blob()
+    await httpProvider.post('/users', payload)
+  }
 
-    const file = new File([imageBlob], 'nomeDaImagem.jpg', {
-      type: 'image/jpeg',
-    })
+  async function updateUserAvatar(file: File) {
     const formData = new FormData()
-
-    const userPayloadJSON = JSON.stringify(userPayload)
-    formData.append('profilePic', file)
-    const blob = new Blob([userPayloadJSON], {
-      type: 'application/json',
-    })
-    formData.append('payload', blob)
-
-    const { data } = await httpProvider.post<
-      unknown,
-      AxiosResponse<UserCreated>
-    >('/users', formData, {
+    formData.append('avatar', file)
+    const { data } = await httpProvider.put(`/users/avatar`, formData, {
       headers: {
         'Content-Type': 'multipart/form-data',
       },
     })
-
     return data
   }
 
-  async function updateUserAvatar({ file, username }: updateUserAvatarPayload) {
-    const formData = new FormData()
-    formData.append('profilePic', file)
-    const { data } = await httpProvider.post(
-      `/users/${username}/update-profile-pic`,
-      formData,
-      {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      },
-    )
-    return data
+  async function deleteUserAvatar() {
+    await httpProvider.delete('/users/avatar')
   }
 
-  async function deleteUserAvatar(username: string) {
-    const response = await fetch(avatar.src)
-    const imageBlob = await response.blob()
-
-    const file = new File([imageBlob], 'nomeDaImagem.jpg', {
-      type: 'image/jpeg',
-    })
-
-    const formData = new FormData()
-    formData.append('profilePic', file)
-    const { data } = await httpProvider.post(
-      `/users/${username}/update-profile-pic`,
-      formData,
-      {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      },
-    )
-    return data
-  }
-
-  async function updateUser({ currentData, payload }: UpdateUserDTO) {
-    const userPayload = {
-      ...currentData,
-      ...payload,
-      cpf: payload.cpf ? payload.cpf.replace(/\D/g, '') : currentData.cpf,
-      telephone: payload.telephone
-        ? payload.telephone.replace(/\D/g, '')
-        : currentData.telephone,
+  async function updateUser(user: UpdateUser) {
+    const payload = {
+      cpf: user.cpf.replace(/\D/g, ''),
+      cellphone: user.cellphone.replace(/\D/g, ''),
+      name: user.name,
+      username: user.username,
+      skills: user.skills,
+      active: true,
+      currentPassword: user.currentPassword,
+      newPassword: user.newPassword,
     }
 
-    const { data } = await httpProvider.put('/users', userPayload)
+    const { data } = await httpProvider.put('/users', payload)
     return data
   }
 
@@ -158,7 +96,8 @@ export function UserRequest(httpProvider: AxiosInstance) {
     getUser,
     updateUserAvatar,
     deleteUserAvatar,
+    getProfile,
   }
 }
 
-export const User = UserRequest(clientApi)
+export const UserRepository = UserRequest(api)

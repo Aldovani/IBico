@@ -6,7 +6,7 @@ const spinner = tv({
     colors: {
       black: 'border-slate-400 ',
       white: 'border-slate-50',
-      blue: 'border-blue-500',
+      blue: 'border-blue-900',
     },
   },
 })

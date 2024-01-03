@@ -1,20 +1,13 @@
 'use client'
 
 import { HTTPS_CODES } from '@/constants/http-codes'
-import { useLocalStorage } from '@/hooks/useLocalStorage'
-import { User } from '@/services/api/repositories/user'
+import { UserRepository } from '@/services/api/repositories/user'
 import { toast } from '@/utils/toast'
 import { useMutation, useQuery } from '@tanstack/react-query'
 import { AxiosError } from 'axios'
 import { useRouter } from 'next/navigation'
 import { ReactNode, createContext, useState, useTransition } from 'react'
-import { useCookies } from 'next-client-cookies'
-import { clientApi } from '@/services/api'
-
-type authContextProviderProps = {
-  children: ReactNode
-  user: { items: User[] } | null
-}
+import { api } from '@/services/api'
 
 type RequestSignInProps = {
   cpf: string
@@ -24,20 +17,21 @@ type RequestSignInProps = {
 type RequestSignInResponse = {
   access_token: string
 }
-type skill = {
-  name: string
-  id: number
-}
 
 export type User = {
   name: string
   active: true
   cpf: string
-  dateOfCreation: string
-  imgURL: string
-  skills: skill[]
-  telephone: string
+  createdAt: string
+  avatar: string
+  skills: string[]
+  cellphone: string
   username: string
+}
+
+type authContextProviderProps = {
+  children: ReactNode
+  user: User | null
 }
 
 type authContext = {
@@ -56,39 +50,34 @@ export function AuthContextProvider({
   children,
   user: userProp,
 }: authContextProviderProps) {
-  const [user, setUser] = useState<User | null>(userProp?.items[0] || null)
+  const [user, setUser] = useState<User | null>(userProp || null)
   const [errors, setError] = useState<AxiosError | undefined>(undefined)
   const [, startTransition] = useTransition()
-  const { save, remove } = useLocalStorage()
   const router = useRouter()
-  const cookies = useCookies()
 
   const isAuthenticated = !!user
 
-  const { refetch } = useQuery(['GET_USER'], () => User.getUser({}), {
+  const { refetch } = useQuery(['GET_USER'], UserRepository.getUser, {
     onSuccess: (data) => {
-      setUser(data.items[0])
+      setUser(data.data)
     },
     enabled: false,
     retry: 0,
     initialData: userProp,
   })
+  
 
   const { mutate, isLoading } = useMutation<
     RequestSignInResponse,
     AxiosError,
-    { cpf: string; password: string; pathTo: string },
-    unknown
+    { cpf: string; password: string; pathTo: string }
   >({
     mutationFn: handleRequest,
 
     onSuccess: async (data: { access_token: string }, { pathTo }) => {
-      save('token', data.access_token)
-      cookies.set('token', data.access_token)
-
-      const dataUser = await User.getUser({})
+      const dataUser = await UserRepository.getUser()
       startTransition(() => {
-        setUser(dataUser.items[0])
+        setUser(dataUser.data)
         router.push(pathTo)
       })
     },
@@ -113,23 +102,16 @@ export function AuthContextProvider({
     mutate({ cpf, password, pathTo })
   }
 
-  function handleSignOut() {
-    remove('token')
+  async function handleSignOut() {
+    await api.delete('/sessions')
     setUser(null)
-    cookies.set('token', '')
-
     router.push('/')
   }
 
   async function handleRequest({ cpf, password }: RequestSignInProps) {
-    const signPayload = `${cpf.replace(/\D/g, '')}:${password}`
-
-    const signEncoded = btoa(signPayload)
-
-    const { data } = await clientApi.post('/oauth/token', null, {
-      headers: {
-        Authorization: `Basic ${signEncoded}`,
-      },
+    const { data } = await api.post('/sessions', {
+      cpf: cpf.replace(/\D/g, ''),
+      password,
     })
     return data
   }

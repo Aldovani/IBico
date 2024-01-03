@@ -15,7 +15,7 @@ export default function EntrePin() {
   return (
     <div className=" max-w-lg  pb-10 w-full max-md:m-auto max-sm:px-6">
       <header className="mt-8">
-        <h2 className="text-slate-900 text-3xl font-inter font-semibold">
+        <h2 className="text-blue-900 text-3xl font-inter font-semibold">
           Validar código
         </h2>
         <p className="text-slate-400  mt-2 font-poppins">
@@ -40,7 +40,7 @@ export default function EntrePin() {
         <Button className="mt-5">validar código</Button>
         <span className="font-poppins text-slate-400 mt-4">
           não recebeu código
-          <span className="text-blue-700 font-semibold"> Reenviar</span>
+          <span className="text-blue-900 font-semibold"> Reenviar</span>
         </span>
       </form>
     </div>

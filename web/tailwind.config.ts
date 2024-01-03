@@ -17,10 +17,16 @@ const config: Config = {
         'people-01': "url('/img/people-01.png')",
         'people-02': "url('/img/people-02.png')",
         'people-03': "url('/img/people-03.png')",
-        'hero-01': "url('/img/image-1.png')",
-        'hero-02': "url('/img/image-2.png')",
-        'hero-03': "url('/img/image-3.png')",
-        hero: 'linear-gradient(0deg, rgba(15, 23, 42, 0.25) 0%, rgba(15, 23, 42, 0.25) 100%), url("/img/bg-hero.jpg") ',
+
+        'hero-square': `
+        linear-gradient(#e2e8f0 1px, transparent 1px),
+        linear-gradient(to right, #e2e8f0 1px, transparent 1px)
+          `,
+        'hero-square-opacity':
+          'radial-gradient(circle, rgba(248,250,252,0) 10%, rgba(248,250,252,1) 64%)',
+        shimmer:
+          'linear-gradient(90deg,#ffffff00,#ffffff20 20%,#ffffff50 60%,#ffffff00)',
+        hero: 'linear-gradient(0deg, #F8FAFC 0%, #F8FAFC 100%), url("/img/bg-hero.jpg") ',
       },
       gridTemplateColumns: {
         'opportunity-details': '864px 304px',
@@ -39,6 +45,7 @@ const config: Config = {
         poppins: ['var(--font-poppins)', ...fontFamily.sans],
       },
       boxShadow: {
+        card: '0px 1px 2px 0px rgba(30, 58, 138, 0.05), 0px 4px 4px 0px rgba(30, 58, 138, 0.04), 0px 9px 6px 0px rgba(30, 58, 138, 0.03), 0px 17px 7px 0px rgba(30, 58, 138, 0.01), 0px 26px 7px 0px rgba(30, 58, 138, 0.00);',
         modal:
           '0px 1px 2px 0px rgba(15, 23, 42, 0.05), 0px 4px 4px 0px rgba(15, 23, 42, 0.04), 0px 8px 5px 0px rgba(15, 23, 42, 0.03), 0px 15px 6px 0px rgba(15, 23, 42, 0.01), 0px 23px 7px 0px rgba(15, 23, 42, 0.00);',
       },
@@ -64,12 +71,12 @@ const config: Config = {
           },
         },
         fromRight: {
-          '0%': { transform: 'translateX(100%) scale(.5)', opacity: '0' },
-          '100%': { transform: 'translateX(0) scale(1)', opacity: '1' },
+          '0%': { transform: 'translateX(100%) ', opacity: '0' },
+          '100%': { transform: 'translateX(0) ', opacity: '1' },
         },
         leaveRight: {
-          '0%': { transform: 'translateX(0) scale(1)', opacity: '1' },
-          '100%': { transform: 'translateX(100%) scale(.5)', opacity: '0' },
+          '0%': { transform: 'translateX(0)', opacity: '1' },
+          '100%': { transform: 'translateX(100%)', opacity: '0' },
         },
 
         'skeleton-loading': {
@@ -80,6 +87,11 @@ const config: Config = {
             'background-color': 'hsl(210, 40%, 98%)',
           },
         },
+        shimmer: {
+          '100% ': {
+            transform: ' translateX(100%)',
+          },
+        },
       },
       animation: {
         'fade-in': 'fadeIn .3s cubic-bezier(0.65,0.05,0.36,1)  forwards',
@@ -87,6 +99,7 @@ const config: Config = {
         'from-right': 'fromRight .3s ease forwards',
         'leave-right': 'leaveRight .3s ease forwards',
         skeleton: 'skeleton-loading 1s linear infinite alternate;',
+        shimmer: 'shimmer 2s infinite',
       },
     },
     plugins: [],

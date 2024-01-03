@@ -18,10 +18,10 @@ export function ReviewModal() {
       >
         <Modal.Header onClose={handleClose}>
           <div className="flex items-center gap-1">
-            <div className="p-1 bg-blue-100 rounded-lg text-blue-700">
+            <div className="p-1 bg-blue-900 rounded-lg text-blue-900">
               <FiAward size={18} />
             </div>
-            <h3 className="font-inter text-lg font-semibold">
+            <h3 className="font-inter text-xl font-medium text-blue-900">
               Avaliar oportunidade
             </h3>
           </div>
@@ -41,9 +41,9 @@ export function ReviewModal() {
               />
               <FiFrown
                 size={48}
-                className="group-hover:text-red-500  peer-checked:text-red-500  transition-colors"
+                className="group-hover:text-rose-500  peer-checked:text-rose-500  transition-colors"
               />
-              <span className="group-hover:text-red-500  peer-checked:text-red-500 transition-colors">
+              <span className="group-hover:text-rose-500  peer-checked:text-rose-500 transition-colors">
                 Péssimo
               </span>
             </label>

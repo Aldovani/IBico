@@ -8,7 +8,7 @@ export function LinkBack() {
   return (
     <p
       onClick={back}
-      className="flex items-center text-slate-500 gap-1 font-poppins font-medium"
+      className="flex items-center text-slate-400 gap-1 font-poppins font-medium"
     >
       <FiArrowLeft size={20} /> Voltar
     </p>

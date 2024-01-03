@@ -16,7 +16,7 @@ export function NavigationDashboard() {
             width: hoverLink.width,
             left: hoverLink.left,
           }}
-          className="absolute bottom-0 transition-all h-px translate-y-px  duration-500  bg-blue-700"
+          className="absolute bottom-0 transition-all h-px translate-y-px  duration-500  bg-blue-900"
         ></span>
 
         {LINKS.map(({ href, title, pathName }) => (

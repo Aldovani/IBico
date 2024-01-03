@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react'
 import { maskCPF } from '@/utils/maskCPF'
 import { useAuth } from '@/hooks/useAuth'
 import { HTTPS_CODES } from '@/constants/http-codes'
+import { toast } from '@/utils/toast'
 
 export function useSignIn() {
   const [isShowPassword, setIsShowPassword] = useState(false)
@@ -18,32 +19,43 @@ export function useSignIn() {
     })
     .superRefine((val, ctx) => {
       if (!isValidCPF(val.cpf)) {
-        ctx.addIssue({ message: 'CPF invalido', code: 'custom', path: ['cpf'] })
+        ctx.addIssue({
+          message: 'CPF invalido',
+          code: 'custom',
+          path: ['cpf'],
+        })
       }
     })
 
-  type signInSchema = z.infer<typeof signInSchema>
+  type SignInSchema = z.infer<typeof signInSchema>
 
   const {
     register,
     handleSubmit,
     setValue,
     setError,
+    setFocus,
     formState: { errors },
-  } = useForm<signInSchema>({
+  } = useForm<SignInSchema>({
     resolver: zodResolver(signInSchema),
-    mode: 'onSubmit',
+    mode: 'all',
   })
 
   useEffect(() => {
-    if (errorsSignIn?.response?.status === HTTPS_CODES.UNAUTHORIZED) {
+    if (errorsSignIn?.response?.status === HTTPS_CODES.NOT_FOUND) {
       setError('cpf', { message: 'CPF ou senha incorreto', type: 'value' })
       setError('password', {
-        message: 'CPF ou senha incorreto',
+        message: 'Senha incorreto',
         type: 'value',
       })
+      toast({
+        title: 'Dados inválidos',
+        text: 'CPF ous senha invalida, verifique e tente novamente',
+        type: 'ERROR',
+      })
+      setFocus('cpf')
     }
-  }, [errorsSignIn, setError])
+  }, [errorsSignIn, setError, setFocus])
 
   function handleChangeCPF(value: string) {
     setValue('cpf', maskCPF(value))

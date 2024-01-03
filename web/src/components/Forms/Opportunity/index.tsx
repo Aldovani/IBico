@@ -6,13 +6,15 @@ import { Opportunity } from '@/services/api/repositories/opportunity'
 
 type handleRequestPayload = Omit<
   Opportunity,
-  'postedBy' | 'createdAt' | 'status' | 'id'
+  'postBy' | 'createdAt' | 'status' | 'id'
 >
 
 type OpportunityFormProps = {
   handleRequest: (data: handleRequestPayload) => void
   isLoading: boolean
-  initialData?: Opportunity
+  initialData?: {
+    data: Opportunity
+  }
   isDataLoading?: boolean
   isEditing?: boolean
 }
@@ -32,7 +34,6 @@ export function OpportunityForm({
     register,
     skills,
   } = useOpportunityForm({ initialData })
-
   return (
     <form
       onSubmit={handleSubmit((data) => {
@@ -40,7 +41,7 @@ export function OpportunityForm({
           ...data,
           endDateTime: data.endDateTime,
           startDateTime: data.startDateTime,
-          necessarySkills: skills,
+          skills: skills.map((skill) => skill.name),
         })
       })}
     >
@@ -50,6 +51,7 @@ export function OpportunityForm({
             isLoading={isDataLoading}
             {...register('title')}
             error={!!errors.title}
+            id='title'
             placeholder="Digite o titulo da oportunidade"
           />
           <Input.MessageError message={errors.title?.message} />
@@ -76,7 +78,7 @@ export function OpportunityForm({
             id="date-started"
             isLoading={isDataLoading}
             {...register('startDateTime')}
-            type="datetime-local"
+            type="date"
             error={!!errors.startDateTime}
           />
           <Input.MessageError message={errors.startDateTime?.message} />
@@ -92,20 +94,20 @@ export function OpportunityForm({
             id="date-finished"
             isLoading={isDataLoading}
             {...register('endDateTime')}
-            type="datetime-local"
+            type="date"
           />
           <Input.MessageError message={errors.endDateTime?.message} />
         </Input.Label>
-        <Input.Label error={!!errors.value} id="value" name="valor">
+        <Input.Label error={!!errors.amount} id="amount" name="valor">
           <Input.Field
-            id="value"
+            id="amount"
             isLoading={isDataLoading}
             type="number"
-            error={!!errors.value}
-            {...register('value')}
+            error={!!errors.amount}
+            {...register('amount')}
             placeholder="Digite o valor da oportunidade"
           />
-          <Input.MessageError message={errors.value?.message} />
+          <Input.MessageError message={errors.amount?.message} />
         </Input.Label>
 
         <Input.Label

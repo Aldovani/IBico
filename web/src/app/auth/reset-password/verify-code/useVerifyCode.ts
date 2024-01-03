@@ -1,4 +1,4 @@
-import { clientApi } from '@/services/api/providers/clientSide'
+import { api } from '@/services/api'
 import { toast } from '@/utils/toast'
 import { useMutation } from '@tanstack/react-query'
 import { useRouter, useSearchParams } from 'next/navigation'
@@ -41,7 +41,7 @@ export function useVerifyCode() {
     mutationFn: handleRequestVerifyCode,
     onSuccess: (data) => {
       const dataToVerifyCode = {
-        accessToken: data.accessToken,
+        requestId: data.requestId,
       }
 
       const dataToBase64 = btoa(JSON.stringify(dataToVerifyCode))
@@ -61,7 +61,6 @@ export function useVerifyCode() {
 
     if (code.size <= 5) {
       toast({ text: 'Código invalido', title: 'Error', type: 'ERROR' })
-
       return
     }
     let finalCode = ''
@@ -79,7 +78,7 @@ export function useVerifyCode() {
     requestId,
     userCpf,
   }: RequestVerifyCodePayload) {
-    const { data } = await clientApi.post('/password/validateCode', {
+    const { data } = await api.post('/users/reset-password/validate-code', {
       code,
       requestId,
       userCpf: userCpf.replace(/\D/g, ''),

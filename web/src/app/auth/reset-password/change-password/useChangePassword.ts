@@ -1,4 +1,4 @@
-import { clientApi } from '@/services/api/providers/clientSide'
+import { api } from '@/services/api'
 import { toast } from '@/utils/toast'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useMutation } from '@tanstack/react-query'
@@ -8,7 +8,7 @@ import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
 type ResetPasswordInfo = {
-  accessToken: string
+  requestId: string
 }
 
 export function useResetPassword() {
@@ -24,7 +24,7 @@ export function useResetPassword() {
     if (!queyParams.get('data')) return
 
     const data = JSON.parse(atob(queyParams.get('data') || '{}'))
-    if (data?.accessToken) {
+    if (data?.requestId) {
       setResetPasswordInfo(data)
     }
   }, [queyParams])
@@ -77,9 +77,9 @@ export function useResetPassword() {
   })
 
   async function handleRequestChangePassword(password: string) {
-    const { data } = await clientApi.post('/password/resetPassword', {
-      accessToken: resetPasswordInfo?.accessToken,
-      newPassword: password,
+    const { data } = await api.put('/users/reset-password/change-password', {
+      requestId: resetPasswordInfo?.requestId,
+      password,
     })
     return data
   }

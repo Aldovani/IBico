@@ -1,6 +1,6 @@
 import { useAuth } from '@/hooks/useAuth'
 import { useModal } from '@/hooks/useModal'
-import { User } from '@/services/api/repositories/user'
+import { UserRepository } from '@/services/api/repositories/user'
 import { isValidCellphone } from '@/utils/isValidCellphone'
 import { isValidCPF } from '@/utils/isvalidCPF'
 import { maskCPF } from '@/utils/maskCPF'
@@ -14,7 +14,6 @@ import { z } from 'zod'
 
 export function useUserConfig() {
   const { user, getUser } = useAuth()
-
   const {
     handleAnimationEndClose,
     handleClose,
@@ -28,13 +27,13 @@ export function useUserConfig() {
     .object({
       cpf: z.string().max(14).min(14, 'Deve conter no mínimo 14 números'),
       name: z.string().min(8, 'Deve conter no mínimo 8 caracteres'),
-      username: z.string().min(8, 'Deve conter no mínimo 8 caracteres'),
+      username: z.string().min(4, 'Deve conter no mínimo 4 caracteres'),
       cellphone: z
         .string()
-        .max(15)
+        .max(17)
         .min(14, 'Deve conter no mínimo 14 caracteres')
         .refine(
-          (data) => isValidCellphone(data),
+          (value) => isValidCellphone(value),
           'Número de telefone invalido',
         ),
     })
@@ -56,7 +55,7 @@ export function useUserConfig() {
     mode: 'onSubmit',
     reValidateMode: 'onChange',
     defaultValues: {
-      cellphone: maskCellphone(user?.telephone || ''),
+      cellphone: maskCellphone(user?.cellphone || ''),
       cpf: maskCPF(user?.cpf || ''),
       name: user?.name,
       username: user?.username,
@@ -65,7 +64,7 @@ export function useUserConfig() {
 
   const { isLoading, mutate } = useMutation({
     mutationKey: ['UPDATE_USER'],
-    mutationFn: User.updateUser,
+    mutationFn: UserRepository.updateUser,
     onSuccess: async () => {
       getUser()
       toast({
@@ -79,7 +78,7 @@ export function useUserConfig() {
   const { mutate: disableUserMutate, isLoading: isLoadingUserDisable } =
     useMutation({
       mutationKey: ['DELETE_USER'],
-      mutationFn: User.disableUser,
+      mutationFn: UserRepository.disableUser,
       onSuccess: async () => {
         await getUser()
         handleClose()
@@ -88,7 +87,7 @@ export function useUserConfig() {
 
   const { mutate: mutateUpdateAvatar } = useMutation({
     mutationKey: ['UPDATE_USER_AVATAR'],
-    mutationFn: User.updateUserAvatar,
+    mutationFn: UserRepository.updateUserAvatar,
     onSuccess: async () => {
       await getUser()
       handleClose()
@@ -98,7 +97,7 @@ export function useUserConfig() {
   const { mutate: mutateDeleteAvatar, isLoading: isLoadingDeleteUserAvatar } =
     useMutation({
       mutationKey: ['DELETE_USER_AVATAR'],
-      mutationFn: User.deleteUserAvatar,
+      mutationFn: UserRepository.deleteUserAvatar,
       onSuccess: async () => {
         await getUser()
         handleClose()
@@ -107,20 +106,15 @@ export function useUserConfig() {
 
   function handleDeleteAvatar() {
     if (!user) return
-    mutateDeleteAvatar(user.username)
+    mutateDeleteAvatar()
   }
 
   function handleUpdateAvatar(event: ChangeEvent<HTMLInputElement>) {
+    console.log(event.target)
     if (!event.target.files) return
-
     const file = event.target.files[0]
 
-    if (!user) return
-
-    mutateUpdateAvatar({
-      username: user.username,
-      file,
-    })
+    mutateUpdateAvatar(file)
   }
 
   function handleDisableAccount() {

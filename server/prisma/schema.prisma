@@ -1,0 +1,153 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["clientExtensions"]
+}
+
+generator docs {
+  provider = "node node_modules/prisma-docs-generator"
+  output   = "./docs"
+}
+
+generator dbml {
+  provider = "prisma-dbml-generator"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           String        @id
+  name         String
+  cellphone    String
+  username     String        @unique
+  cpf          String        @unique
+  avatar       String?
+  password     String
+  rating       Float
+  active       Boolean
+  createdAt    DateTime
+  skills       UserSkill[]
+  Candidatures Candidature[]
+
+  Review            Review[]
+  AuthorOpportunity Opportunity[] @relation("author")
+
+  CandidateOpportunity Opportunity[]  @relation("candaidate")
+  PasswordCode         PasswordCode[]
+
+  @@map("users")
+}
+
+model Skill {
+  id               String             @id
+  name             String
+  UserSkill        UserSkill[]
+  OpportunitySkill OpportunitySkill[]
+
+  @@map("skills")
+}
+
+model UserSkill {
+  skillId String
+  Skill   Skill  @relation(fields: [skillId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+
+  userId String
+  User   User   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+
+  @@id([skillId, userId])
+  @@map("user_skills")
+}
+
+model Opportunity {
+  id    String @id
+  title String
+
+  description           String
+  amount                Float
+  local                 String
+  status                String
+  startDateTime         DateTime
+  endDateTime           DateTime
+  timeLoad              String
+  opportunityClosedTime DateTime?
+  createdAt             DateTime
+
+  Author   User   @relation("author", fields: [authorId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  authorId String
+
+  Candidate   User?   @relation("candaidate", fields: [candidateId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  candidateId String?
+
+  canidatures Candidature[]
+  skills      OpportunitySkill[]
+  Review      Review[]
+
+  @@map("opportunities")
+}
+
+model OpportunitySkill {
+  skillId String
+  skill   Skill  @relation(fields: [skillId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+
+  opportunityId String
+  Opportunity   Opportunity @relation(fields: [opportunityId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+
+  @@id([skillId, opportunityId])
+  @@map("opportunity_skills")
+}
+
+model Candidature {
+  id            String      @id
+  createdAt     DateTime
+  opportunityId String
+  userId        String
+  User          User        @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  Opportunity   Opportunity @relation(fields: [opportunityId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+
+  @@map("candidatures")
+}
+
+model Review {
+  id          String @id
+  description String
+  rating      Float
+
+  createdAt DateTime
+
+  Author   User   @relation(fields: [authorId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  authorId String
+
+  Opportunity   Opportunity @relation(fields: [opportunityId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  opportunityId String
+
+  @@map("reviews")
+}
+
+model PasswordCode {
+  id            String          @id
+  code          String
+  expiresAt     DateTime
+  createdAt     DateTime
+  userId        String
+  user          User            @relation(fields: [userId], references: [id])
+  PasswordReset PasswordReset[]
+
+  @@map("password_codes")
+}
+
+model PasswordReset {
+  id        String   @id
+  expiresAt DateTime
+  createdAt DateTime
+  used      Boolean
+
+  request        PasswordCode @relation(fields: [passwordCodeId], references: [id])
+  passwordCodeId String
+
+  @@map("password_resets")
+}

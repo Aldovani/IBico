@@ -1,6 +1,5 @@
-import { Skills } from '@/components/Skills/SkillsList'
 import { AxiosInstance, AxiosResponse } from 'axios'
-import { clientApi } from '../providers/clientSide'
+import { api } from '../'
 
 export type Opportunity = {
   id: string
@@ -10,52 +9,31 @@ export type Opportunity = {
   endDateTime: string
   timeLoad: string
   local: string
-  value: number
-  necessarySkills: Skills[]
+  amount: number
+  skills: string[]
   status: string
   createdAt: string
-  postedBy: {
+  postBy: {
     name: string
     username: string
-    imgURL: string
+    avatar: string
   }
 }
 
 type createOpportunityPayload = Omit<
   Opportunity,
-  'id' | 'postedBy' | 'createdAt' | 'status'
+  'id' | 'postBy' | 'createdAt' | 'status'
 >
 type UpdateOpportunityPayload = Omit<
   Opportunity,
-  'postedBy' | 'createdAt' | 'status'
+  'postBy' | 'createdAt' | 'status'
 > & { id?: string }
 
-export type Candidate = {
-  id: string
-  candidatureDate: string
-  candidateName: string
-  candidateUsername: string
-  candidateImgURL: string
-  opportunityId: string
-}
-
-export type GetCandidatesResponse = {
-  items: Candidate[]
-  pageNo: number
-  pageSize: number
-  totalElements: number
-  totalPages: number
-  last: boolean
-  self: boolean
-}
 export type GetOpportunitiesResponse = {
-  items: Opportunity[]
-  pageNo: number
-  pageSize: number
+  data: Opportunity[]
   totalElements: number
   totalPages: number
-  last: boolean
-  self: boolean
+  isLast: boolean
 }
 
 type GetOpportunitiesOptions = {
@@ -63,35 +41,47 @@ type GetOpportunitiesOptions = {
   pageSize?: number
   sortBy?: keyof Opportunity
   sortDir?: 'ASC' | 'DESC'
-  query?: string
+  local?: string
+  title?: string
 }
 
 type selectCandidatePayload = {
-  username: string
+  userId: string
   opportunityId: string
 }
+type OpportunityStatus = 'CREATED' | 'PENDING' | 'CLOSED' | 'DISABLED'
 
+type GetMeOpportunitiesProps = {
+  status: OpportunityStatus
+  page: number
+  perPage: number
+}
+
+type ChangeStatusProps = {
+  opportunityId: string
+  status: OpportunityStatus
+}
 export function OpportunityRequest(httpProvider: AxiosInstance) {
   async function createOpportunity({
     description,
     endDateTime,
     local,
-    necessarySkills,
+    skills,
     startDateTime,
     timeLoad,
     title,
-    value,
+    amount,
   }: createOpportunityPayload) {
     const opportunityPayload = {
       description,
       endDateTime,
       local,
-      necessarySkills,
+      skills,
       startDateTime,
       status: 'CREATED',
       timeLoad,
       title,
-      value,
+      amount,
     }
 
     const { data } = await httpProvider.post(
@@ -103,27 +93,41 @@ export function OpportunityRequest(httpProvider: AxiosInstance) {
   }
 
   async function getOpportunities({
-    pageNo = 0,
+    pageNo = 1,
     pageSize = 12,
-    sortBy = 'id',
-    sortDir = 'ASC',
-    query = '',
+    local = '',
+    title = '',
   }: GetOpportunitiesOptions) {
     const { data } = await httpProvider.get<
       unknown,
       AxiosResponse<GetOpportunitiesResponse>
     >('/opportunities', {
-      params: { pageNo, pageSize, sortBy, sortDir, query },
+      params: { page: pageNo, perPage: pageSize, local, title },
     })
     return data
   }
 
-  async function getMeOpportunities() {
+  async function getMeOpportunities({
+    status,
+    page,
+    perPage = 10,
+  }: GetMeOpportunitiesProps) {
     const { data } = await httpProvider.get<
       unknown,
       AxiosResponse<GetOpportunitiesResponse>
-    >('/users/opportunites')
-    return data
+    >('/opportunities/me', {
+      params: {
+        status,
+        page,
+        perPage,
+      },
+    })
+    return {
+      totalElements: data.totalElements,
+      totalPages: data.totalPages,
+      data: data.data,
+      isLast: data.isLast,
+    }
   }
 
   async function getOpportunityById(id: string) {
@@ -146,31 +150,31 @@ export function OpportunityRequest(httpProvider: AxiosInstance) {
   }
   async function selectCandidate({
     opportunityId,
-    username,
+    userId,
   }: selectCandidatePayload) {
     const { data } = await httpProvider.post(
-      `opportunities/${opportunityId}/candidates/${username}`,
+      `opportunities/${opportunityId}/candidates/${userId}`,
     )
     return data
   }
 
-  async function getCandidates(id: string) {
-    const { data } = await httpProvider.get<
-      unknown,
-      AxiosResponse<GetCandidatesResponse>
-    >(`/opportunities/${id}/candidates`)
+  async function changeStatus({ opportunityId, status }: ChangeStatusProps) {
+    const { data } = await httpProvider.put(
+      `opportunities/${opportunityId}/${status}`,
+    )
     return data
   }
+
   return {
     createOpportunity,
     getOpportunities,
     deleteOpportunity,
     updateOpportunity,
     getOpportunityById,
-    getCandidates,
+    changeStatus,
     getMeOpportunities,
     selectCandidate,
   }
 }
 
-export const Opportunity = OpportunityRequest(clientApi)
+export const opportunity = OpportunityRequest(api)

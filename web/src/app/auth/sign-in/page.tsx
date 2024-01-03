@@ -19,7 +19,7 @@ export default function SignIn() {
   return (
     <div className=" max-w-lg  pb-10 w-full max-md:m-auto max-sm:px-6">
       <header className="mt-8">
-        <h2 className="text-slate-900 text-3xl font-inter font-semibold">
+        <h2 className="text-blue-900 text-3xl font-inter font-semibold">
           Bem vindo ao iBico
         </h2>
         <p className="text-slate-400  mt-2 font-poppins">
@@ -79,9 +79,9 @@ export default function SignIn() {
           Esqueceu a senha?{' '}
           <Link
             href="/auth/reset-password/validate-cpf"
-            className="text-blue-700 font-semibold"
+            className="text-blue-900 font-semibold"
           >
-            Redefinir
+            Redefinir senha
           </Link>
         </span>
 
@@ -90,7 +90,7 @@ export default function SignIn() {
         </Button>
         <span className="text-slate-400 mt-2 font-poppins">
           Não possui uma conta?{' '}
-          <Link href="/auth/register" className="text-blue-700 font-semibold">
+          <Link href="/auth/register" className="text-blue-900 font-semibold">
             Registra-se
           </Link>
         </span>

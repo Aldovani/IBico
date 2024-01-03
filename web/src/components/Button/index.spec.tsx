@@ -42,7 +42,7 @@ describe('Button component', () => {
     )
 
     expect(getByTestId(BUTTON_TEST_ID)).toHaveClass(
-      'flex items-center rounded-lg justify-center h-12 w-full py-3 font-semibold duration-150 ease-out text-lg hover:bg-blue-600 bg-blue-700 text-slate-50 disable:border-2 disable:bg-blue-800 disable:hover:bg-blue-800',
+      'flex items-center rounded-lg justify-center h-12 w-full py-3 font-semibold duration-150 ease-out text-lg hover:bg-blue-900 bg-blue-900 text-slate-50 disable:border-2 disable:bg-blue-900 disable:hover:bg-blue-900',
     )
   })
 

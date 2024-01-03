@@ -15,7 +15,7 @@ export function ActiveLink({
   return (
     <Link
       href={href}
-      className="font-poppins data-[active='true']:text-blue-700 block px-3 py-2"
+      className="font-poppins data-[active='true']:text-blue-900 block px-3 py-2"
       onMouseEnter={onMouseEnter}
       data-active={isActive}
     >

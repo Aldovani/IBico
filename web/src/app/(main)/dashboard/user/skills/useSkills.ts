@@ -1,16 +1,15 @@
 import { Skills } from '@/components/Skills/SkillsList'
-import { User as UserType } from '@/contexts/authContext'
 import { useAuth } from '@/hooks/useAuth'
-import { User } from '@/services/api/repositories/user'
+import { UserRepository } from '@/services/api/repositories/user'
 import { toast } from '@/utils/toast'
 import { useMutation } from '@tanstack/react-query'
 import { FormEvent, useState } from 'react'
 
 export function useSkills() {
-  const { user, getUser } = useAuth()
+  const { user } = useAuth()
   const [skills, setSkills] = useState<Skills[]>(() => {
     const data = user?.skills.map((skill) => {
-      return { name: skill.name, id: Math.random() }
+      return { name: skill, id: Math.random() }
     })
 
     return data as Skills[]
@@ -18,22 +17,30 @@ export function useSkills() {
 
   const { mutate, isLoading } = useMutation({
     mutationKey: ['UPDATE_SKILLS'],
-    mutationFn: () =>
-      User.updateUser({
-        currentData: user as UserType,
-        payload: {
-          skills,
-        },
-      }),
-    onSuccess: () => {
-      getUser()
+    mutationFn: updateUser,
+
+    onSuccess: async () => {
       toast({
         title: 'Sucesso',
         text: 'alteração das competências realizada com sucesso',
         type: 'SUCCESS',
       })
+      await UserRepository.getUser()
     },
   })
+
+  async function updateUser() {
+    if (!user) return
+    UserRepository.updateUser({
+      cellphone: user.cpf,
+      cpf: user.cpf,
+      name: user.name,
+      username: user.username,
+      skills: skills.map((skill) => skill.name),
+      currentPassword: undefined,
+      newPassword: undefined,
+    })
+  }
 
   function handleAddSkill({ id, name }: Skills) {
     setSkills((prev) => [...prev, { id, name }])

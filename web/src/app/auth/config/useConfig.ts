@@ -1,7 +1,6 @@
 import { Skills } from '@/components/Skills/SkillsList'
-import { User as UserType } from '@/contexts/authContext'
 import { useAuth } from '@/hooks/useAuth'
-import { User } from '@/services/api/repositories/user'
+import { UserRepository } from '@/services/api/repositories/user'
 import { toast } from '@/utils/toast'
 import { useMutation } from '@tanstack/react-query'
 import { useRouter } from 'next/navigation'
@@ -12,7 +11,7 @@ export function useConfig() {
   const { user, getUser } = useAuth()
   const [skills, setSkills] = useState<Skills[]>(() => {
     const data = user?.skills.map((skill) => {
-      return { name: skill.name, id: Math.random() }
+      return { name: skill, id: Math.random() }
     })
 
     return data as Skills[]
@@ -20,13 +19,7 @@ export function useConfig() {
 
   const { mutate, isLoading } = useMutation({
     mutationKey: ['UPDATE_SKILLS'],
-    mutationFn: () =>
-      User.updateUser({
-        currentData: user as UserType,
-        payload: {
-          skills,
-        },
-      }),
+    mutationFn: handleUpdate,
     onSuccess: () => {
       getUser()
       toast({
@@ -38,6 +31,18 @@ export function useConfig() {
     },
   })
 
+  async function handleUpdate() {
+    if (!user) return
+    UserRepository.updateUser({
+      cellphone: user.cellphone,
+      skills: skills.map((skill) => skill.name),
+      cpf: user.cpf,
+      currentPassword: undefined,
+      newPassword: undefined,
+      name: user.name,
+      username: user.username,
+    })
+  }
   function handleAddSkill({ id, name }: Skills) {
     setSkills((prev) => [...prev, { id, name }])
   }

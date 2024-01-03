@@ -7,9 +7,9 @@ const action = tv({
   variants: {
     actions: {
       dangerous:
-        'data-[loading="true"]:bg-red-500  text-red-700  border-red-500 hover:bg-red-500 hover:text-slate-50 ',
+        'data-[loading="true"]:bg-rose-500  text-rose-600  border-rose-500 hover:bg-rose-600 hover:text-slate-50 ',
       success:
-        'data-[loading="true"]:bg-blue-700 text-blue-700 hover:bg-blue-700 hover:text-slate-50',
+        'data-[loading="true"]:bg-blue-900 text-blue-900 hover:bg-blue-900/90 hover:text-slate-50',
     },
   },
 })

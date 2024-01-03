@@ -32,7 +32,7 @@ export const Small: Story = {
   args: {
     variants: 'primary',
     children: 'Small Button',
-    sizes: 'sm',
+    sizes: 'normal',
   },
   argTypes: {
     variants: {

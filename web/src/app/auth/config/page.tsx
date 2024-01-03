@@ -14,7 +14,7 @@ export default function Register() {
   return (
     <div className=" pb-10 max-w-lg w-full max-md:m-auto max-sm:px-6">
       <header className="mt-8">
-        <h2 className="font-inter text-slate-900 text-3xl font-semibold">
+        <h2 className="font-inter text-blue-900 text-3xl font-semibold">
           Configuração da sua conta
         </h2>
         <p className="font-poppins text-slate-400  mt-2">

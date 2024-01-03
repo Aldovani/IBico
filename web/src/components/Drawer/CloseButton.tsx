@@ -12,7 +12,7 @@ export function CloseButton({ ...rest }: CloseButtonProps) {
     <button
       onClick={onClose}
       {...rest}
-      className="border-x text-slate-400 border-y border-slate-200 p-1 rounded-lg transition-all bg-slate-50  hover:scale-105 hover:text-red-700"
+      className="border-x text-slate-400 border-y border-slate-200 p-1 rounded-lg transition-all bg-slate-50  hover:scale-105 hover:text-rose-700"
     >
       <FiX size={20} />
     </button>

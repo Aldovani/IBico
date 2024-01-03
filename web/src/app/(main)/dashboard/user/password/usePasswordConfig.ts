@@ -1,6 +1,5 @@
-import { User as UserType } from '@/contexts/authContext'
 import { useAuth } from '@/hooks/useAuth'
-import { User } from '@/services/api/repositories/user'
+import { UserRepository } from '@/services/api/repositories/user'
 import { toast } from '@/utils/toast'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useMutation } from '@tanstack/react-query'
@@ -13,26 +12,16 @@ export function usePasswordConfig() {
   const { user } = useAuth()
   const [isShowConfirmPassword, setIsShowConfirmPassword] = useState(false)
 
-  const changePasswordSchema = z
-    .object({
-      password: z
-        .string()
-        .min(8, 'Deve conter no mínimo 08 números')
-        .regex(
-          /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?.&])[A-Za-z\d@$!%*?.&]{8,}$/,
-          'Senha deve conter letra maiúscula e minuscula , numero e um carácter especial ',
-        ),
-      confirmPassword: z.string().min(8, 'Deve conter no mínimo 08 números'),
-    })
-    .superRefine(({ confirmPassword, password }, ctx) => {
-      if (password !== confirmPassword) {
-        ctx.addIssue({
-          message: 'Senhas diferentes',
-          code: 'custom',
-          path: ['confirmPassword'],
-        })
-      }
-    })
+  const changePasswordSchema = z.object({
+    currentPassword: z.string().min(8, 'Deve conter no mínimo 08 números'),
+    newPassword: z
+      .string()
+      .min(8, 'Deve conter no mínimo 08 números')
+      .regex(
+        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?.&])[A-Za-z\d@$!%*?.&]{8,}$/,
+        'Senha deve conter letra maiúscula e minuscula , numero e um carácter especial ',
+      ),
+  })
 
   type ChangePasswordSchema = z.infer<typeof changePasswordSchema>
 
@@ -48,7 +37,7 @@ export function usePasswordConfig() {
 
   const { mutate, isLoading } = useMutation({
     mutationKey: ['UPDATE_PASSWORD'],
-    mutationFn: User.updateUser,
+    mutationFn: UserRepository.updateUser,
     onSuccess: () => {
       toast({
         text: 'Senha alterada com sucesso',
@@ -58,10 +47,19 @@ export function usePasswordConfig() {
       reset()
     },
   })
-  async function handleChangePassword(password: string) {
+  async function handleChangePassword(
+    currentPassword: string,
+    newPassword: string,
+  ) {
+    if (!user) return
     mutate({
-      payload: { passwd: password },
-      currentData: user as UserType,
+      cellphone: user.cellphone,
+      cpf: user.cpf,
+      currentPassword,
+      name: user.name,
+      newPassword,
+      skills: user.skills,
+      username: user.username,
     })
   }
 

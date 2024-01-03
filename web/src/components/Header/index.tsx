@@ -10,7 +10,7 @@ export function Header() {
       <div className="mx-auto flex  px-6 items-center justify-between max-w-screen-xl">
         <Link
           href="/opportunities"
-          className="text-blue-700 font-inter font-semibold text-4xl"
+          className="text-blue-900 font-inter font-bold text-3xl"
         >
           iBico
         </Link>
@@ -20,7 +20,7 @@ export function Header() {
         <div className="flex items-center gap-4">
           <Link
             href="/dashboard/opportunities/create"
-            className=" border border-slate-200 rounded-lg p-2 flex item items-center gap-1  transition-colors hover:text-blue-700  "
+            className="h-[42px] w-[42px] justify-center border border-slate-200 rounded-lg p-2 flex item items-center gap-1  transition-colors hover:text-blue-900  "
             title="Publique sua oportunidade"
           >
             <FiBriefcase size={20} />
