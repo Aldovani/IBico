@@ -1,14 +1,17 @@
-# iBico
-## Plataforma intermediá vagas de empregos temporários  
+<h1 align="center">iBico</h1>
+<h4 align="center">Plataforma intermediá vagas de empregos temporários </h4>
 
-- [Sobre](#Sobre)
-- [Features](#features)
-- [Instalação](#instalacao)
-- [Como usar](#como-usar)
-  - [Pre Requisitos](#pre-requisitos)
-  - [Front-end](#front-end)
-  - [Back-end](#Back-end)
-- [Tecnologias](#tecnologias)
+<div align="center">
+
+[Sobre](#Sobre) |  [Tecnologias](#tecnologias)| [Instalação](#instalacao) 
+
+
+</div>
+
+<img src="./.github/banner.png"/>
+
+
+<div id="Sobre">
 
 
 ### Sobre
@@ -21,13 +24,42 @@ O alvo secundário são as pessoas – ou até mesmo empresas – que estão int
 
  Deve-se ressaltar que o projeto não se trata de intermediar, no sentido de o interessado trabalhar em nome de nossa plataforma, mas sim em conectar ela e o prestador para que ambas decidam os termos de seu relacionamento. 
 
+
+</div>
+ 
+<div id="tecnologias">
+
+
+### 🛠 Tecnologias
+
+As seguintes ferramentas foram usadas na construção do projeto:
+
+#### Front-end
+- [NextJs](https://nextjs.org/)
+- [tailwind](https://tailwindcss.com)
+- [Typescript](https://www.typescriptlang.org/)
+- [React-Query](https://tanstack.com/query/v3/)
+
+#### Back-end
+- [Fastify](https://fatify.io/)
+- [Node.js](https://nodejs.org/en/)
+- [Typescript](https://www.typescriptlang.org/)
+- [sqlite](https://sqlite.org/)
+
+</div>
+
 ### Features
 
 - [x] Cadastro de usuário
+- [x] Resetar  senha
 - [x] Cadastro de oportunidades
 - [x] Selecionar candidato
 - [x] Inscrever-se na oportunidade
 - [x] REalizar review da oportunidade
+
+
+<div id="instalacao">
+
 
 ### Pré-requisitos
 Antes de começar, você vai precisar ter instalado em sua máquina as seguintes ferramentas:
@@ -76,16 +108,7 @@ $ npm run dev
 # O servidor inciará na porta:3000 - acesse <http://localhost:3000>
 ```
 
-### 🛠 Tecnologias
-
-As seguintes ferramentas foram usadas na construção do projeto:
-
-- [Fastify](https://expo.io/)
-- [Node.js](https://nodejs.org/en/)
-- [React](https://pt-br.reactjs.org/)
-- [NextJs](https://pt-br.reactjs.org/)
-- [TypeScript](https://www.typescriptlang.org/)
-
+</div>
 
 ### Autor
 ---
