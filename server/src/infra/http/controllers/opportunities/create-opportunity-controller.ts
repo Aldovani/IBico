@@ -77,8 +77,8 @@ export class CreateOpportunityController {
     })
 
     if (response.isRight()) {
-      return res.status(200).send({
-        status: 200,
+      return res.status(201).send({
+        status: 201,
         message: 'Opportunity created',
       })
     }
