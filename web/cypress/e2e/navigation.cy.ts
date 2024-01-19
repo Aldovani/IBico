@@ -21,6 +21,5 @@ describe('Navigation', () => {
   it('should not be able to navigate to protect page', () => {
     cy.visit('http://localhost:3000/opportunities')
     cy.url().should('include', '/auth/sign')
-
   })
 })
