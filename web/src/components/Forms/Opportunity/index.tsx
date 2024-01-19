@@ -51,7 +51,7 @@ export function OpportunityForm({
             isLoading={isDataLoading}
             {...register('title')}
             error={!!errors.title}
-            id='title'
+            id="title"
             placeholder="Digite o titulo da oportunidade"
           />
           <Input.MessageError message={errors.title?.message} />

@@ -1,6 +1,5 @@
 export function isValidCellphone(cellphone: string) {
   cellphone = cellphone.replace(/\D/g, '')
-  console.log({cellphone})
 
   if (!(cellphone.length >= 10 && cellphone.length <= 11)) return false
 

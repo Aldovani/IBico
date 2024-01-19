@@ -79,8 +79,7 @@ export function useOpportunity() {
     ['GET_OPPORTUNITIES', currentPage, filter],
     getGetOpportunities,
     {
-      onSuccess: ({ data, ...tudo }) => {
-        console.log({ tudo })
+      onSuccess: ({ data }) => {
         setOpportunities(data)
       },
     },

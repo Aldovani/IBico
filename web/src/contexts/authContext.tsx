@@ -65,7 +65,6 @@ export function AuthContextProvider({
     retry: 0,
     initialData: userProp,
   })
-  
 
   const { mutate, isLoading } = useMutation<
     RequestSignInResponse,
@@ -78,6 +77,7 @@ export function AuthContextProvider({
       const dataUser = await UserRepository.getUser()
       startTransition(() => {
         setUser(dataUser.data)
+        setError(undefined)
         router.push(pathTo)
       })
     },

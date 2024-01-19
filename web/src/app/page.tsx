@@ -13,11 +13,16 @@ import {
 import { AiOutlineApple } from 'react-icons/ai'
 import { SlSocialGoogle } from 'react-icons/sl'
 import anime from 'animejs'
-import { useEffect } from 'react'
-import { inView, motion } from 'framer-motion'
+import { ElementRef, useEffect, useRef, useState } from 'react'
+import { inView, motion, useMotionValueEvent, useScroll } from 'framer-motion'
 import { Reveal } from '@/components/Reveal'
 
 export default function Home() {
+  const { scrollY } = useScroll()
+  const [headerActive, setHeaderActive] = useState(false)
+  const mainRef = useRef<ElementRef<'main'>>(null)
+  const headerRef = useRef<ElementRef<'header'>>(null)
+
   useEffect(() => {
     inView('.status', () => {
       anime({
@@ -47,10 +52,27 @@ export default function Home() {
     })
   }, [])
 
+  useMotionValueEvent(scrollY, 'change', () => {
+    if (scrollY.get() > 10) {
+      setHeaderActive(true)
+    } else {
+      setHeaderActive(false)
+    }
+  })
+
   return (
     <>
-      <Reveal to="bottom" duration={0.3}>
-        <header className="header border-b fixed w-full bg-slate-50 border-slate-200 py-2 z-[999] ">
+      <Reveal to="bottom" delay={1} duration={0.3}>
+        <header
+          ref={headerRef}
+          data-active={headerActive}
+          className="
+          data-[active='true']:border-b data-[active='true']:border-slate-200
+          data-[active='true']:shadow-sm data-[active='true']:py-4 transition-all
+          header  fixed w-full py-2 z-[999] data-[active='true']:bg-slate-50
+          
+          "
+        >
           <div className="navigation max-w-screen-xl m-auto flex items-center justify-between">
             <Link
               href="/"
@@ -62,13 +84,13 @@ export default function Home() {
             <div className="flex gap-5 items-center">
               <Link
                 href="auth/sign-in"
-                className="font-poppins font-semibold py-3 px-4 relative z-20  text-slate-700 transition-colors hover:after:scale-100 after:transition-transform after:rounded-lg after:block after:bg-slate-100 after:absolute after:w-full after:h-full after:inset-0 after:scale-0  after:-z-10 "
+                className="font-poppins bg-slate-50 font-semibold h-10 py-3 px-6 flex items-center relative z-20 border  border-slate-200 text-blue-900 transition-colors rounded-lg hover:bg-slate-100 after:absolute after:w-full after:h-full after:inset-0 after:scale-0  after:-z-10 "
               >
                 Entrar
               </Link>
               <Link
                 href="auth/register"
-                className="hover:bg-blue-900 hover:text-slate-50 duration-100 transition-all py-3 border  border-slate-200 text-blue-900 h-10 px-4  flex items-center justify-center font-poppins font-medium rounded-lg"
+                className="bg-blue-900 text-slate-50 duration-100 transition-all py-3  h-10 px-4  flex items-center justify-center font-poppins font-medium rounded-lg"
               >
                 Cadastra-se
               </Link>
@@ -78,11 +100,11 @@ export default function Home() {
       </Reveal>
 
       <Reveal delay={0.5}>
-        <main className="relative     pt-20  h-screen ">
+        <main ref={mainRef} className="relative  pt-40 pb-32 min-h-screen ">
           <div className="absolute z-[-2] top-0 left-0 w-full h-full bg-[length:90px_90px] bg-hero-square"></div>
-          <div className="absolute z-[-1] top-0 left-0 w-full h-full bg-hero-square-opacity"></div>
+          <div className="absolute z-[-1] top-0 left-0 w-full h-full bg-hero-square-linear"></div>
 
-          <div className="hero-content  max-w-screen-xl mx-auto   w-full h-full flex justify-center items-center">
+          <div className=" max-w-screen-xl mx-auto   w-full  flex flex-col justify-center items-center">
             <div className="flex flex-col items-center justify-center">
               <span className="text-xl text-blue-900 font-poppins  font-semibold">
                 Se junte a milhares de usuários
@@ -101,6 +123,13 @@ export default function Home() {
               >
                 Procurar oportunidades
               </Link>
+            </div>
+
+            <div className="flex gap-8 items-end">
+              <div className="w-72 h-[490px] rounded-[20px] bg-hero-person-01 relative after:absolute after:block after:w-[160px] after:h-[160px] after:right-0 after:top-0 after:bg-slate-50 after:rounded-full after:translate-x-1/2 after:-translate-y-[61px]"></div>
+              <div className="w-72 h-[390px] rounded-[20px] bg-hero-person-02"></div>
+              <div className="w-72 h-[390px] rounded-[20px] bg-hero-person-03"></div>
+              <div className="w-72 h-[490px] rounded-[20px] bg-hero-person-04  relative after:absolute after:block after:w-[160px] after:h-[160px] after:left-0 after:top-0 after:bg-slate-50 after:rounded-full after:-translate-x-1/2 after:-translate-y-[61px]"></div>
             </div>
           </div>
         </main>
@@ -166,56 +195,60 @@ export default function Home() {
         </Reveal>
 
         <div className="benefits flex gap-6 mt-12">
-          <Reveal delay={0.5}>
-            <div className="card-benefit px-4 py-6 max-w-304 border border-slate-200 rounded-lg">
-              <FiCrosshair size={32} className="text-blue-900" />
-              <h3 className="font-poppins text-blue-900 font-semibold text-xl mt-5 mb-3">
-                Objetivo
-              </h3>
-              <p className="text-slate-400 text-sm ">
-                Encontre empregos que atendam aos seus objetivos de carreira e
-                estilo de vida.
-              </p>
-            </div>
+          <Reveal
+            delay={0.5}
+            className="card-benefit h-full px-4 py-6 max-w-304 border border-slate-200 rounded-lg"
+          >
+            <FiCrosshair size={32} className="text-blue-900" />
+            <h3 className="font-poppins text-blue-900 font-semibold text-xl mt-5 mb-3">
+              Objetivo
+            </h3>
+            <p className="text-slate-400 text-sm ">
+              Encontre empregos que atendam aos seus objetivos de carreira e
+              estilo de vida.
+            </p>
           </Reveal>
 
-          <Reveal delay={0.6}>
-            <div className="card-benefit px-4 py-6 max-w-304 border border-slate-200 rounded-lg">
-              <FiCompass size={32} className="text-blue-900" />
-              <h3 className="font-poppins text-blue-900 font-semibold text-xl mt-5 mb-3">
-                Velocidade
-              </h3>
-              <p className="text-slate-400 text-sm ">
-                Inicie sua próxima oportunidade de trabalho em tempo recorde,
-                graças à nossa busca eficiente.
-              </p>
-            </div>
+          <Reveal
+            delay={0.6}
+            className="card-benefit px-4 py-6 max-w-304 border border-slate-200 rounded-lg"
+          >
+            <FiCompass size={32} className="text-blue-900" />
+            <h3 className="font-poppins text-blue-900 font-semibold text-xl mt-5 mb-3">
+              Velocidade
+            </h3>
+            <p className="text-slate-400 text-sm ">
+              Inicie sua próxima oportunidade de trabalho em tempo recorde,
+              graças à nossa busca eficiente.
+            </p>
           </Reveal>
 
-          <Reveal delay={0.7}>
-            <div className="card-benefit px-4 py-6 max-w-304 border border-slate-200 rounded-lg">
-              <FiSearch size={32} className="text-blue-900" />
-              <h3 className="font-poppins text-blue-900 font-semibold text-xl mt-5 mb-3">
-                Procura
-              </h3>
-              <p className="text-slate-400 text-sm ">
-                Simplificamos a busca de empregos temporários, permitindo que
-                você encontre oportunidades sob medida.
-              </p>
-            </div>
+          <Reveal
+            delay={0.7}
+            className="card-benefit px-4 py-6 max-w-304 border border-slate-200 rounded-lg"
+          >
+            <FiSearch size={32} className="text-blue-900" />
+            <h3 className="font-poppins text-blue-900 font-semibold text-xl mt-5 mb-3">
+              Procura
+            </h3>
+            <p className="text-slate-400 text-sm ">
+              Simplificamos a busca de empregos temporários, permitindo que você
+              encontre oportunidades sob medida.
+            </p>
           </Reveal>
 
-          <Reveal delay={0.8}>
-            <div className="card-benefit px-4 py-6 max-w-304 border border-slate-200 rounded-lg">
-              <FiClock size={32} className="text-blue-900" />
-              <h3 className="font-poppins text-blue-900 font-semibold text-xl mt-5 mb-3">
-                Tempo
-              </h3>
-              <p className="text-slate-400 text-sm ">
-                Economize tempo e aproveite a flexibilidade para trabalhar
-                quando e onde você desejar.
-              </p>
-            </div>
+          <Reveal
+            delay={0.8}
+            className="card-benefit px-4 py-6 max-w-304 border border-slate-200 rounded-lg"
+          >
+            <FiClock size={32} className="text-blue-900" />
+            <h3 className="font-poppins text-blue-900 font-semibold text-xl mt-5 mb-3">
+              Tempo
+            </h3>
+            <p className="text-slate-400 text-sm ">
+              Economize tempo e aproveite a flexibilidade para trabalhar quando
+              e onde você desejar.
+            </p>
           </Reveal>
         </div>
       </section>
@@ -325,43 +358,37 @@ export default function Home() {
         </div>
       </section>
 
-      <section id="about" className="max-w-screen-xl m-auto pt-20 pb-28 ">
-        <Reveal>
-          <div className="flex  justify-between items-center">
-            <div>
-              <span className="font-poppins font-bold text-sm text-blue-900">
-                pra quem é
-              </span>
-              <h2 className="font-inter font-medium text-blue-900 leading-[120%]  mt-3 text-[40px] max-w-sm ">
-                Por que decidimos criar o{' '}
-                <span className="font-bold">iBico</span> ?
-              </h2>
-              <div className="max-w-[520px]">
-                <p className="font-poppins text-slate-400 mt-5 ">
-                  Vorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc
-                  vulputate libero et velit interdum, ac aliquet odio mattis.
-                </p>
-                <p className="font-poppins text-slate-400 mt-4 ">
-                  Class aptent taciti sociosqu ad litora torquent per conubia
-                  nostra, per inceptos himenaeos. Curabitur tempus urna at
-                  turpis condimentum lobortis.
-                </p>
+      <section className="bg-blue-900  relative mt-20 overflow-hidden">
+        <div className="absolute right-0 top-0 w-1/2 bg-cover bg-about-section h-full bg-no-repeat"></div>
+        <div className="absolute right-0 top-0 w-40 h-40 left-1/2 bg-slate-50 rounded-full -translate-x-1/2 -translate-y-3/4"></div>
+        <div className="max-w-screen-xl m-auto ">
+          <Reveal className=" w-full pt-20 pb-28 flex-1">
+            <span className="font-poppins font-bold text-sm text-slate-50">
+              pra quem é
+            </span>
+            <h2 className="font-inter font-medium text-slate-50 leading-[120%]  mt-3 text-[40px] max-w-sm ">
+              Por que decidimos criar o <span className="font-bold">iBico</span>{' '}
+              ?
+            </h2>
+            <div className="max-w-[520px]">
+              <p className="font-poppins text-slate-200 mt-5 ">
+                Vorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc
+                vulputate libero et velit interdum, ac aliquet odio mattis.
+              </p>
+              <p className="font-poppins text-slate-200 mt-4 ">
+                Class aptent taciti sociosqu ad litora torquent per conubia
+                nostra, per inceptos himenaeos. Curabitur tempus urna at turpis
+                condimentum lobortis.
+              </p>
 
-                <p className="font-poppins text-slate-400 mt-4 ">
-                  Class aptent taciti sociosqu ad litora torquent per conubia
-                  nostra, per inceptos himenaeos. Curabitur tempus urna at
-                  turpis condimentum lobortis.
-                </p>
-              </div>
+              <p className="font-poppins text-slate-200 mt-4 ">
+                Class aptent taciti sociosqu ad litora torquent per conubia
+                nostra, per inceptos himenaeos. Curabitur tempus urna at turpis
+                condimentum lobortis.
+              </p>
             </div>
-
-            <div className="grid  h-[480px] grid-cols-2 grid-rows-2  gap-x-4 gap-y-3 max-w-[582px]   w-full">
-              <div className="rounded-xl col-start-1 max-w-[280px] bg-people-01 bg-no-repeat bg-cover col-end-2 row-start-1 row-end-2"></div>
-              <div className="rounded-xl col-start-1 max-w-[280px] bg-people-02 col-end-2 row-start-2 row-end-3"></div>
-              <div className="rounded-xl col-start-2 max-w-[280px] bg-people-03 col-end-3 row-start-1 row-end-3"></div>
-            </div>
-          </div>
-        </Reveal>
+          </Reveal>
+        </div>
       </section>
 
       <section id="app" className="bg-hero-square bg-[length:90px_90px] py-28">

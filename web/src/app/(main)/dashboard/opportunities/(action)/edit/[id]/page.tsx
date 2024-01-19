@@ -11,7 +11,7 @@ export default function EditOpportunity() {
     <div className="w-full">
       <Link
         href="/dashboard/opportunities"
-        className="flex  -translate-y-full items-center text-slate-500 gap-1 font-poppins font-medium "
+        className="flex mt-6  -translate-y-full items-center text-slate-500 gap-1 font-poppins font-medium "
       >
         {<FiArrowLeft size={20} />} Voltar
       </Link>

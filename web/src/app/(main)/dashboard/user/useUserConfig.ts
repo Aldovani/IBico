@@ -110,7 +110,6 @@ export function useUserConfig() {
   }
 
   function handleUpdateAvatar(event: ChangeEvent<HTMLInputElement>) {
-    console.log(event.target)
     if (!event.target.files) return
     const file = event.target.files[0]
 

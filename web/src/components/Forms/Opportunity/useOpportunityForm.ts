@@ -64,9 +64,9 @@ export function useOpportunityForm({ initialData }: useOpportunityFormProps) {
     resolver: zodResolver(opportunitySchema),
     values: {
       description: initialData?.data.description || '',
-      endDateTime: initialData?.data.endDateTime || '',
       local: initialData?.data.local || '',
-      startDateTime: initialData?.data?.startDateTime || '',
+      startDateTime: initialData?.data?.startDateTime.split('T')[0] || '',
+      endDateTime: initialData?.data.endDateTime.split('T')[0] || '',
       timeLoad: initialData?.data.timeLoad || '',
       title: initialData?.data.title || '',
       amount: initialData?.data.amount || 0,

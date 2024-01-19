@@ -71,8 +71,12 @@ export function useResetPassword() {
       })
       router.push('/auth/sign-in')
     },
-    onError: (error) => {
-      console.log(error)
+    onError: () => {
+      toast({
+        title: 'Erro ao alterar a senha',
+        text: 'Algo der errado aconteceu',
+        type: 'ERROR',
+      })
     },
   })
 

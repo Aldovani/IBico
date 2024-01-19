@@ -13,20 +13,21 @@ const config: Config = {
     extend: {
       backgroundImage: {
         'auth-image': "url('/img/auth-image.jpg')",
-        app: "url('/img/bg-app.png')",
-        'people-01': "url('/img/people-01.png')",
-        'people-02': "url('/img/people-02.png')",
-        'people-03': "url('/img/people-03.png')",
-
         'hero-square': `
         linear-gradient(#e2e8f0 1px, transparent 1px),
         linear-gradient(to right, #e2e8f0 1px, transparent 1px)
           `,
         'hero-square-opacity':
           'radial-gradient(circle, rgba(248,250,252,0) 10%, rgba(248,250,252,1) 64%)',
+        'hero-square-linear':
+          'linear-gradient(180deg, rgba(248, 250, 252, 0.00) 0%, rgba(248,250,252,1) 100%)',
+        'hero-person-01': "url('/img/bg-hero-person-01.png')",
+        'hero-person-02': "url('/img/bg-hero-person-02.png')",
+        'hero-person-03': "url('/img/bg-hero-person-03.png')",
+        'hero-person-04': "url('/img/bg-hero-person-04.png')",
+        'about-section': "url('/img/bg-about-section.png')",
         shimmer:
           'linear-gradient(90deg,#ffffff00,#ffffff20 20%,#ffffff50 60%,#ffffff00)',
-        hero: 'linear-gradient(0deg, #F8FAFC 0%, #F8FAFC 100%), url("/img/bg-hero.jpg") ',
       },
       gridTemplateColumns: {
         'opportunity-details': '864px 304px',

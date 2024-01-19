@@ -1,18 +1,19 @@
-import { ReactNode, useEffect, useRef } from 'react'
+import { ComponentProps, ReactNode, useEffect, useRef } from 'react'
 import { motion, useAnimation, useInView } from 'framer-motion'
 
-import {} from 'tailwind-variants'
 type RevealProps = {
   children: ReactNode
   to?: 'bottom' | 'top'
   duration?: number
   delay?: number
-}
+} & ComponentProps<'div'>
+
 export function Reveal({
   children,
   to = 'top',
   delay = 0.25,
   duration = 0.5,
+  className,
 }: RevealProps) {
   const ref = useRef(null)
   const isInView = useInView(ref, { once: true })
@@ -33,7 +34,7 @@ export function Reveal({
         initial="hidden"
         animate={mainController}
         transition={{ duration, delay, ease: [0.17, 0.84, 0.44, 1] }}
-        // className={className}
+        className={className}
       >
         {children}
       </motion.div>
