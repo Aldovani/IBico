@@ -2,7 +2,7 @@ import { FastifyReply, FastifyRequest } from 'fastify'
 import { container } from 'tsyringe'
 import { z } from 'zod'
 import { ZodValidationPipe } from '../../pipes/zod-validation-pipe'
-import { GetCandidatureUseCase } from '@/domain/portal/application/use-cases/candidatures/get-candidatute'
+import { GetCandidatureUseCase } from '@/domain/portal/application/use-cases/candidatures/get-candidature'
 
 const getCandidatureParamsSchema = z.object({
   opportunityId: z.coerce.string().uuid(),

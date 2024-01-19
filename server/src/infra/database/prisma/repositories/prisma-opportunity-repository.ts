@@ -53,7 +53,6 @@ export class PrismaOpportunityRepository implements IOpportunitiesRepository {
   }
 
   async delete(opportunity: Opportunity): Promise<void> {
-    console.log({ id: opportunity.id.toString() })
     await this.PrismaService.opportunity.delete({
       where: {
         id: opportunity.id.toString(),

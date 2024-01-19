@@ -10,6 +10,5 @@ server
     console.log('server is running 🔥')
   })
   .catch((e) => {
-    console.log(e)
     console.log('Error server ❌')
   })

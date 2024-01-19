@@ -126,7 +126,7 @@ export class PrismaCandidatureRepository implements ICandidaturesRepository {
     inner join users as U on U.id = c.userId
     where opportunityId= ${opportunityId}
     group By U.username
-    LIMIT ${perPage} OFFSET ${page - 1} * ${perPage};
+    LIMIT ${perPage} OFFSET ${(page - 1) * perPage} ;
 
     `,
       this.PrismaService.candidature.count({
