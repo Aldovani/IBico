@@ -6,7 +6,7 @@ import { UniqueEntityId } from '@/core/entities/unique-entity-id'
 let inMemoryReviewRepository: InMemoryReviewRepository
 let sut: FetchMyReviewsUseCase
 
-describe('Fetch the reviews', () => {
+describe('Fetch my reviews', () => {
   beforeEach(() => {
     inMemoryReviewRepository = new InMemoryReviewRepository()
     sut = new FetchMyReviewsUseCase(inMemoryReviewRepository)

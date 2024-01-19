@@ -2,6 +2,7 @@ import { Entity } from '@/core/entities/entity'
 import { UniqueEntityId } from '@/core/entities/unique-entity-id'
 import { Optional } from '@/core/types/optional'
 import { Opportunity } from './opportunity'
+import { User } from './user'
 
 export type ReviewProps = {
   description: string
@@ -9,7 +10,7 @@ export type ReviewProps = {
   userId: UniqueEntityId
   opportunityId: UniqueEntityId
   opportunity?: Opportunity
-
+  user?: User
   createdAt: Date
 }
 
@@ -51,5 +52,9 @@ export class Review extends Entity<ReviewProps> {
 
   get opportunity() {
     return this.props.opportunity
+  }
+
+  get user() {
+    return this.props.user
   }
 }

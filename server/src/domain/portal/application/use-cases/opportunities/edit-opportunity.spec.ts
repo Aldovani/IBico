@@ -49,6 +49,7 @@ describe('Edit opportunity', () => {
         local: '',
         skills: ['a', 'b'],
         title: 'Novo titulo',
+        status: 'CREATED',
       },
     })
 
@@ -68,6 +69,7 @@ describe('Edit opportunity', () => {
       opportunityId: opportunity.id.toString(),
       userId: '1',
       opportunity: {
+        status: 'CREATED',
         amount: 100,
         description: '',
         endDateTime: new Date(),
@@ -89,6 +91,7 @@ describe('Edit opportunity', () => {
       opportunityId: '1',
       userId: '1',
       opportunity: {
+        status: 'CREATED',
         amount: 100,
         description: '',
         endDateTime: new Date(),

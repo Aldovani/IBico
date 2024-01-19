@@ -43,7 +43,7 @@ export class InMemoryReviewRepository implements IReviewsRepository {
     { page, perPage }: PaginationParams,
   ): Promise<Review[]> {
     const reviews = this.reviews
-      .filter((item) => item.userId.toString() === username)
+      .filter((item) => item.user?.username === username)
       .slice((page - 1) * perPage, page * perPage)
 
     return reviews

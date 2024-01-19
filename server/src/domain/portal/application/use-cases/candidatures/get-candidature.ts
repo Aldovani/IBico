@@ -1,6 +1,7 @@
-import { Either, right } from '@/core/types/either'
+import { Either, left, right } from '@/core/types/either'
 import { ICandidaturesRepository } from '../../repositories/candidatures-repository'
 import { inject, injectable } from 'tsyringe'
+import { ResourceNotFoundError } from '@/core/errors/erros/resource-not-found-error'
 
 type GetCandidatureRequest = {
   opportunityId: string
@@ -8,7 +9,7 @@ type GetCandidatureRequest = {
 }
 
 type GetCandidatureResponse = Either<
-  null,
+  ResourceNotFoundError,
   {
     isCandidate: boolean
   }
@@ -30,6 +31,10 @@ export class GetCandidatureUseCase {
         opportunityId,
         userId,
       })
+
+    if (!candidature) {
+      return left(new ResourceNotFoundError())
+    }
 
     const isCandidate = !!candidature
 
