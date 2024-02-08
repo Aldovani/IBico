@@ -82,10 +82,18 @@ export class PrismaUserRepository implements IUsersRepository {
         },
       }),
       this.PrismaService.$queryRaw<[{ rating: number | null }]>`
-  SELECT  (SELECT AVG(rating) from reviews as R inner join opportunities as  O on O.candidateId = U.id where R.authorId != U.id and R.opportunityId= O.id ) as
-   rating FROM users as U INNER JOIN opportunities as O
-   on O.candidateId= U.Id
-    where u.username = ${username}`,
+SELECT AVG(R.rating) AS rating
+FROM reviews AS R
+INNER JOIN opportunities AS O ON O.id = R."opportunityId"
+INNER JOIN users AS U ON U.id = O."candidateId"
+WHERE R."authorId" != U.id
+AND U.username = ${username};`,
+
+      //     this.PrismaService.$queryRaw<[{ rating: number | null }]>`
+      // SELECT  (SELECT AVG(rating) from reviews as R inner join opportunities as  O on O.candidateId = U.id where R.authorId != U.id and R.opportunityId= O.id ) as
+      //  rating FROM users as U INNER JOIN opportunities as O
+      //  on O.candidateId= U.Id
+      //   where u.username = ${username}`,
     ])
 
     if (!data[0]) {
@@ -93,9 +101,10 @@ export class PrismaUserRepository implements IUsersRepository {
     }
     const [user, userRating] = data
 
+    console.log({ userRating })
     const userToDomain = PrismaUserMapper.toDomain(user)
 
-    userToDomain.rating = userRating[0]?.rating || 10
+    userToDomain.rating = userRating[0].rating ?? 10
 
     return {
       user: userToDomain,

@@ -11,13 +11,16 @@ const createOpportunityQuerySchema = z
   .object({
     title: z.string().min(8),
     description: z.string().min(20),
-    local: z.string().min(8),
+    local: z.string().min(4),
     amount: z.number().min(1),
     startDateTime: z.coerce
       .date()
-      .refine((value) => dayjsDateProvide.compareIfAfter(value, new Date()), {
-        message: 'Date needs to be after now',
-      }),
+      .refine(
+        (value) => dayjsDateProvide.isBeforeOrSame(value, new Date(), 'd'),
+        {
+          message: 'Date needs to be after now',
+        },
+      ),
     endDateTime: z.coerce.date(),
     timeLoad: z.string(),
     skills: z
@@ -29,9 +32,10 @@ const createOpportunityQuerySchema = z
       ),
   })
   .superRefine((values, ctx) => {
-    const isEndDateBeforeStartDate = dayjsDateProvide.compareIfAfter(
-      values.startDateTime,
+    const isEndDateBeforeStartDate = dayjsDateProvide.isBefore(
       values.endDateTime,
+      values.startDateTime,
+      'd',
     )
 
     if (isEndDateBeforeStartDate) {

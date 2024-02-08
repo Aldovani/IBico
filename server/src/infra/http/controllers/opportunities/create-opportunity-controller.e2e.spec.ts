@@ -1,6 +1,8 @@
 import request from 'supertest'
 import { app } from '@/infra/app'
 import { faker } from '@faker-js/faker'
+import { DayjsDateProvider } from '@/core/containers/providers/dateProvider/implementations/day-js-date-provider'
+const dayJs = new DayjsDateProvider()
 
 describe('[E2E] Create opportunity', async () => {
   beforeAll(async () => {
@@ -35,11 +37,12 @@ describe('[E2E] Create opportunity', async () => {
         description: faker.lorem.sentence(20),
         local: faker.location.city(),
         title: faker.lorem.text(),
-        endDateTime: '10/01/2024',
-        startDateTime: '09/01/2024',
+        startDateTime: new Date(),
+        endDateTime: dayJs.addDays(new Date(), 2),
         timeLoad: faker.lorem.text(),
         skills: ['teste'],
       })
+
     expect(response.status).toBe(201)
     expect(response.body).toEqual({
       status: 201,

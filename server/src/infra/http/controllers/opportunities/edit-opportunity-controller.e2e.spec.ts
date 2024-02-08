@@ -1,7 +1,8 @@
 import request from 'supertest'
 import { app } from '@/infra/app'
 import { faker } from '@faker-js/faker'
-
+import { DayjsDateProvider } from '@/core/containers/providers/dateProvider/implementations/day-js-date-provider'
+const DayjsDate = new DayjsDateProvider()
 describe('[E2E] Edit opportunity', async () => {
   beforeAll(async () => {
     await app.ready()
@@ -27,23 +28,23 @@ describe('[E2E] Edit opportunity', async () => {
 
     const { headers } = authResponse
 
-    await request(app.server)
+    const response = await request(app.server)
       .post('/opportunities')
       .set('Cookie', headers['set-cookie'])
       .send({
-        amount: faker.number.int(),
+        amount: 10,
         description: faker.lorem.sentence(20),
         local: faker.location.city(),
         title: faker.lorem.text(),
-        endDateTime: '10/01/2024',
-        startDateTime: '09/01/2024',
+        startDateTime: new Date(),
+        endDateTime: DayjsDate.addDays(new Date(), 5),
         timeLoad: faker.lorem.text(),
         skills: ['teste'],
       })
 
-    const myOpportunities = await request(app.server).get('/opportunities/me')
-
-    console.log({ oppotunity: myOpportunities.body })
+    const myOpportunities = await request(app.server)
+      .get('/opportunities/me')
+      .set('Cookie', headers['set-cookie'])
 
     const opportunityId = myOpportunities.body.data[0].id
 
@@ -55,8 +56,8 @@ describe('[E2E] Edit opportunity', async () => {
         description: faker.lorem.sentence(20),
         local: faker.location.city(),
         title: faker.lorem.text(),
-        startDateTime: '19/01/2024',
-        endDateTime: '20/01/2024',
+        startDateTime: new Date(),
+        endDateTime: DayjsDate.addDays(new Date(), 5),
         timeLoad: faker.lorem.text(),
         skills: ['teste', 'test-2'],
       })

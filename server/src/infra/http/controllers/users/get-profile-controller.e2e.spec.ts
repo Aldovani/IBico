@@ -25,7 +25,6 @@ describe('[E2E] Get profile', async () => {
     })
 
     const { headers } = authResponse
-
     const response = await request(app.server)
       .get('/users/profile/aldovani')
       .set('Cookie', headers['set-cookie'])

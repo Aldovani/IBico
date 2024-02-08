@@ -105,7 +105,6 @@ export class InMemoryCandidatureRepository implements ICandidaturesRepository {
     if (!candidature) {
       return null
     }
-    console.log(candidature)
 
     return candidature
   }

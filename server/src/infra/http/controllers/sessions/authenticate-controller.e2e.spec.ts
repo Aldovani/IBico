@@ -26,7 +26,6 @@ describe('[E2E] Authenticate', async () => {
 
     expect(response.status).toBe(200)
 
-    console.log(response.body)
     expect(response.body).toEqual({ status: 200, message: 'Authenticated' })
   })
 })
