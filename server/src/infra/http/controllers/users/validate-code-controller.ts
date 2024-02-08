@@ -4,6 +4,8 @@ import { ResourceNotFoundError } from '@/core/errors/erros/resource-not-found-er
 import { z } from 'zod'
 import { ZodValidationPipe } from '../../pipes/zod-validation-pipe'
 import { ValidateCodeUseCase } from '@/domain/portal/application/use-cases/users/validate-code'
+import { ResourceExpiredError } from '@/core/errors/erros/resource-expired-error'
+import { ResourceAlreadyUsedError } from '@/core/errors/erros/resource-already-used-error'
 
 const validateCodeBodySchema = z.object({
   code: z.string().min(6).max(6),
@@ -34,6 +36,16 @@ export class ValidateCodeController {
         case ResourceNotFoundError:
           return res.status(404).send({
             status: 404,
+            message: error.message,
+          })
+        case ResourceExpiredError:
+          return res.status(400).send({
+            status: 400,
+            message: error.message,
+          })
+        case ResourceAlreadyUsedError:
+          return res.status(400).send({
+            status: 400,
             message: error.message,
           })
       }

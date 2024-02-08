@@ -46,6 +46,7 @@ describe('Change password', () => {
     await inMemoryPasswordCodeRepository.create(
       PasswordCode.create({
         code: '123456',
+        used: false,
         expiresAt: dateProvider.addHours(new Date(), 1),
         userId: new UniqueEntityId('1'),
       }),
@@ -75,6 +76,7 @@ describe('Change password', () => {
     await inMemoryPasswordCodeRepository.create(
       PasswordCode.create({
         code: '123456',
+        used: false,
         expiresAt: dateProvider.addHours(new Date(), 1),
         userId: new UniqueEntityId('1'),
       }),

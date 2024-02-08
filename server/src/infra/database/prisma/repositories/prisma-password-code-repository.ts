@@ -11,6 +11,15 @@ export class PrismaPasswordCodeRepository implements IPasswordCodeRepository {
     private PrismaService: PrismaService,
   ) {}
 
+  async save(data: PasswordCode): Promise<void> {
+    const passwordCode = PrismaPasswordCodeMapper.toPrisma(data)
+
+    await this.PrismaService.passwordCode.update({
+      data: passwordCode,
+      where: { id: passwordCode.id },
+    })
+  }
+
   async create(passwordCode: PasswordCode): Promise<void> {
     const data = PrismaPasswordCodeMapper.toPrisma(passwordCode)
 

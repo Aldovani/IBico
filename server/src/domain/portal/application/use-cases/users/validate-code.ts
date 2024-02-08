@@ -6,6 +6,7 @@ import { IDateProvider } from '@/core/containers/providers/dateProvider/IDatePro
 import { PasswordReset } from '@/domain/portal/enterprise/entities/password-reset'
 import { ResourceExpiredError } from '@/core/errors/erros/resource-expired-error'
 import { inject, injectable } from 'tsyringe'
+import { ResourceAlreadyUsedError } from '@/core/errors/erros/resource-already-used-error'
 
 type ValidateCodeRequest = {
   requestId: string
@@ -38,14 +39,17 @@ export class ValidateCodeUseCase {
     if (!passwordCode) {
       return left(new ResourceNotFoundError())
     }
+    if (passwordCode.used) {
+      return left(new ResourceAlreadyUsedError())
+    }
 
     if (passwordCode.code !== code) {
       return left(new ResourceNotFoundError())
     }
 
     const codeExpired = this.dateProvider.isBefore(
-      new Date(),
       passwordCode.expiresAt,
+      new Date(),
       'h',
     )
 
@@ -58,6 +62,9 @@ export class ValidateCodeUseCase {
       requestId: passwordCode.id,
     })
 
+    passwordCode.used = true
+
+    await this.passwordCodeRepository.save(passwordCode)
     await this.passwordResetRepository.create(passwordReset)
     return right({
       requestId: passwordReset.id.toString(),

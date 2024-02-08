@@ -4,6 +4,8 @@ import { ValidateCodeUseCase } from './validate-code'
 import { InMemoryPasswordResetRepository } from 'test/repositories/in-memory-password-request-repository'
 import { PasswordCode } from '@/domain/portal/enterprise/entities/password-code'
 import { UniqueEntityId } from '@/core/entities/unique-entity-id'
+import { ResourceExpiredError } from '@/core/errors/erros/resource-expired-error'
+import { ResourceAlreadyUsedError } from '@/core/errors/erros/resource-already-used-error'
 
 let dateProvider: DayjsDateProvider
 let inMemoryPasswordCodeRepository: InMemoryPasswordCodeRepository
@@ -33,13 +35,13 @@ describe('Validate password code', () => {
     await inMemoryPasswordCodeRepository.create(
       PasswordCode.create({
         code: '123456',
+        used: false,
         expiresAt: dateProvider.addHours(new Date(), 1),
         userId: new UniqueEntityId('1'),
       }),
     )
 
     const passwordCode = inMemoryPasswordCodeRepository.passwordCodes[0]
-
     const response = await sut.execute({
       code: passwordCode.code,
       requestId: passwordCode.id.toString(),
@@ -58,7 +60,7 @@ describe('Validate password code', () => {
       PasswordCode.create({
         code: '123456',
         expiresAt: dateProvider.addHours(new Date(), 1),
-
+        used: false,
         userId: new UniqueEntityId('1'),
       }),
     )
@@ -77,12 +79,12 @@ describe('Validate password code', () => {
     await inMemoryPasswordCodeRepository.create(
       PasswordCode.create({
         code: '123456',
-        expiresAt: dateProvider.addHours(new Date(), 1),
-
+        expiresAt: new Date(),
+        used: false,
         userId: new UniqueEntityId('1'),
       }),
     )
-    vi.setSystemTime(new Date(2023, 12, 15))
+    vi.setSystemTime(dateProvider.addHours(new Date(), 1))
     const passwordCode = inMemoryPasswordCodeRepository.passwordCodes[0]
 
     const response = await sut.execute({
@@ -91,5 +93,25 @@ describe('Validate password code', () => {
     })
 
     expect(response.isLeft()).toBe(true)
+    expect(response.value).toBeInstanceOf(ResourceExpiredError)
+  })
+
+  it('should not be validate the code already used', async () => {
+    await inMemoryPasswordCodeRepository.create(
+      PasswordCode.create({
+        code: '123456',
+        expiresAt: dateProvider.addHours(new Date(), 1),
+        used: true,
+        userId: new UniqueEntityId('1'),
+      }),
+    )
+    const passwordCode = inMemoryPasswordCodeRepository.passwordCodes[0]
+
+    const response = await sut.execute({
+      code: passwordCode.code,
+      requestId: passwordCode.id.toString(),
+    })
+    expect(response.isLeft()).toBe(true)
+    expect(response.value).toBeInstanceOf(ResourceAlreadyUsedError)
   })
 })

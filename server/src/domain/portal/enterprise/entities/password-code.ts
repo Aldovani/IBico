@@ -7,6 +7,7 @@ export type PasswordCodeProps = {
   expiresAt: Date
   userId: UniqueEntityId
   code: string
+  used: boolean
 }
 
 export class PasswordCode extends Entity<PasswordCodeProps> {
@@ -18,6 +19,7 @@ export class PasswordCode extends Entity<PasswordCodeProps> {
       {
         ...props,
         createdAt: new Date(),
+        used: props.used || false,
       },
       id,
     )
@@ -39,5 +41,17 @@ export class PasswordCode extends Entity<PasswordCodeProps> {
 
   get expiresAt() {
     return this.props.expiresAt
+  }
+
+  set expiresAt(data: Date) {
+    this.expiresAt = data
+  }
+
+  get used() {
+    return this.props.used
+  }
+
+  set used(value: boolean) {
+    this.props.used = value
   }
 }

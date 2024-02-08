@@ -44,6 +44,7 @@ export class GeneratePasswordResetCodeUseCase {
     const passwordCode = PasswordCode.create({
       code,
       userId: user.id,
+      used: false,
       expiresAt: this.dateProvider.addHours(new Date(), 1),
     })
 

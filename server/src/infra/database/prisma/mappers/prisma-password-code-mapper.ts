@@ -9,6 +9,7 @@ export class PrismaPasswordCodeMapper {
         code: raw.code,
         userId: new UniqueEntityId(raw.userId),
         expiresAt: raw.expiresAt,
+        used: raw.used,
         createdAt: raw.createdAt,
       },
       new UniqueEntityId(raw.id),
@@ -21,6 +22,7 @@ export class PrismaPasswordCodeMapper {
       createdAt: raw.createdAt,
       expiresAt: raw.expiresAt,
       id: raw.id.toString(),
+      used: raw.used,
       userId: raw.userId.toString(),
     }
   }

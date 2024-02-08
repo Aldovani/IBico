@@ -43,8 +43,8 @@ export class ChangePasswordUseCase {
     }
 
     const requestExpired = this.dateProvider.isBefore(
-      new Date(),
       passwordReset.expiresAt,
+      new Date(),
       'h',
     )
 
