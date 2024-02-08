@@ -96,6 +96,7 @@ Table password_codes {
   code String [not null]
   expiresAt DateTime [not null]
   createdAt DateTime [not null]
+  used Boolean [not null, default: false]
   userId String [not null]
   user users [not null]
   PasswordReset password_resets [not null]
@@ -105,7 +106,7 @@ Table password_resets {
   id String [pk]
   expiresAt DateTime [not null]
   createdAt DateTime [not null]
-  used Boolean [not null]
+  used Boolean [not null, default: false]
   request password_codes [not null]
   passwordCodeId String [not null]
 }

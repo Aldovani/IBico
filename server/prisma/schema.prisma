@@ -133,6 +133,7 @@ model PasswordCode {
   code          String
   expiresAt     DateTime
   createdAt     DateTime
+  used          Boolean         @default(false)
   userId        String
   user          User            @relation(fields: [userId], references: [id])
   PasswordReset PasswordReset[]
@@ -144,7 +145,7 @@ model PasswordReset {
   id        String   @id
   expiresAt DateTime
   createdAt DateTime
-  used      Boolean
+  used      Boolean  @default(false)
 
   request        PasswordCode @relation(fields: [passwordCodeId], references: [id])
   passwordCodeId String
