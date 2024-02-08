@@ -43,9 +43,10 @@ export class ValidateCodeUseCase {
       return left(new ResourceNotFoundError())
     }
 
-    const codeExpired = this.dateProvider.compareIfAfter(
+    const codeExpired = this.dateProvider.isBefore(
       new Date(),
       passwordCode.expiresAt,
+      'h',
     )
 
     if (codeExpired) {

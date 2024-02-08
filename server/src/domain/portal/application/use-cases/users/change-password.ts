@@ -42,9 +42,10 @@ export class ChangePasswordUseCase {
       return left(new ResourceNotFoundError())
     }
 
-    const requestExpired = this.dateProvider.compareIfAfter(
+    const requestExpired = this.dateProvider.isBefore(
       new Date(),
       passwordReset.expiresAt,
+      'h',
     )
 
     if (requestExpired) {
